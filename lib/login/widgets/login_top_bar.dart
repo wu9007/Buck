@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 class LoginTopBar extends StatelessWidget {
   LoginTopBar({@required this.child});

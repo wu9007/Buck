@@ -1,7 +1,7 @@
 name: buck
 description: An assembled flutter application framework.
-version: 0.0.1
-author: Shusheng <leyansorosame@gmail.com>
+version: 0.0.2
+author: leyan95 <leyansorosame@gmail.com>
 homepage: https://github.com/leyan95/buck
 
 environment:
