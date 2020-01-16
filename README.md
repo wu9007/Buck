@@ -1,15 +1,16 @@
 # buck
 
-[![License][license-image]][license-url] 
 [![Pub](https://img.shields.io/pub/v/buck.svg?style=flat-square)](https://pub.dartlang.org/packages/buck)
 
 An assembled flutter application framework.
+
+Old longings nomadic leap, Chafing at custom's chain; Again from its brumal sleep Wakens the ferine stain.
 
 ## Getting Started
 
 ```yaml
 dependencies:
- buck: ^0.0.2
+ buck: ^0.1.1
 ```
 
 ## Completed
