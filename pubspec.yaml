@@ -1,0 +1,30 @@
+name: buck
+description: An assembled flutter application framework.
+version: 0.0.1
+author: Shusheng <leyansorosame@gmail.com>
+homepage: https://github.com/leyan95/buck
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+  shared_preferences: ^0.5.6
+  dio: ^3.0.5
+  flutter_local_notifications: ^0.8.4+3
+  rxdart: ^0.22.6
+  vibrate: ^0.0.4
+  pda_scanner: ^0.2.3
+  device_info: ^0.4.1+4
+  fluttertoast: ^3.1.3
+  open_file: ^2.1.1
+  package_info: ^0.4.0+13
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:

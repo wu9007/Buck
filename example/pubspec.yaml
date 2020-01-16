@@ -1,0 +1,45 @@
+name: buck_example
+description: Demonstrates how to use the buck plugin.
+publish_to: 'none'
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+  flutter_earth: ^0.0.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  buck:
+    path: ../
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/bundle1.png
+    - assets/images/bundle2.png
+    - assets/images/bundle3.png
+    - assets/images/background.png
+    - assets/images/logo.png
+    - assets/city.json
+
+  fonts:
+    - family: shouji
+      fonts:
+        - asset: assets/fonts/FangZhengShouJi.TTF
+          weight: 500
+    - family: pinshang
+      fonts:
+        - asset: assets/fonts/FangZhengPinShang.TTF
+          weight: 500
+    - family: myicons
+      fonts:
+        - asset: assets/icons/my_icon.ttf
