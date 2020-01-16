@@ -11,9 +11,9 @@ abstract class Menu extends Widget {
 }
 
 abstract class StatelessMenu extends StatelessWidget implements Menu {
-  const StatelessMenu({ Key key }) : super(key: key);
+  const StatelessMenu({Key key}) : super(key: key);
 }
 
 abstract class StatefulMenu extends StatefulWidget implements Menu {
-  const StatefulMenu({ Key key }) : super(key: key);
+  const StatefulMenu({Key key}) : super(key: key);
 }
