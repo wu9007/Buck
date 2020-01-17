@@ -3,6 +3,7 @@ import 'package:buck/bundle/menu_boss.dart';
 import 'package:buck/bundle/piano.dart';
 import 'package:buck/bundle/piano_boss.dart';
 import 'package:buck/service/cache_control.dart';
+import 'package:buck/service/common_api.dart';
 import 'package:buck/service/message_box.dart';
 import 'package:buck/service/theme_painter.dart';
 import 'package:buck/service/version_control.dart';
@@ -18,18 +19,20 @@ const bool inProduction = const bool.fromEnvironment("dart.vm.product");
 class Buck {
   static Buck _instance;
 
-  CacheControl _cacheControl;
-  UserInfo userInfo;
-  SocketClient _socketClient;
-  GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
-  Notifier _notifier;
-  MessageBox _messageBox;
-  AndroidDeviceInfo _androidInfo;
   bool _menuFree;
-  Map<String, WidgetBuilder> _routers = {};
-  ThemePainter _themePainter;
-  VersionControl _versionControl;
+  UserInfo userInfo;
   PackageInfo _packageInfo;
+  AndroidDeviceInfo _androidInfo;
+  Map<String, WidgetBuilder> _routers = {};
+  GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
+
+  Notifier _notifierInstance;
+  CommonApi _commonApiInstance;
+  MessageBox _messageBoxInstance;
+  CacheControl _cacheControlInstance;
+  SocketClient _socketClientInstance;
+  ThemePainter _themePainterInstance;
+  VersionControl _versionControlInstance;
 
   Buck._();
 
@@ -41,23 +44,31 @@ class Buck {
     return _instance;
   }
 
-  Future init({@required String baseUrl, @required String wsUrl, bool menuFree = !inProduction}) async {
-    _cacheControl = await CacheControl.getInstance();
-    _socketClient = await SocketClient.getInstance();
-    _versionControl = VersionControl.getInstance();
-    _notifier = Notifier.getInstance();
-    _messageBox = MessageBox.getInstance();
-    _themePainter = ThemePainter.getInstance();
+  Future init({bool menuFree = !inProduction}) async {
+    _notifierInstance = Notifier.getInstance();
+    _commonApiInstance = CommonApi.getInstance();
+    _messageBoxInstance = MessageBox.getInstance();
+    _versionControlInstance = VersionControl.getInstance();
+    _cacheControlInstance = await CacheControl.getInstance();
+    _socketClientInstance = await SocketClient.getInstance();
+    _themePainterInstance = ThemePainter.getInstance();
     _androidInfo = await DeviceInfoPlugin().androidInfo;
     _packageInfo = await PackageInfo.fromPlatform();
-    _cacheControl.setVersion(_packageInfo.version);
+    _cacheControlInstance.setVersion(_packageInfo.version);
     _menuFree = menuFree;
-    userInfo = _cacheControl.userInfo;
+    userInfo = _cacheControlInstance.userInfo;
     if (userInfo != null) {
-      await _socketClient.connect();
+      await _socketClientInstance.connect();
     }
-    _cacheControl.init(baseUrl: baseUrl, wsUrl: wsUrl);
-    _notifier.init();
+    _notifierInstance.init();
+  }
+
+  void settingBaseUrl({@required String baseUrl, @required String wsUrl}) {
+    _cacheControlInstance.init(baseUrl: baseUrl, wsUrl: wsUrl);
+  }
+
+  void settingCommonPath({@required String loginApi, @required String listMessageApi, @required String readMessageApi, @required String versionApi}) {
+    _commonApiInstance.setCommonPath(loginApi: loginApi, listMessageApi: listMessageApi, readMessageApi: readMessageApi, versionApi: versionApi);
   }
 
   void installMenus(String groupName, List<Menu> menus) {
@@ -74,15 +85,15 @@ class Buck {
     });
   }
 
-  CacheControl get cacheControl => _cacheControl;
+  CacheControl get cacheControl => _cacheControlInstance;
 
-  SocketClient get socketClient => _socketClient;
+  SocketClient get socketClient => _socketClientInstance;
 
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
-  Notifier get notifier => _notifier;
+  Notifier get notifier => _notifierInstance;
 
-  MessageBox get messageBox => _messageBox;
+  MessageBox get messageBox => _messageBoxInstance;
 
   AndroidDeviceInfo get androidInfo => _androidInfo;
 
@@ -90,9 +101,11 @@ class Buck {
 
   Map<String, WidgetBuilder> get routers => _routers;
 
-  ThemePainter get themePainter => _themePainter;
+  ThemePainter get themePainter => _themePainterInstance;
 
-  VersionControl get versionControl => _versionControl;
+  VersionControl get versionControl => _versionControlInstance;
 
   PackageInfo get packageInfo => _packageInfo;
+
+  CommonApi get commonApiInstance => _commonApiInstance;
 }

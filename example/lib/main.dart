@@ -12,8 +12,13 @@ import 'package:buck_example/pianos/piano_expression.dart';
 import 'package:buck_example/pianos/piano_setting.dart';
 import 'package:flutter/material.dart';
 
-const BASE_URL = 'http://192.168.0.1:8090/ares/';
-const WS_URL = 'ws://192.168.0.1:8091';
+const BASE_URL = 'http://10.1.11.126:8090';
+const WS_URL = 'ws://10.1.11.126:8091';
+
+const LOGIN_API = '/guest/login';
+const LIST_MESSAGE_API = '/message/list_own_message';
+const READ_MESSAGE_API = '/message/read';
+const VERSION_PATH_API = '/version/latest_version';
 
 const LOGO_PATH = "assets/images/logo.png";
 const HOME_TITLE = "BUCK";
@@ -23,7 +28,10 @@ const WELCOME_LABEL = "Albert Einstein: Logic will get you from A to B. Imaginat
 
 Future<void> main() async {
   Buck buck = Buck.getInstance();
-  await buck.init(baseUrl: BASE_URL, wsUrl: WS_URL, menuFree: true);
+  await buck.init(menuFree: true);
+  buck.settingBaseUrl(baseUrl: BASE_URL, wsUrl: WS_URL);
+  buck.settingCommonPath(loginApi: LOGIN_API, listMessageApi: LIST_MESSAGE_API, readMessageApi: READ_MESSAGE_API, versionApi: VERSION_PATH_API);
+
   buck.installMenus('Alpha', [BundleRest(), BundleDeliver(key: Key('a-deliver'))]);
   buck.installMenus('Beta', [BundleService(), BundleShopping()]);
   buck.installMenus('Gama', [BundleRest(), BundleDeliver(key: Key('c-Deliver')), BundleService(), BundleShopping()]);

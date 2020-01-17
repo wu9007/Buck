@@ -16,7 +16,7 @@ class DioClient<T> {
 
   Future<ResponseBody<T>> post(url, {params}) async {
     _cacheControl = await CacheControl.getInstance();
-    _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
+    if(_cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
     _dio.options.baseUrl = _cacheControl.baseUrl;
 
     Response<Map<String, dynamic>> response;
@@ -45,7 +45,7 @@ class DioClient<T> {
 
   Future<ResponseBody<T>> get(url, {params}) async {
     _cacheControl = await CacheControl.getInstance();
-    _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
+    if(_cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
     _dio.options.baseUrl = _cacheControl.baseUrl;
 
     Response<Map<String, dynamic>> response;
@@ -74,7 +74,7 @@ class DioClient<T> {
 
   Future download(BuildContext context, url, {Map<String, dynamic> queryParameters, @required path, ProgressCallback onReceiveProgress}) async {
     _cacheControl = await CacheControl.getInstance();
-    _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
+    if(_cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
     _dio.options.baseUrl = _cacheControl.baseUrl;
     _dio.options.responseType = ResponseType.stream;
 

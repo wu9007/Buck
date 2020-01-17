@@ -1,3 +1,4 @@
+import 'package:buck/basic_app.dart';
 import 'package:buck/message/message_body.dart';
 import 'package:buck/message/socket_client.dart';
 import 'package:buck/utils/dio_client.dart';
@@ -23,7 +24,7 @@ class MessageBox {
   }
 
   Future<void> loadMessage() async {
-    ResponseBody responseBody = await DioClient().get('/message/list_own_message');
+    ResponseBody responseBody = await DioClient().get(buck.commonApiInstance.listMessageApi);
     if (responseBody.success) {
       List<MessageBody> allMessageList = MessageBody.allFromMap(responseBody.data);
       _unreadMessageList = allMessageList.where((item) => item.unread).toList();
