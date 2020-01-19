@@ -5,6 +5,7 @@ import 'package:buck/basic_app.dart';
 import 'package:buck/message/cmd_executor.dart';
 import 'package:buck/message/message_body.dart';
 import 'package:buck/model/user_info.dart';
+import 'package:buck/widgets/tips/tips_tool.dart';
 import 'package:rxdart/rxdart.dart';
 
 final BehaviorSubject<MessageBody> socketMessageSubject = BehaviorSubject<MessageBody>();
@@ -27,6 +28,7 @@ class SocketClient {
       'avatar': userInfo.avatar,
       'serialNo': serialNo,
     }).catchError((e) {
+      TipsTool.info('网络异常').show();
       throw new Exception(e);
     });
     if (_webSocket.readyState == 1) {
