@@ -97,8 +97,8 @@ class BasicAppState extends State<BasicApp> with PdaLifecycleMixin {
       _loginPage = LoginPage(
           backgroundPath: 'assets/images/background.png',
           logoPath: 'assets/images/logo.png',
-          titleLabel: 'Basic Engine',
-          welcomeLabel: 'Albert Einstein: Logic will get you from A to B. Imagination will take you everywhere.');
+          titleLabel: 'BUCK  🐺',
+          welcomeLabel: 'Old longings nomadic leap, Chafing at custom\'s chain; Again from its brumal sleep Wakens the ferine stain.');
     } else {
       _loginPage = widget.loginPage;
     }

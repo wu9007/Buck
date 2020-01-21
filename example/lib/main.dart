@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 const BASE_URL = 'http://10.1.11.126:8001';
 const WS_URL = 'ws://10.1.11.126:9999';
 
-const LOGIN_API = '/auth/guest/login';
+const LOGIN_API = '/auth/guest/app_login';
 const LIST_MESSAGE_API = '/notification/message/list_own';
 const READ_MESSAGE_API = '/notification/message/read';
 const VERSION_PATH_API = '/admin/app_version/latest_version';
