@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:buck/bundle/menu.dart';
 import 'package:buck/bundle/menu_boss.dart';
 import 'package:buck/bundle/piano.dart';
@@ -13,6 +15,7 @@ import 'package:buck/model/user_info.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
+import 'package:path_provider/path_provider.dart';
 
 const bool inProduction = const bool.fromEnvironment("dart.vm.product");
 
@@ -23,6 +26,7 @@ class Buck {
   UserInfo userInfo;
   PackageInfo _packageInfo;
   AndroidDeviceInfo _androidInfo;
+  Directory _documentsDir;
   Map<String, WidgetBuilder> _routers = {};
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
 
@@ -54,6 +58,7 @@ class Buck {
     _themePainterInstance = ThemePainter.getInstance();
     _androidInfo = await DeviceInfoPlugin().androidInfo;
     _packageInfo = await PackageInfo.fromPlatform();
+    _documentsDir = await getApplicationDocumentsDirectory();
     _cacheControlInstance.setVersion(_packageInfo.version);
     _menuFree = menuFree;
     userInfo = _cacheControlInstance.userInfo;
@@ -67,8 +72,16 @@ class Buck {
     _cacheControlInstance.init(baseUrl: baseUrl, wsUrl: wsUrl);
   }
 
-  void settingCommonPath({@required String loginApi, @required String listMessageApi, @required String readMessageApi, @required String versionApi}) {
-    _commonApiInstance.setCommonPath(loginApi: loginApi, listMessageApi: listMessageApi, readMessageApi: readMessageApi, versionApi: versionApi);
+  void settingCommonPath(
+      {@required String loginApi,
+      @required String listMessageApi,
+      @required String readMessageApi,
+      @required String versionApi}) {
+    _commonApiInstance.setCommonPath(
+        loginApi: loginApi,
+        listMessageApi: listMessageApi,
+        readMessageApi: readMessageApi,
+        versionApi: versionApi);
   }
 
   void installMenus(String groupName, List<Menu> menus) {
@@ -108,4 +121,6 @@ class Buck {
   PackageInfo get packageInfo => _packageInfo;
 
   CommonApi get commonApiInstance => _commonApiInstance;
+
+  Directory get documentsDir => _documentsDir;
 }

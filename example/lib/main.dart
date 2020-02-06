@@ -12,13 +12,13 @@ import 'package:buck_example/pianos/piano_expression.dart';
 import 'package:buck_example/pianos/piano_setting.dart';
 import 'package:flutter/material.dart';
 
-const BASE_URL = 'http://10.1.11.126:8001';
-const WS_URL = 'ws://10.1.11.126:9999';
+const BASE_URL = 'http://192.168.1.3:8001';
+const WS_URL = 'ws://192.168.1.3:9999';
 
 const LOGIN_API = '/auth/guest/app_login';
-const LIST_MESSAGE_API = '/notification/message/list_own';
-const READ_MESSAGE_API = '/notification/message/read';
-const VERSION_PATH_API = '/admin/app_version/latest_version';
+const LIST_MESSAGE_API = '/notification/app/list_own';
+const READ_MESSAGE_API = '/notification/app/read';
+const VERSION_PATH_API = '/admin/app_version/latest';
 
 const LOGO_PATH = "assets/images/logo.png";
 const HOME_TITLE = "BUCK";

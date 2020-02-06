@@ -21,9 +21,14 @@ class VersionControl {
   }
 
   checkVersion() async {
-    ResponseBody responseBody = await DioClient().get(buck.commonApiInstance.versionApi, params: {'appName': buck.packageInfo.appName});
-    if (responseBody.success && responseBody.data != null) {
-      VersionUpgradeInfo versionUpgradeInfo = VersionUpgradeInfo.fromMap(responseBody.data);
+    ResponseBody responseBody = await DioClient().get(
+        buck.commonApiInstance.versionApi,
+        params: {'appName': buck.packageInfo.appName});
+    if (responseBody != null &&
+        (responseBody.success ?? false) &&
+        responseBody.data != null) {
+      VersionUpgradeInfo versionUpgradeInfo =
+          VersionUpgradeInfo.fromMap(responseBody.data);
       if (buck.cacheControl.version != versionUpgradeInfo.version) {
         upgradeSubject.add(versionUpgradeInfo);
         buck.cacheControl.setVersion(versionUpgradeInfo.version);
@@ -39,8 +44,8 @@ class VersionControl {
         return UpgradeDialog(
           url: versionUpgradeInfo.url,
           path: versionUpgradeInfo.path,
-          title: '系统升级',
-          content: versionUpgradeInfo.description,
+          title: '发现新版本：${versionUpgradeInfo.version}',
+          content: versionUpgradeInfo.description ?? '✨ 全新改版，带给你不一样的体验。',
           nextTime: '下次再说',
           upgradeNow: '现在升级',
           mandatory: versionUpgradeInfo.mandatory,

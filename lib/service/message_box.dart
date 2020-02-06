@@ -4,7 +4,8 @@ import 'package:buck/message/socket_client.dart';
 import 'package:buck/utils/dio_client.dart';
 import 'package:rxdart/subjects.dart';
 
-final PublishSubject<List<MessageBody>> messageBoxSubject = PublishSubject<List<MessageBody>>();
+final PublishSubject<List<MessageBody>> messageBoxSubject =
+    PublishSubject<List<MessageBody>>();
 
 /// @author wujianchuan
 /// @date 2019/12/17 17:06
@@ -18,19 +19,24 @@ class MessageBox {
   static MessageBox getInstance() {
     if (_instance == null) {
       _instance = MessageBox._();
-      socketMessageSubject.stream.listen((messageBody) => _instance.pushUnreadMessage(messageBody));
+      socketMessageSubject.stream
+          .listen((messageBody) => _instance.pushUnreadMessage(messageBody));
     }
     return _instance;
   }
 
   Future<void> loadMessage() async {
-    ResponseBody responseBody = await DioClient().get(buck.commonApiInstance.listMessageApi);
-    if (responseBody.success) {
-      List<MessageBody> allMessageList = MessageBody.allFromMap(responseBody.data);
+    ResponseBody responseBody =
+        await DioClient().get(buck.commonApiInstance.listMessageApi);
+    if (responseBody != null && (responseBody.success ?? false)) {
+      List<MessageBody> allMessageList =
+          MessageBody.allFromMap(responseBody.data);
       _unreadMessageList = allMessageList.where((item) => item.unread).toList();
       _unreadMessageList.sort((v1, v2) => v2.sendTime.compareTo(v1.sendTime));
-      _alreadyReadMessageList = allMessageList.where((item) => !item.unread).toList();
-      _alreadyReadMessageList.sort((v1, v2) => v2.sendTime.compareTo(v1.sendTime));
+      _alreadyReadMessageList =
+          allMessageList.where((item) => !item.unread).toList();
+      _alreadyReadMessageList
+          .sort((v1, v2) => v2.sendTime.compareTo(v1.sendTime));
       messageBoxSubject.add(allMessage());
     }
   }
@@ -41,7 +47,8 @@ class MessageBox {
   }
 
   MessageBody popUnreadMessage(String uuid) {
-    MessageBody messageBody = _unreadMessageList.singleWhere((item) => item.uuid == uuid);
+    MessageBody messageBody =
+        _unreadMessageList.singleWhere((item) => item.uuid == uuid);
     messageBody.read();
     _unreadMessageList.remove(messageBody);
     _alreadyReadMessageList.add(messageBody);

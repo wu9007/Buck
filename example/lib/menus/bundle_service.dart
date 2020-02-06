@@ -12,7 +12,8 @@ class BundleService extends StatelessMenu {
       appBar: AppBar(
         backgroundColor: Colors.grey[200],
         leading: icon,
-        title: Text('service', style: TextStyle(color: Colors.black, fontFamily: 'pinshang')),
+        title: Text('service',
+            style: TextStyle(color: Colors.black, fontFamily: 'pinshang')),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,10 +73,12 @@ class BundleService extends StatelessMenu {
       barrierDismissible: false,
       builder: (context) {
         return UpgradeDialog(
-          url: 'http://10.1.11.27:8090/app.apk',
-          path: '/sdcard/app.apk',
+          url:
+              'https://qd.myapp.com/myapp/qqteam/AndroidQQi/qq_6.0.1.6600_android_r25029_GuanWang_537057608_release.apk',
+          path: '/qq_6.0.1.6600_android_r25029_GuanWang_537057608_release.apk',
           title: 'Upgrade Dialog Demo',
-          content: 'There is a new version that can be updated. Would you like to update?',
+          content:
+              'There is a new version that can be updated. Would you like to update?',
         );
       },
     );
