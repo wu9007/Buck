@@ -1,3 +1,4 @@
+import 'package:buck/basic_app.dart';
 import 'package:buck/utils/dio_client.dart';
 
 const COMMON_MESSAGE = 'CommonMessage';
@@ -51,7 +52,7 @@ class MessageBody {
 
   Future<void> read() async {
     this._unread = false;
-    await DioClient().get('/message/read', params: {'uuid': _uuid});
+    await DioClient().post(buck.commonApiInstance.readMessageApi, params: {'uuid': _uuid});
   }
 
   String get type => this._type;
