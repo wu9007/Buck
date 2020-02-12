@@ -17,6 +17,20 @@ class LoginClient {
     return _instance;
   }
 
+  void checkUrl(){
+    String baseUrl =buck.cacheControl.baseUrl;
+    String allBaseUrl =buck.cacheControl.allBaseUrl;
+    String activeUrl = buck.cacheControl.activeBaseUrl;
+    if(activeUrl == null) activeUrl = baseUrl;
+    /// TODO 测试当前使用的服务器地址是否通畅
+    /// TODO 如果通畅，直接返回
+
+    /// 当前使用的不通畅的地址如果不是系统内置的地址
+    if(activeUrl != baseUrl){
+      /// TODO 测试系统内置服务器地址是否通畅，如果通畅则将使用地址设置为系统内置地址，否则测试自定义添加的地址
+    }
+  }
+
   Future<bool> login(String userName, String password) async {
     Map<String, String> params = {'userName': userName, 'password': password, 'serialNo': buck.androidInfo.androidId};
     ResponseBody<Map<String, dynamic>> response = await DioClient<Map<String, dynamic>>().post(buck.commonApiInstance.loginApi, params: params);
@@ -34,7 +48,7 @@ class LoginClient {
   }
 
   void logOut() {
-    buck.cacheControl.clear();
+    buck.cacheControl.clearAuth();
     buck.messageBox.clear();
     buck.userInfo = null;
     buck.socketClient.closeSocket();
