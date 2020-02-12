@@ -40,7 +40,7 @@ class CacheControl {
 
   void setToken(token) => _sp.setString(_tokenKey, token);
 
-  void clearAuth() {
+  void recycleAuth() {
     _sp.setString(_tokenKey, null);
     _sp.setString(_userInfoKey, null);
   }

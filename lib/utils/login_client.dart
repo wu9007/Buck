@@ -48,7 +48,7 @@ class LoginClient {
   }
 
   void logOut() {
-    buck.cacheControl.clearAuth();
+    buck.cacheControl.recycleAuth();
     buck.messageBox.clear();
     buck.userInfo = null;
     buck.socketClient.closeSocket();
