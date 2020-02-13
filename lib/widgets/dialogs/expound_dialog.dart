@@ -33,14 +33,14 @@ class ExpoundDialog extends StatelessWidget {
             ),
             child: Column(
               children: <Widget>[
-                Text(title, style: TextStyle(color: Theme.of(context).textTheme.title.color, fontSize: 18, decoration: TextDecoration.none, fontFamily: 'pinshang')),
+                Text(title, style: TextStyle(color: Theme.of(context).textTheme.headline6.color, fontSize: 18, decoration: TextDecoration.none, fontFamily: 'pinshang')),
                 Divider(),
                 Expanded(
                   child: SizedBox(
                     width: width - 20,
                     child: SingleChildScrollView(
                       child: Text(content,
-                          style: TextStyle(color: Theme.of(context).textTheme.body1.color, fontSize: 15, decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
+                          style: TextStyle(color: Theme.of(context).textTheme.bodyText2.color, fontSize: 15, decoration: TextDecoration.none, fontWeight: FontWeight.normal)),
                     ),
                   ),
                 ),

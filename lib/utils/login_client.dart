@@ -21,7 +21,10 @@ class LoginClient {
     String baseUrl =buck.cacheControl.baseUrl;
     String customBaseUrls =buck.cacheControl.customBaseUrls;
     String activeUrl = buck.cacheControl.activeBaseUrl;
-    if(activeUrl == null) activeUrl = baseUrl;
+    if(activeUrl == null) {
+      activeUrl = baseUrl;
+      buck.cacheControl.setActiveBaseUrl(activeUrl);
+    }
     /// 测试当前使用的服务器地址是否通畅
     ResponseBody responseBody = await DioClient().get(buck.commonApiInstance.loginApi);
     /// 如果通畅，直接返回

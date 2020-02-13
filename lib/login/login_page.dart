@@ -8,6 +8,7 @@ import 'package:buck/utils/login_client.dart';
 import 'package:buck/widgets/loading/gradient_circular_progress_route.dart';
 import 'package:buck/widgets/tips/tips_tool.dart';
 import 'package:flutter/material.dart';
+import 'package:pda_scanner/pda_listener_mixin.dart';
 
 import 'login_animation.dart';
 
@@ -29,7 +30,7 @@ class LoginPage extends StatefulWidget {
   State<StatefulWidget> createState() => LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
+class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin, PdaListenerMixin {
   LoginEnterAnimation enterAnimation;
   AnimationController animationController;
 
@@ -111,11 +112,11 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
     return FadeTransition(
       opacity: enterAnimation.userNameOpacity,
       child: TextFormField(
-        style: textTheme.title.copyWith(color: Colors.black87, letterSpacing: 1.2),
+        style: textTheme.headline6.copyWith(color: Colors.black87, letterSpacing: 1.2),
         decoration: new InputDecoration(
           border: InputBorder.none,
           hintText: USER_NAME_HINT,
-          hintStyle: textTheme.subhead.copyWith(color: Colors.grey),
+          hintStyle: textTheme.subtitle1.copyWith(color: Colors.grey),
           icon: Icon(Icons.person, color: Colors.black87),
           contentPadding: EdgeInsets.zero,
         ),
@@ -137,11 +138,11 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
     return FadeTransition(
       opacity: enterAnimation.passwordOpacity,
       child: TextFormField(
-        style: textTheme.title.copyWith(color: Colors.black87, letterSpacing: 1.2),
+        style: textTheme.headline6.copyWith(color: Colors.black87, letterSpacing: 1.2),
         decoration: new InputDecoration(
             border: InputBorder.none,
             hintText: PASSWORD_HINT,
-            hintStyle: textTheme.subhead.copyWith(color: Colors.grey),
+            hintStyle: textTheme.subtitle1.copyWith(color: Colors.grey),
             contentPadding: EdgeInsets.zero,
             icon: Icon(Icons.lock, color: Colors.black87)),
         keyboardType: TextInputType.text,
@@ -237,7 +238,7 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
               opacity: enterAnimation.titleLabelOpacity,
               child: Text(
                 widget.welcomeLabel,
-                style: textTheme.title.copyWith(fontFamily: 'shouji', color: Colors.black87, fontWeight: FontWeight.normal, wordSpacing: 1.2, fontSize: 15),
+                style: textTheme.headline6.copyWith(fontFamily: 'shouji', color: Colors.black87, fontWeight: FontWeight.normal, wordSpacing: 1.2, fontSize: 15),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -261,5 +262,15 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
             onWillPop: () => Future.value(false),
           );
         });
+  }
+
+  @override
+  void onError(Object error) {
+    // TODO: implement onError
+  }
+
+  @override
+  void onEvent(Object code) {
+    // TODO: implement onEvent
   }
 }

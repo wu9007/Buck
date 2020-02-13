@@ -31,7 +31,7 @@ class HeaderText extends StatelessWidget {
         ),
         Text(
           text,
-          style: textTheme.headline
+          style: textTheme.headline5
               .copyWith(color: Colors.black87, fontWeight: FontWeight.bold),
         )
       ],

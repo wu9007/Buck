@@ -64,7 +64,7 @@ class UpgradeDialogState extends State<UpgradeDialog> {
             children: <Widget>[
               Text(widget.title,
                   style: TextStyle(
-                      color: Theme.of(context).textTheme.title.color,
+                      color: Theme.of(context).textTheme.headline6.color,
                       fontSize: 18,
                       decoration: TextDecoration.none,
                       fontFamily: 'pinshang')),
@@ -75,7 +75,7 @@ class UpgradeDialogState extends State<UpgradeDialog> {
                   child: SingleChildScrollView(
                     child: Text(widget.content,
                         style: TextStyle(
-                            color: Theme.of(context).textTheme.body1.color,
+                            color: Theme.of(context).textTheme.bodyText2.color,
                             fontSize: 15,
                             decoration: TextDecoration.none,
                             fontWeight: FontWeight.normal)),
