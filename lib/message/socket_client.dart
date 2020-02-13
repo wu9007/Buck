@@ -28,7 +28,7 @@ class SocketClient {
       'avatar': userInfo.avatar,
       'serialNo': serialNo,
     }).catchError((e) {
-      TipsTool.info('网络异常').show();
+      TipsTool.info('连接异常').show();
       throw new Exception(e);
     });
     if (_webSocket.readyState == 1) {

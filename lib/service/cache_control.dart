@@ -19,7 +19,7 @@ class CacheControl {
   static final String _themeTypeKey = '5';
   static final String _appVersionKey = '6';
   /// The address of the server currently in use by the app.
-  static final String _activeBaseUrlKey = '7';
+  static final String _customBaseUrlsKey = '7';
   /// User-defined list of server addresses.
   static final String _allBaseUrlKey = '8';
 
@@ -97,11 +97,11 @@ class CacheControl {
 
   String get version => _sp.get(_appVersionKey);
 
-  void setActiveBaseUrl(String activeBaseUrl) => _sp.setString(_activeBaseUrlKey, activeBaseUrl);
+  void setActiveBaseUrl(String activeBaseUrl) => _sp.setString(_customBaseUrlsKey, activeBaseUrl);
 
-  String get activeBaseUrl => _sp.get(_activeBaseUrlKey);
+  String get activeBaseUrl => _sp.get(_customBaseUrlsKey);
 
-  void setAllBaseUrl(String allBaseUrl) => _sp.setString(_allBaseUrlKey, allBaseUrl);
+  void setCustomBaseUrls(String customBaseUrls) => _sp.setString(_allBaseUrlKey, customBaseUrls);
 
-  String get allBaseUrl => _sp.get(_allBaseUrlKey);
+  String get customBaseUrls => _sp.get(_allBaseUrlKey);
 }

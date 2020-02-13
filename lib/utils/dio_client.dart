@@ -14,10 +14,10 @@ class DioClient<T> {
 
   CacheControl _cacheControl;
 
-  Future<ResponseBody<T>> post(url, {params}) async {
+  Future<ResponseBody<T>> post(url, {params, customBaseUrl}) async {
     _cacheControl = await CacheControl.getInstance();
     if(_cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
-    _dio.options.baseUrl = _cacheControl.baseUrl;
+    _dio.options.baseUrl = customBaseUrl == null ? _cacheControl.baseUrl : customBaseUrl;
 
     Response<Map<String, dynamic>> response;
     try {
@@ -43,10 +43,10 @@ class DioClient<T> {
     }
   }
 
-  Future<ResponseBody<T>> get(url, {params}) async {
+  Future<ResponseBody<T>> get(url, {params, customBaseUrl}) async {
     _cacheControl = await CacheControl.getInstance();
     if(_cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
-    _dio.options.baseUrl = _cacheControl.baseUrl;
+    _dio.options.baseUrl = customBaseUrl == null ? _cacheControl.baseUrl : customBaseUrl;
 
     Response<Map<String, dynamic>> response;
     try {

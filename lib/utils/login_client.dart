@@ -17,18 +17,38 @@ class LoginClient {
     return _instance;
   }
 
-  void checkUrl(){
+  Future<bool> checkUrl() async {
     String baseUrl =buck.cacheControl.baseUrl;
-    String allBaseUrl =buck.cacheControl.allBaseUrl;
+    String customBaseUrls =buck.cacheControl.customBaseUrls;
     String activeUrl = buck.cacheControl.activeBaseUrl;
     if(activeUrl == null) activeUrl = baseUrl;
-    /// TODO 测试当前使用的服务器地址是否通畅
-    /// TODO 如果通畅，直接返回
-
-    /// 当前使用的不通畅的地址如果不是系统内置的地址
-    if(activeUrl != baseUrl){
-      /// TODO 测试系统内置服务器地址是否通畅，如果通畅则将使用地址设置为系统内置地址，否则测试自定义添加的地址
+    /// 测试当前使用的服务器地址是否通畅
+    ResponseBody responseBody = await DioClient().get(buck.commonApiInstance.loginApi);
+    /// 如果通畅，直接返回
+    if(responseBody == null) {
+      /// 当前使用的不通畅的地址如果不是系统内置的地址
+      if(activeUrl != baseUrl) {
+        /// 测试系统内置服务器地址是否通畅，如果通畅则将使用地址设置为系统内置地址并返回
+        responseBody = await DioClient().get(buck.commonApiInstance.loginApi, customBaseUrl: baseUrl);
+        if(responseBody != null) {
+          buck.cacheControl.setActiveBaseUrl(baseUrl);
+          return true;
+        }
+      }
+      /// 测试自定义添加的地址
+      if(customBaseUrls != null){
+        List<String> customBaseUrlList = customBaseUrls.split(',');
+        for (var customBaseUrl in customBaseUrlList) {
+          responseBody = await DioClient().get(buck.commonApiInstance.loginApi, customBaseUrl: customBaseUrl);
+          if(responseBody != null) {
+            buck.cacheControl.setActiveBaseUrl(customBaseUrl);
+            return true;
+          }
+        }
+      }
+      return false;
     }
+    return true;
   }
 
   Future<bool> login(String userName, String password) async {

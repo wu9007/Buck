@@ -6,6 +6,7 @@ import 'package:buck/login/widgets/header_text.dart';
 import 'package:buck/login/widgets/login_top_bar.dart';
 import 'package:buck/utils/login_client.dart';
 import 'package:buck/widgets/loading/gradient_circular_progress_route.dart';
+import 'package:buck/widgets/tips/tips_tool.dart';
 import 'package:flutter/material.dart';
 
 import 'login_animation.dart';
@@ -169,7 +170,12 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
             _formKey.currentState.save();
             bool success;
             try {
-              success = await LoginClient.getInstance().login(_userName, _password);
+              bool baseUrlAvailable = await LoginClient.getInstance().checkUrl();
+              if(baseUrlAvailable) {
+                success = await LoginClient.getInstance().login(_userName, _password);
+              } else{
+                TipsTool.warning('服务器地址不可用，请扫码设置服务器地址。').show();
+              }
             } catch (e) {
               print(e);
             } finally {
