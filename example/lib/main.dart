@@ -13,7 +13,6 @@ import 'package:buck_example/pianos/piano_setting.dart';
 import 'package:flutter/material.dart';
 
 const BASE_URL = 'http://192.168.1.3:8001';
-const WS_URL = 'ws://192.168.1.3:9999';
 
 const LOGIN_API = '/auth/guest/app_login';
 const LIST_MESSAGE_API = '/notification/app/list_own';
@@ -28,8 +27,7 @@ const WELCOME_LABEL = "Albert Einstein: Logic will get you from A to B. Imaginat
 
 Future<void> main() async {
   Buck buck = Buck.getInstance();
-  await buck.init(menuFree: true);
-  buck.settingBaseUrl(baseUrl: BASE_URL, wsUrl: WS_URL);
+  await buck.init(baseUrl: BASE_URL, menuFree: true);
   buck.settingCommonPath(loginApi: LOGIN_API, listMessageApi: LIST_MESSAGE_API, readMessageApi: READ_MESSAGE_API, versionApi: VERSION_PATH_API);
 
   buck.installMenus('Alpha', [BundleRest(), BundleDeliver(key: Key('a-deliver'))]);

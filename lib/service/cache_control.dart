@@ -14,14 +14,13 @@ class CacheControl {
   static final String _userInfoKey = '1';
   /// The server address built into the program.
   static final String _baseUrlKey = '2';
-  static final String _wsUrlKey = '3';
-  static final String _shortcutKey = '4';
-  static final String _themeTypeKey = '5';
-  static final String _appVersionKey = '6';
+  static final String _shortcutKey = '3';
+  static final String _themeTypeKey = '4';
+  static final String _appVersionKey = '5';
   /// The address of the server currently in use by the app.
-  static final String _customBaseUrlsKey = '7';
+  static final String _customBaseUrlsKey = '6';
   /// User-defined list of server addresses.
-  static final String _allBaseUrlKey = '8';
+  static final String _allBaseUrlKey = '7';
 
   static final CacheControl _instance = CacheControl._();
   static SharedPreferences _sp;
@@ -33,9 +32,8 @@ class CacheControl {
     return _instance;
   }
 
-  Future init({@required String baseUrl, @required wsUrl}) async {
+  Future init(String baseUrl) async {
     _setBaseUrl(baseUrl);
-    _setWsUrl(wsUrl);
   }
 
   void setToken(token) => _sp.setString(_tokenKey, token);
@@ -47,9 +45,9 @@ class CacheControl {
 
   String get token => _sp.getString(_tokenKey) ?? '';
 
-  String get baseUrl => _sp.getString(_baseUrlKey);
+  void _setBaseUrl(String baseUrl) => _sp.setString(_baseUrlKey, baseUrl);
 
-  String get wsUrl => _sp.getString(_wsUrlKey);
+  String get baseUrl => _sp.getString(_baseUrlKey);
 
   void setUserInfo(String userInfo) => _sp.setString(_userInfoKey, userInfo);
 
@@ -61,10 +59,6 @@ class CacheControl {
     }
     return UserInfo.fromMap(jsonDecode(userInfoStr));
   }
-
-  void _setBaseUrl(String baseUrl) => _sp.setString(_baseUrlKey, baseUrl);
-
-  void _setWsUrl(String wsUrl) => _sp.setString(_wsUrlKey, wsUrl);
 
   List<String> get shortcutBundleIds => _sp.getStringList(_shortcutKey) ?? [];
 

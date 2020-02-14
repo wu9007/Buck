@@ -8,7 +8,8 @@ import 'package:buck/model/user_info.dart';
 import 'package:buck/widgets/tips/tips_tool.dart';
 import 'package:rxdart/rxdart.dart';
 
-final BehaviorSubject<MessageBody> socketMessageSubject = BehaviorSubject<MessageBody>();
+final BehaviorSubject<MessageBody> socketMessageSubject =
+    BehaviorSubject<MessageBody>();
 
 class SocketClient {
   static SocketClient _socketClient = new SocketClient._();
@@ -24,7 +25,13 @@ class SocketClient {
   Future<bool> connect() async {
     UserInfo userInfo = buck.userInfo;
     String serialNo = buck.androidInfo.androidId;
-    _webSocket = await WebSocket.connect(buck.cacheControl.wsUrl, headers: {
+    String activeBaseUrl = buck.cacheControl.activeBaseUrl;
+    String ip = activeBaseUrl.substring(
+        activeBaseUrl.lastIndexOf('/') + 1, activeBaseUrl.lastIndexOf(':'));
+    String port = activeBaseUrl.substring(activeBaseUrl.lastIndexOf(':') + 1);
+    String wsPort = (int.parse(port) + 1).toString();
+    String wsUrl = 'ws://$ip:$wsPort';
+    _webSocket = await WebSocket.connect(wsUrl, headers: {
       'avatar': userInfo.avatar,
       'serialNo': serialNo,
     }).catchError((e) {

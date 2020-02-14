@@ -175,7 +175,7 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
               if(baseUrlAvailable) {
                 success = await LoginClient.getInstance().login(_userName, _password);
               } else{
-                TipsTool.warning('服务器地址不可用，请扫码设置服务器地址。').show();
+                TipsTool.warning('服务器地址不可用，请扫码设置服务器地址后重新尝试登录。').show();
               }
             } catch (e) {
               print(e);
@@ -266,11 +266,18 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
 
   @override
   void onError(Object error) {
-    // TODO: implement onError
+    TipsTool.warning('扫描失败，请检查 PDA 的设置是否正确').show();
   }
 
   @override
   void onEvent(Object code) {
-    // TODO: implement onEvent
+    if(code.toString().startsWith('http')) {
+      String customBaseUrls = buck.cacheControl.customBaseUrls;
+      if(customBaseUrls == null) customBaseUrls = code;
+      if(!customBaseUrls.contains(code)) customBaseUrls += ',$code';
+      buck.cacheControl.setCustomBaseUrls(customBaseUrls);
+    } else{
+      TipsTool.warning('扫描内容不合法').show();
+    }
   }
 }

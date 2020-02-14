@@ -48,7 +48,7 @@ class Buck {
     return _instance;
   }
 
-  Future init({bool menuFree = !inProduction}) async {
+  Future init({@required String baseUrl, bool menuFree = !inProduction}) async {
     _notifierInstance = Notifier.getInstance();
     _commonApiInstance = CommonApi.getInstance();
     _messageBoxInstance = MessageBox.getInstance();
@@ -66,10 +66,7 @@ class Buck {
       await _socketClientInstance.connect();
     }
     _notifierInstance.init();
-  }
-
-  void settingBaseUrl({@required String baseUrl, @required String wsUrl}) {
-    _cacheControlInstance.init(baseUrl: baseUrl, wsUrl: wsUrl);
+    _cacheControlInstance.init(baseUrl);
   }
 
   void settingCommonPath(
