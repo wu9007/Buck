@@ -34,7 +34,7 @@ class SocketClient {
     _webSocket = await WebSocket.connect(wsUrl, headers: {
       'avatar': userInfo.avatar,
       'serialNo': serialNo,
-    }).catchError((e) {
+    }).timeout(Duration(seconds: 15)).catchError((e) {
       TipsTool.info('连接异常').show();
       throw new Exception(e);
     });
