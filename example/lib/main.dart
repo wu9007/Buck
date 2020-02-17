@@ -12,7 +12,8 @@ import 'package:buck_example/pianos/piano_expression.dart';
 import 'package:buck_example/pianos/piano_setting.dart';
 import 'package:flutter/material.dart';
 
-const BASE_URL = 'http://192.168.1.3:8001';
+//const BASE_URL = 'http://192.168.1.3:8001';
+const BASE_URL = 'http://192.168.43.29:8001';
 
 const LOGIN_API = '/auth/guest/app_login';
 const LIST_MESSAGE_API = '/notification/app/list_own';

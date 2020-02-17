@@ -5,6 +5,7 @@ import 'package:buck/basic_app.dart';
 import 'package:buck/message/cmd_executor.dart';
 import 'package:buck/message/message_body.dart';
 import 'package:buck/model/user_info.dart';
+import 'package:buck/utils/login_client.dart';
 import 'package:buck/widgets/tips/tips_tool.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -14,7 +15,7 @@ final BehaviorSubject<MessageBody> socketMessageSubject =
 class SocketClient {
   static SocketClient _socketClient = new SocketClient._();
   WebSocket _webSocket;
-  bool _isOpen;
+  bool _isOpen = false;
 
   SocketClient._();
 
@@ -36,7 +37,7 @@ class SocketClient {
       'serialNo': serialNo,
     }).timeout(Duration(seconds: 15)).catchError((e) {
       TipsTool.info('连接异常').show();
-      throw new Exception(e);
+      LoginClient.getInstance().logOut();
     });
     if (_webSocket.readyState == 1) {
       _isOpen = true;
