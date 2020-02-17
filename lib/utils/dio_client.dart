@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class DioClient<T> {
   final Dio _dio = new Dio(BaseOptions(
-    connectTimeout: 20000,
+    connectTimeout: 2000,
     receiveTimeout: 40000,
     responseType: ResponseType.json,
   ));

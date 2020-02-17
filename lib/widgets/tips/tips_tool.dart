@@ -28,7 +28,7 @@ class TipsTool {
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIos: 1,
-        backgroundColor: Colors.white70,
+        backgroundColor: Colors.grey[100],
         textColor: textColor,
         fontSize: 14.0);
   }

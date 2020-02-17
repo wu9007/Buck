@@ -75,6 +75,6 @@ class LoginClient {
     buck.messageBox.clear();
     buck.userInfo = null;
     buck.socketClient.closeSocket();
-    buck.navigatorKey.currentState.pushNamedAndRemoveUntil('loginPage', (route) => route == null);
+    buck.navigatorKey.currentState?.pushNamedAndRemoveUntil('loginPage', (route) => route == null);
   }
 }

@@ -36,10 +36,10 @@ class SocketClient {
       'avatar': userInfo.avatar,
       'serialNo': serialNo,
     }).timeout(Duration(seconds: 15)).catchError((e) {
-      TipsTool.info('连接异常').show();
+      TipsTool.warning('连接异常，请重新登录').show();
       LoginClient.getInstance().logOut();
     });
-    if (_webSocket.readyState == 1) {
+    if (_webSocket?.readyState == 1) {
       _isOpen = true;
       print("Websocke has been connected.");
       _webSocket.listen(

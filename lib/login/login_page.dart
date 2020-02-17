@@ -175,7 +175,7 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
               if(baseUrlAvailable) {
                 success = await LoginClient.getInstance().login(_userName, _password);
               } else{
-                TipsTool.warning('服务器地址不可用，请扫码设置服务器地址后重新尝试登录。').show();
+                TipsTool.warning('请检测网络是否正常\n\n或扫码设置服务器地址后重新尝试登录').show();
               }
             } catch (e) {
               print(e);
