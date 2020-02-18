@@ -27,10 +27,9 @@ class SocketClient {
     UserInfo userInfo = buck.userInfo;
     String serialNo = buck.androidInfo.androidId;
     String activeBaseUrl = buck.cacheControl.activeBaseUrl;
-    String ip = activeBaseUrl.substring(
-        activeBaseUrl.lastIndexOf('/') + 1, activeBaseUrl.lastIndexOf(':'));
-    String port = activeBaseUrl.substring(activeBaseUrl.lastIndexOf(':') + 1);
-    String wsPort = (int.parse(port) + 1).toString();
+    RegExpMatch portRegExpMatch = RegExp(r":\d{4}").firstMatch(activeBaseUrl);
+    String ip = activeBaseUrl.substring(activeBaseUrl.indexOf('//') + 2, portRegExpMatch.start);
+    String wsPort = (int.parse(activeBaseUrl.substring(portRegExpMatch.start + 1, portRegExpMatch.end)) + 1).toString();
     String wsUrl = 'ws://$ip:$wsPort';
     _webSocket = await WebSocket.connect(wsUrl, headers: {
       'avatar': userInfo.avatar,
