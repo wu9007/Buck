@@ -60,7 +60,7 @@ class LoginClient {
   Future<bool> login(String userName, String password) async {
     Map<String, String> params = {'userName': userName, 'password': password, 'serialNo': buck.androidInfo.androidId};
     ResponseBody<Map<String, dynamic>> response = await DioClient<Map<String, dynamic>>().post(buck.commonApiInstance.loginApi, params: params);
-    if (response.success && response.data != null) {
+    if (response != null && response.success && response.data != null) {
       Map<String, dynamic> userMap = response.data;
       buck.cacheControl.setUserInfo(jsonEncode(userMap));
       buck.userInfo = UserInfo.fromMap(userMap);
