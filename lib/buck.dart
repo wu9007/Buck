@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
 
-const bool inProduction = const bool.fromEnvironment("dart.vm.product");
+/// const bool inProduction = const bool.fromEnvironment("dart.vm.product");
 
 class Buck {
   static Buck _instance;
@@ -48,7 +48,7 @@ class Buck {
     return _instance;
   }
 
-  Future init({@required String baseUrl, bool menuFree = !inProduction}) async {
+  Future init({@required String baseUrl, bool menuFree = false}) async {
     _notifierInstance = Notifier.getInstance();
     _commonApiInstance = CommonApi.getInstance();
     _messageBoxInstance = MessageBox.getInstance();
