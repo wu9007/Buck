@@ -5,7 +5,7 @@ class UserInfo {
   final String departmentUuid;
   final String departmentName;
   final List authIds;
-  final List menuIds;
+  final List bundleIds;
 
   UserInfo.fromMap(Map<String, dynamic> map)
       : uuid = map['uuid'],
@@ -14,7 +14,7 @@ class UserInfo {
         departmentUuid = map['departmentUuid'],
         departmentName = map['departmentName'],
         authIds = map['authIds'],
-        menuIds = map['menuIds'];
+        bundleIds = map['bundleIds'];
 
   Map<String, dynamic> toMap() => <String, dynamic>{
         'uuid': this.uuid,
@@ -23,7 +23,7 @@ class UserInfo {
         'departmentUuid': this.departmentUuid,
         'demaprtmentName': this.departmentName,
         'authIds': this.authIds,
-        'menuIds': this.menuIds
+        'bundleIds': this.bundleIds
       };
 
   String getAvatar() {

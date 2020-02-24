@@ -22,7 +22,7 @@ class MenuBoss {
     UserInfo _userInfo = Buck.getInstance().userInfo;
     Map<String, List<Menu>> groupingBundles = {};
     if (_userInfo != null) {
-      List bundleIds = _userInfo.menuIds;
+      List bundleIds = _userInfo.bundleIds;
       _pool.entries.forEach((entry) {
         List<Menu> menus = entry.value.values.where((menu) => buck.menuFree ? true : bundleIds.contains(menu.id)).toList();
         menus.sort((menu1, menu2) => menu1.sort > menu2.sort ? 1 : -1);
