@@ -27,7 +27,7 @@ class LoginClient {
     }
 
     /// 测试当前使用的服务器地址是否通畅
-    ResponseBody responseBody = await DioClient().get(buck.commonApiInstance.loginApi);
+    ResponseBody responseBody = await DioClient().get(buck.commonApiInstance.connectApi);
 
     /// 如果通畅，直接返回
     if (responseBody == null) {

@@ -8,7 +8,7 @@ import 'package:http_parser/http_parser.dart';
 
 class DioClient<T> {
   final Dio _dio = new Dio(BaseOptions(
-    connectTimeout: 2000,
+    connectTimeout: 10000,
     receiveTimeout: 40000,
     responseType: ResponseType.json,
   ));

@@ -69,16 +69,20 @@ class Buck {
     _cacheControlInstance.init(baseUrl);
   }
 
-  void settingCommonPath(
-      {@required String loginApi,
-      @required String listMessageApi,
-      @required String readMessageApi,
-      @required String versionApi}) {
+  void settingCommonPath({
+    @required String connectApi,
+    @required String loginApi,
+    @required String listMessageApi,
+    @required String readMessageApi,
+    @required String versionApi,
+  }) {
     _commonApiInstance.setCommonPath(
-        loginApi: loginApi,
-        listMessageApi: listMessageApi,
-        readMessageApi: readMessageApi,
-        versionApi: versionApi);
+      connectApi: connectApi,
+      loginApi: loginApi,
+      listMessageApi: listMessageApi,
+      readMessageApi: readMessageApi,
+      versionApi: versionApi,
+    );
   }
 
   void installMenus(String groupName, List<Menu> menus) {

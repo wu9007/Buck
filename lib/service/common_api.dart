@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class CommonApi {
   static CommonApi _instance = CommonApi._();
   String _loginApi;
+  String _connectApi;
   String _listMessageApi;
   String _readMessageApi;
   String _versionApi;
@@ -15,7 +16,14 @@ class CommonApi {
     return _instance;
   }
 
-  void setCommonPath({@required String loginApi, @required String listMessageApi, @required String readMessageApi, @required String versionApi}) {
+  void setCommonPath({
+    @required String connectApi,
+    @required String loginApi,
+    @required String listMessageApi,
+    @required String readMessageApi,
+    @required String versionApi,
+  }) {
+    this._connectApi = connectApi;
     this._loginApi = loginApi;
     this._listMessageApi = listMessageApi;
     this._readMessageApi = readMessageApi;
@@ -29,4 +37,6 @@ class CommonApi {
   String get readMessageApi => _readMessageApi;
 
   String get loginApi => _loginApi;
+
+  String get connectApi => _connectApi;
 }
