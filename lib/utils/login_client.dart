@@ -18,32 +18,35 @@ class LoginClient {
   }
 
   Future<bool> checkUrl() async {
-    String baseUrl =buck.cacheControl.baseUrl;
-    String customBaseUrls =buck.cacheControl.customBaseUrls;
+    String baseUrl = buck.cacheControl.baseUrl;
+    String customBaseUrls = buck.cacheControl.customBaseUrls;
     String activeUrl = buck.cacheControl.activeBaseUrl;
-    if(activeUrl == null) {
+    if (activeUrl == null) {
       activeUrl = baseUrl;
       buck.cacheControl.setActiveBaseUrl(activeUrl);
     }
+
     /// 测试当前使用的服务器地址是否通畅
     ResponseBody responseBody = await DioClient().get(buck.commonApiInstance.loginApi);
+
     /// 如果通畅，直接返回
-    if(responseBody == null) {
+    if (responseBody == null) {
       /// 当前使用的不通畅的地址如果不是系统内置的地址
-      if(activeUrl != baseUrl) {
+      if (activeUrl != baseUrl) {
         /// 测试系统内置服务器地址是否通畅，如果通畅则将使用地址设置为系统内置地址并返回
         responseBody = await DioClient().get(buck.commonApiInstance.loginApi, customBaseUrl: baseUrl);
-        if(responseBody != null) {
+        if (responseBody != null) {
           buck.cacheControl.setActiveBaseUrl(baseUrl);
           return true;
         }
       }
+
       /// 测试自定义添加的地址
-      if(customBaseUrls != null){
+      if (customBaseUrls != null) {
         List<String> customBaseUrlList = customBaseUrls.split(',');
         for (var customBaseUrl in customBaseUrlList) {
           responseBody = await DioClient().get(buck.commonApiInstance.loginApi, customBaseUrl: customBaseUrl);
-          if(responseBody != null) {
+          if (responseBody != null) {
             buck.cacheControl.setActiveBaseUrl(customBaseUrl);
             return true;
           }
@@ -57,7 +60,7 @@ class LoginClient {
   Future<bool> login(String userName, String password) async {
     Map<String, String> params = {'userName': userName, 'password': password, 'serialNo': buck.androidInfo.androidId};
     ResponseBody<Map<String, dynamic>> response = await DioClient<Map<String, dynamic>>().post(buck.commonApiInstance.loginApi, params: params);
-    if (response.success) {
+    if (response.success && response.data != null) {
       Map<String, dynamic> userMap = response.data;
       buck.cacheControl.setUserInfo(jsonEncode(userMap));
       buck.userInfo = UserInfo.fromMap(userMap);
