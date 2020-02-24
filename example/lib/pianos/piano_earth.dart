@@ -26,4 +26,7 @@ class PianoEarth extends StatelessPiano {
 
   @override
   String get cnName => '地图';
+
+  @override
+  bool get auth => false;
 }

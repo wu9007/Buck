@@ -24,4 +24,7 @@ class PianoExpression extends StatelessPiano {
 
   @override
   String get cnName => '表情';
+
+  @override
+  bool get auth => false;
 }

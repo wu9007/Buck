@@ -8,6 +8,8 @@ abstract class Piano extends Widget {
   String get id;
 
   String get cnName;
+
+  bool get auth;
 }
 
 abstract class StatelessPiano extends StatelessWidget implements Piano {}

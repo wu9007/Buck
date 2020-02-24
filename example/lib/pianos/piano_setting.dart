@@ -24,4 +24,7 @@ class PianoSetting extends StatelessPiano {
 
   @override
   String get cnName => '设置';
+
+  @override
+  bool get auth => false;
 }

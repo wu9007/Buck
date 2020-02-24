@@ -24,4 +24,7 @@ class PianoPay extends StatelessPiano {
 
   @override
   String get cnName => '支付';
+
+  @override
+  bool get auth => false;
 }

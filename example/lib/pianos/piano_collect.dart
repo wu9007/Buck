@@ -24,4 +24,7 @@ class PianoCollect extends StatelessPiano {
 
   @override
   String get cnName => '收藏';
+
+  @override
+  bool get auth => false;
 }

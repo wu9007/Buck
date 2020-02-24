@@ -22,7 +22,7 @@ class PianoBoss {
     if (_userInfo != null) {
       List pianoIds = _userInfo.bundleIds;
       _pool.entries.forEach((entry) {
-        List<Piano> pianos = entry.value.values.where((piano) => buck.menuFree ? true : pianoIds.contains(piano.id)).toList();
+        List<Piano> pianos = entry.value.values.where((piano) => buck.menuFree ? true : (!piano.auth || pianoIds.contains(piano.id))).toList();
         pianos.sort((piano1, piano2) => piano1.sort > piano2.sort ? 1 : -1);
         if (pianos.length > 0) groupingPianos.putIfAbsent(entry.key, () => pianos);
       });
@@ -30,7 +30,7 @@ class PianoBoss {
     return groupingPianos;
   }
 
-  static List<Widget> groupingMenus(BuildContext context) {
+  static List<Widget> groupingPianos(BuildContext context) {
     return PianoBoss.group.entries.map((entry) {
       List<Piano> pianos = entry.value;
       return Column(

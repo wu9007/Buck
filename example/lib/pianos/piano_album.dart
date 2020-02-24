@@ -30,4 +30,7 @@ class PianoAlbum extends StatelessPiano {
 
   @override
   String get cnName => '相册';
+
+  @override
+  bool get auth => false;
 }

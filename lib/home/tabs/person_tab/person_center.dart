@@ -33,7 +33,7 @@ class PersonCenterState extends State<PersonCenter> {
               child: Column(
                 children: <Widget>[
                   _buildUserCard(),
-                  Column(children: PianoBoss.groupingMenus(context)),
+                  Column(children: PianoBoss.groupingPianos(context)),
                   _buildAuthButtons(),
                   SizedBox(height: 30),
                 ],

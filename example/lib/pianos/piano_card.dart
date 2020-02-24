@@ -24,4 +24,7 @@ class PianoCard extends StatelessPiano {
 
   @override
   String get cnName => '卡包';
+
+  @override
+  bool get auth => false;
 }
