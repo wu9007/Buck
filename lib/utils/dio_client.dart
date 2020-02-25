@@ -16,16 +16,16 @@ class DioClient<T> {
 
   CacheControl _cacheControl;
 
-  Future<ResponseBody<T>> post(url, {Map params, UploadFile uploadFile, List<UploadFile> uploadFiles, customBaseUrl}) async {
+  Future<ResponseBody<T>> post(url, {Map data, Map queryParameters, UploadFile uploadFile, List<UploadFile> uploadFiles, customBaseUrl}) async {
     _cacheControl = await CacheControl.getInstance();
     if (_cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
     _dio.options.baseUrl = customBaseUrl == null ? _cacheControl.activeBaseUrl : customBaseUrl;
 
     Response<Map<String, dynamic>> response;
-    if (uploadFile != null) params.putIfAbsent('file', () async => await MultipartFile.fromFile(uploadFile.filePath, filename: uploadFile.fileName, contentType: uploadFile.contentType));
-    if (uploadFiles != null) params.putIfAbsent('files', () => uploadFiles.map((e) async => await MultipartFile.fromFile(uploadFile.filePath, filename: uploadFile.fileName, contentType: uploadFile.contentType)));
+    if (uploadFile != null) data.putIfAbsent('file', () async => await MultipartFile.fromFile(uploadFile.filePath, filename: uploadFile.fileName, contentType: uploadFile.contentType));
+    if (uploadFiles != null) data.putIfAbsent('files', () => uploadFiles.map((e) async => await MultipartFile.fromFile(uploadFile.filePath, filename: uploadFile.fileName, contentType: uploadFile.contentType)));
     try {
-      response = await _dio.post(url, data: params);
+      response = await _dio.post(url, data: data, queryParameters: queryParameters);
     } on DioError catch (e) {
       print(e);
       TipsTool.error('网络异常').show();
@@ -36,7 +36,7 @@ class DioClient<T> {
         _cacheControl.setToken(responseBody.token);
       }
       if (responseBody.resend ?? false) {
-        return post(url, params: params);
+        return post(url, data: data);
       }
       if (responseBody.reLogin ?? false) {
         LoginClient.getInstance().logOut();
