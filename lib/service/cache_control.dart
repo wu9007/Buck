@@ -12,15 +12,20 @@ final PublishSubject<String> themeSubject = PublishSubject<String>();
 class CacheControl {
   static final String _tokenKey = '0';
   static final String _userInfoKey = '1';
+
   /// The server address built into the program.
   static final String _baseUrlKey = '2';
   static final String _shortcutKey = '3';
   static final String _themeTypeKey = '4';
   static final String _appVersionKey = '5';
+
   /// The address of the server currently in use by the app.
   static final String _customBaseUrlsKey = '6';
+
   /// User-defined list of server addresses.
   static final String _allBaseUrlKey = '7';
+  static final String _connectTimeoutKey = '8';
+  static final String _receiveTimeoutKey = '9';
 
   static final CacheControl _instance = CacheControl._();
   static SharedPreferences _sp;
@@ -98,4 +103,12 @@ class CacheControl {
   void setCustomBaseUrls(String customBaseUrls) => _sp.setString(_allBaseUrlKey, customBaseUrls);
 
   String get customBaseUrls => _sp.get(_allBaseUrlKey);
+
+  void setConnectTimeout(int connectTimeout) => _sp.setInt(_connectTimeoutKey, connectTimeout);
+
+  int get connectTimeout => _sp.getInt(_connectTimeoutKey);
+
+  void setReceiveTimeout(int receiveTimeout) => _sp.setInt(_receiveTimeoutKey, receiveTimeout);
+
+  int get receiveTimeout => _sp.getInt(_receiveTimeoutKey);
 }

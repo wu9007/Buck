@@ -4,6 +4,7 @@ import 'package:buck_example/menus/bundle_deliver.dart';
 import 'package:buck_example/menus/bundle_rest.dart';
 import 'package:buck_example/menus/bundle_service.dart';
 import 'package:buck_example/menus/bundle_shopping.dart';
+import 'package:buck_example/menus/departmentusersyncinfo.dart';
 import 'package:buck_example/pianos/piano_album.dart';
 import 'package:buck_example/pianos/piano_card.dart';
 import 'package:buck_example/pianos/piano_collect.dart';
@@ -29,10 +30,10 @@ const WELCOME_LABEL = "Albert Einstein: Logic will get you from A to B. Imaginat
 
 Future<void> main() async {
   Buck buck = Buck.getInstance();
-  await buck.init(baseUrl: BASE_URL, menuFree: true);
+  await buck.init(baseUrl: BASE_URL, connectTimeout: 20000, requestTimeout: 40000, menuFree: true);
   buck.settingCommonPath(connectApi: CONNECT_API, loginApi: LOGIN_API, listMessageApi: LIST_MESSAGE_API, readMessageApi: READ_MESSAGE_API, versionApi: VERSION_PATH_API);
 
-  buck.installMenus('Alpha', [BundleRest(), BundleDeliver(key: Key('a-deliver'))]);
+  buck.installMenus('Alpha', [DepartmentUserSyncInfo(), BundleRest(), BundleDeliver(key: Key('a-deliver'))]);
   buck.installMenus('Beta', [BundleService(), BundleShopping()]);
   buck.installMenus('Gama', [BundleRest(), BundleDeliver(key: Key('c-Deliver')), BundleService(), BundleShopping()]);
   buck.installPianos('Piano Group A', [PianoEarth()]);

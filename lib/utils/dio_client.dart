@@ -1,3 +1,4 @@
+import 'package:buck/basic_app.dart';
 import 'package:buck/service/cache_control.dart';
 import 'package:buck/utils/login_client.dart';
 import 'package:buck/widgets/tips/tips_tool.dart';
@@ -8,8 +9,8 @@ import 'package:http_parser/http_parser.dart';
 
 class DioClient<T> {
   final Dio _dio = new Dio(BaseOptions(
-    connectTimeout: 10000,
-    receiveTimeout: 40000,
+    connectTimeout: buck.cacheControl.connectTimeout ?? 10000,
+    receiveTimeout: buck.cacheControl.receiveTimeout ?? 40000,
     responseType: ResponseType.json,
   ));
 
