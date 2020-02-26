@@ -1,6 +1,6 @@
 import 'package:buck/bundle/menu.dart';
 import 'package:buck/constant/icon_constant.dart';
-import 'package:buck_example/earth.dart';
+import 'package:buck_example/widgets/earth.dart';
 import 'package:flutter/material.dart';
 
 class BundleRest extends StatelessMenu {

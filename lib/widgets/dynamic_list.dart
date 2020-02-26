@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 /// 下拉刷新，上拉加载更多数据
 class DynamicList extends StatefulWidget {
@@ -11,6 +12,7 @@ class DynamicList extends StatefulWidget {
     this.initLoadingWidget,
     this.moreLoadingWidget,
     this.controller,
+    this.scrollDirection = Axis.vertical,
   })  : assert(itemBuilder != null),
         assert(dataRequester != null),
         assert(initRequester != null),
@@ -25,6 +27,7 @@ class DynamicList extends StatefulWidget {
     this.initLoadingWidget,
     this.moreLoadingWidget,
     this.controller,
+    this.scrollDirection = Axis.vertical,
   })  : assert(itemBuilder != null),
         assert(dataRequester != null),
         assert(initRequester != null),
@@ -38,6 +41,7 @@ class DynamicList extends StatefulWidget {
   final Widget moreLoadingWidget;
   final bool separated;
   final DynamicListController controller;
+  final Axis scrollDirection;
 
   @override
   State createState() => new DynamicListState();
@@ -82,6 +86,7 @@ class DynamicListState extends State<DynamicList> {
             onRefresh: this._onRefresh,
             child: this.widget.separated
                 ? ListView.separated(
+                    scrollDirection: widget.scrollDirection,
                     separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0, color: Theme.of(context).hintColor),
                     itemCount: _dataList.length + 1,
                     itemBuilder: (context, index) {
@@ -98,6 +103,7 @@ class DynamicListState extends State<DynamicList> {
                     controller: _controller,
                   )
                 : ListView.builder(
+                    scrollDirection: widget.scrollDirection,
                     itemCount: _dataList.length + 1,
                     itemBuilder: (context, index) {
                       if (index == _dataList.length) {
@@ -187,15 +193,16 @@ class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 670));
-    final CurvedAnimation curve = CurvedAnimation(parent: controller, curve: Curves.elasticOut);
-    animation = Tween(begin: 0.0, end: 30.0).animate(curve)
+    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1800));
+    final CurvedAnimation curve = CurvedAnimation(parent: controller, curve: Curves.easeInOutBack);
+    animation = Tween(begin: 0.0, end: 2 * math.pi).animate(curve)
       ..addListener(() {
-        if (mounted) setState(() {});
+        setState(() {});
       })
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          controller.reverse();
+          controller.reset();
+          controller.forward();
         } else if (status == AnimationStatus.dismissed) {
           controller.forward();
         }
@@ -212,13 +219,13 @@ class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
-      padding: EdgeInsets.only(left: animation.value),
-      child: SizedBox(
+      height: 50,
+      child: Transform.rotate(
+        angle: animation.value,
         child: Icon(
-          Icons.create,
-          size: 20,
-          color: Colors.orange,
+          Icons.donut_large,
+          color: Theme.of(context).primaryColor,
+          size: 30,
         ),
       ),
     );

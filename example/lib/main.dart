@@ -1,10 +1,11 @@
 import 'package:buck/buck.dart';
 import 'package:buck/basic_app.dart';
 import 'package:buck_example/menus/bundle_deliver.dart';
+import 'package:buck_example/menus/bundle_liquid_exchange/bundle_liquid_exchange.dart';
+import 'package:buck_example/menus/bundle_preparation/bunlde_preparation.dart';
 import 'package:buck_example/menus/bundle_rest.dart';
 import 'package:buck_example/menus/bundle_service.dart';
 import 'package:buck_example/menus/bundle_shopping.dart';
-import 'package:buck_example/menus/departmentusersyncinfo.dart';
 import 'package:buck_example/pianos/piano_album.dart';
 import 'package:buck_example/pianos/piano_card.dart';
 import 'package:buck_example/pianos/piano_collect.dart';
@@ -33,7 +34,7 @@ Future<void> main() async {
   await buck.init(baseUrl: BASE_URL, connectTimeout: 20000, requestTimeout: 40000, menuFree: true);
   buck.settingCommonPath(connectApi: CONNECT_API, loginApi: LOGIN_API, listMessageApi: LIST_MESSAGE_API, readMessageApi: READ_MESSAGE_API, versionApi: VERSION_PATH_API);
 
-  buck.installMenus('Alpha', [DepartmentUserSyncInfo(), BundleRest(), BundleDeliver(key: Key('a-deliver'))]);
+  buck.installMenus('Alpha', [BundlePreparation(), BundleLiquidExchange()]);
   buck.installMenus('Beta', [BundleService(), BundleShopping()]);
   buck.installMenus('Gama', [BundleRest(), BundleDeliver(key: Key('c-Deliver')), BundleService(), BundleShopping()]);
   buck.installPianos('Piano Group A', [PianoEarth()]);

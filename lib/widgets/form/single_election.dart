@@ -17,7 +17,7 @@ class SingleElection extends StatefulWidget {
   SingleElection.build({
     Key key,
     this.leading,
-    @required this.label,
+    this.label,
     @required this.list,
     @required this.value,
     @required this.onPressed,
@@ -48,7 +48,7 @@ class SingleElectionState extends State<SingleElection> {
     return Opacity(
       opacity: widget.disabled ? 0.5 : 1,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,10 +71,12 @@ class SingleElectionState extends State<SingleElection> {
                 padding: EdgeInsets.only(right: 32),
                 child: widget.leading,
               ),
-        Padding(
-          padding: EdgeInsets.only(right: 5, bottom: 3),
-          child: Text(widget.label ?? '', style: CustomStyle.labelStyle),
-        ),
+        widget.leading == null
+            ? Container()
+            : Padding(
+                padding: EdgeInsets.only(right: 5, bottom: 3),
+                child: Text(widget.label ?? '', style: CustomStyle.labelStyle),
+              ),
       ],
     );
   }
@@ -91,8 +93,7 @@ class SingleElectionState extends State<SingleElection> {
                   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                   child: FlatButton(
                     color: selected ? _selectedColor[50] : Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12)), side: BorderSide(color: selected ? _selectedColor : _unSelectedColor)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12)), side: BorderSide(color: selected ? _selectedColor : _unSelectedColor)),
                     child: Text(
                       widget.list[index].label,
                       style: new TextStyle(color: selected ? _selectedColor : _unSelectedColor),
