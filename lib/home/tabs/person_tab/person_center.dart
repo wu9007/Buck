@@ -68,7 +68,7 @@ class PersonCenterState extends State<PersonCenter> {
 //                  ),
                       child: FadeInImage.assetNetwork(
                         placeholder: 'assets/images/logo.png',
-                        image: 'http://172.0.66.104:8000/amili/purchasecontractbj/download?uuid=40280e816e347597016e3484b1f90003',
+                        image: 'https://repository-images.githubusercontent.com/234246059/f2541b80-58d8-11ea-98a1-a82ad94117f4',
                       ),
                     ),
                     decoration: BoxDecoration(
