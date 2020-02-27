@@ -9,8 +9,7 @@ import 'package:buck/utils/login_client.dart';
 import 'package:buck/widgets/tips/tips_tool.dart';
 import 'package:rxdart/rxdart.dart';
 
-final BehaviorSubject<MessageBody> socketMessageSubject =
-    BehaviorSubject<MessageBody>();
+final BehaviorSubject<MessageBody> socketMessageSubject = BehaviorSubject<MessageBody>();
 
 class SocketClient {
   static SocketClient _socketClient = new SocketClient._();
@@ -35,8 +34,7 @@ class SocketClient {
       'avatar': userInfo.avatar,
       'serialNo': serialNo,
     }).timeout(Duration(seconds: 15)).catchError((e) {
-      TipsTool.warning('连接异常，请重新登录').show();
-      LoginClient.getInstance().logOut();
+      TipsTool.warning('连接异常，系统同将无法收到实时消息').show();
     });
     if (_webSocket?.readyState == 1) {
       _isOpen = true;
