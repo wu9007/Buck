@@ -1,4 +1,5 @@
 import 'package:buck/widgets/form/constant/style_constant.dart';
+import 'package:buck/widgets/tips/tips_tool.dart';
 import 'package:flutter/material.dart';
 
 class SingleElection extends StatefulWidget {
@@ -10,6 +11,7 @@ class SingleElection extends StatefulWidget {
   final Color selectedColor;
   final dynamic value;
   final bool disabled;
+  final String disabledHind;
 
   @override
   State<StatefulWidget> createState() => new SingleElectionState();
@@ -24,6 +26,7 @@ class SingleElection extends StatefulWidget {
     this.color,
     this.selectedColor,
     this.disabled = false,
+    this.disabledHind = 'The current item is not available',
   }) : super(key: key);
 }
 
@@ -98,7 +101,7 @@ class SingleElectionState extends State<SingleElection> {
                       widget.list[index].label,
                       style: new TextStyle(color: selected ? _selectedColor : _unSelectedColor),
                     ),
-                    onPressed: widget.disabled ? () {} : () => widget.onPressed(widget.list[index]),
+                    onPressed: widget.disabled ? () => TipsTool.warning(widget.disabledHind) : () => widget.onPressed(widget.list[index]),
                   ),
                 );
               },
