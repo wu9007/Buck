@@ -21,14 +21,9 @@ class VersionControl {
   }
 
   checkVersion() async {
-    ResponseBody responseBody = await DioClient().get(
-        buck.commonApiInstance.versionApi,
-        params: {'appName': buck.packageInfo.appName});
-    if (responseBody != null &&
-        (responseBody.success ?? false) &&
-        responseBody.data != null) {
-      VersionUpgradeInfo versionUpgradeInfo =
-          VersionUpgradeInfo.fromMap(responseBody.data);
+    ResponseBody responseBody = await DioClient().get(buck.commonApiInstance.versionApi, queryParameters: {'appName': buck.packageInfo.appName});
+    if (responseBody != null && (responseBody.success ?? false) && responseBody.data != null) {
+      VersionUpgradeInfo versionUpgradeInfo = VersionUpgradeInfo.fromMap(responseBody.data);
       if (buck.cacheControl.version != versionUpgradeInfo.version) {
         upgradeSubject.add(versionUpgradeInfo);
         buck.cacheControl.setVersion(versionUpgradeInfo.version);

@@ -47,14 +47,14 @@ class DioClient<T> {
     }
   }
 
-  Future<ResponseBody<T>> get(url, {params, customBaseUrl}) async {
+  Future<ResponseBody<T>> get(url, {queryParameters, customBaseUrl}) async {
     _cacheControl = await CacheControl.getInstance();
     if (_cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
     _dio.options.baseUrl = customBaseUrl == null ? _cacheControl.activeBaseUrl : customBaseUrl;
 
     Response<Map<String, dynamic>> response;
     try {
-      response = await _dio.get(url, queryParameters: params);
+      response = await _dio.get(url, queryParameters: queryParameters);
     } on DioError catch (e) {
       print(e);
       TipsTool.error('网络异常').show();
@@ -65,7 +65,7 @@ class DioClient<T> {
         _cacheControl.setToken(responseBody.token);
       }
       if (responseBody.resend ?? false) {
-        return get(url, params: params);
+        return get(url, queryParameters: queryParameters);
       }
       if (responseBody.reLogin ?? false) {
         LoginClient.getInstance().logOut();
