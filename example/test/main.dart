@@ -1,0 +1,31 @@
+import 'package:buck/utils/encrypt_helper.dart';
+import 'package:encrypt/encrypt.dart';
+import 'package:encrypt/encrypt_io.dart';
+import 'package:pointycastle/asymmetric/api.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+main() async {
+  test("encrypt test", () async {
+    final publicKey = await parseKeyFromFile<RSAPublicKey>('assets/keys/public_key.pem');
+    final privateKey = await parseKeyFromFile<RSAPrivateKey>('assets/keys/private_key.pem');
+
+    final plainText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+    final encrypter = Encrypter(RSA(publicKey: publicKey, privateKey: privateKey));
+
+    final encrypted = encrypter.encrypt(plainText);
+    final decrypted = encrypter.decrypt(encrypted);
+    print(decrypted);
+  });
+  test("encrypt_helper test", () async {
+    final plainText = 'Lorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing elit';
+    EncryptHelper encryptHelper = EncryptHelper.getInstance();
+    await encryptHelper.init(
+      clientPublicKeyPath: 'assets/keys/client_public_key.pem',
+      clientPrivateKeyPath: 'assets/keys/client_private_key.pem',
+    );
+    String encodeStr = encryptHelper.encodeClientData(plainText);
+    String decodeStr = encryptHelper.decodeClientData(encodeStr);
+    print(encodeStr);
+    print(decodeStr);
+  });
+}

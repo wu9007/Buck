@@ -12,6 +12,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_earth: ^0.0.4
   image_picker: ^0.6.2+1
+  encrypt: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -31,6 +32,8 @@ flutter:
     - assets/images/background.png
     - assets/images/logo.png
     - assets/city.json
+    - assets/keys/client_private_key.pem
+    - assets/keys/client_public_key.pem
 
   fonts:
     - family: shouji

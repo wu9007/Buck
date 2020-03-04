@@ -24,6 +24,7 @@ dependencies:
   package_info: ^0.4.0+13
   permission_handler: ^3.0.0
   path_provider: 0.4.1
+  encrypt: ^4.0.0
 
 dev_dependencies:
   flutter_test:

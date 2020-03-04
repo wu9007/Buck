@@ -16,6 +16,7 @@ class DioClient<T> {
 
   CacheControl _cacheControl;
 
+  /// TODO 发送请求时可设置是否进行 RSA 加密
   Future<ResponseBody<T>> post(url, {Map data, Map queryParameters, UploadFile uploadFile, List<UploadFile> uploadFiles, customBaseUrl}) async {
     _cacheControl = await CacheControl.getInstance();
     if (_cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};

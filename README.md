@@ -27,4 +27,4 @@ dependencies:
 -  [x] 系统升级提醒
 
 ## Todo
--  [x] 加密请求
+-  [x] 加密请求(RSA)

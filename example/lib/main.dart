@@ -1,5 +1,6 @@
 import 'package:buck/buck.dart';
 import 'package:buck/basic_app.dart';
+import 'package:buck/utils/encrypt_helper.dart';
 import 'package:buck_example/menus/bundle_deliver.dart';
 import 'package:buck_example/menus/bundle_liquid_exchange/bundle_liquid_exchange.dart';
 import 'package:buck_example/menus/bundle_preparation/bunlde_preparation.dart';
@@ -40,5 +41,10 @@ Future<void> main() async {
   buck.installPianos('Piano Group A', [PianoEarth()]);
   buck.installPianos('Piano Group B', [PianoCollect(), PianoAlbum(), PianoCard(), PianoExpression()]);
   buck.installPianos('Piano Group C', [PianoSetting()]);
+
+  await EncryptHelper.getInstance().init(
+    clientPublicKeyPath: 'assets/keys/client_public_key.pem',
+    clientPrivateKeyPath: 'assets/keys/client_private_key.pem',
+  );
   runApp(BasicApp(homeTitle: HOME_TITLE));
 }
