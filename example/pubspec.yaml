@@ -32,8 +32,8 @@ flutter:
     - assets/images/background.png
     - assets/images/logo.png
     - assets/city.json
-    - assets/keys/client_private_key.pem
-    - assets/keys/client_public_key.pem
+    - assets/rsa/private_key.pem
+    - assets/rsa/public_key.pem
 
   fonts:
     - family: shouji

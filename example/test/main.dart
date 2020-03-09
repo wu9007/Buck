@@ -17,11 +17,12 @@ main() async {
     print(decrypted);
   });
   test("encrypt_helper test", () async {
-    final plainText = 'Lorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing elit';
+    final plainText =
+        'Lorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing elit';
     EncryptHelper encryptHelper = EncryptHelper.getInstance();
     await encryptHelper.init(
-      clientPublicKeyPath: 'assets/keys/client_public_key.pem',
-      clientPrivateKeyPath: 'assets/keys/client_private_key.pem',
+      clientPublicKeyPath: 'assets/rsa/public_key.pem',
+      clientPrivateKeyPath: 'assets/rsa/private_key.pem',
     );
     String encodeStr = encryptHelper.encodeClientData(plainText);
     String decodeStr = encryptHelper.decodeClientData(encodeStr);

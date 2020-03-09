@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:buck/basic_app.dart';
 import 'package:buck/service/cache_control.dart';
+import 'package:buck/utils/encrypt_helper.dart';
 import 'package:buck/utils/login_client.dart';
 import 'package:buck/widgets/tips/tips_tool.dart';
 import 'package:dio/dio.dart';
@@ -16,17 +19,18 @@ class DioClient<T> {
 
   CacheControl _cacheControl;
 
-  /// TODO 发送请求时可设置是否进行 RSA 加密
-  Future<ResponseBody<T>> post(url, {Map data, Map queryParameters, UploadFile uploadFile, List<UploadFile> uploadFiles, customBaseUrl}) async {
+  /// TODO 接收到响应的是数据之后判断数据是否被加密，若被加密则进行解密（AES+RSA）
+  Future<ResponseBody<T>> post(url, {Map data, Map queryParameters, UploadFile uploadFile, List<UploadFile> uploadFiles, customBaseUrl, bool encrypt = false}) async {
     _cacheControl = await CacheControl.getInstance();
-    if (_cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
+    _dio.options.headers = {'clientName': buck.packageInfo.appName, 'encrypt': encrypt};
+    if (_cacheControl.token.length > 0) _dio.options.headers['Authorization'] = 'Bearer ' + _cacheControl.token;
     _dio.options.baseUrl = customBaseUrl == null ? _cacheControl.activeBaseUrl : customBaseUrl;
 
     Response<Map<String, dynamic>> response;
     if (uploadFile != null) data.putIfAbsent('file', () async => await MultipartFile.fromFile(uploadFile.filePath, filename: uploadFile.fileName, contentType: uploadFile.contentType));
     if (uploadFiles != null) data.putIfAbsent('files', () => uploadFiles.map((e) async => await MultipartFile.fromFile(uploadFile.filePath, filename: uploadFile.fileName, contentType: uploadFile.contentType)));
     try {
-      response = await _dio.post(url, data: data, queryParameters: queryParameters);
+      response = await _dio.post(url, data: encrypt ? EncryptHelper.getInstance().encodeBackendData(jsonEncode(data)) : data, queryParameters: queryParameters);
     } on DioError catch (e) {
       print(e);
       TipsTool.error('网络异常').show();
@@ -50,7 +54,8 @@ class DioClient<T> {
 
   Future<ResponseBody<T>> get(url, {queryParameters, customBaseUrl}) async {
     _cacheControl = await CacheControl.getInstance();
-    if (_cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
+    _dio.options.headers = {'clientName': buck.packageInfo.appName};
+    if (_cacheControl.token.length > 0) _dio.options.headers['Authorization'] = 'Bearer ' + _cacheControl.token;
     _dio.options.baseUrl = customBaseUrl == null ? _cacheControl.activeBaseUrl : customBaseUrl;
 
     Response<Map<String, dynamic>> response;

@@ -43,8 +43,8 @@ Future<void> main() async {
   buck.installPianos('Piano Group C', [PianoSetting()]);
 
   await EncryptHelper.getInstance().init(
-    clientPublicKeyPath: 'assets/keys/client_public_key.pem',
-    clientPrivateKeyPath: 'assets/keys/client_private_key.pem',
+    clientPublicKeyPath: 'assets/rsa/public_key.pem',
+    clientPrivateKeyPath: 'assets/rsa/private_key.pem',
   );
   runApp(BasicApp(homeTitle: HOME_TITLE));
 }
