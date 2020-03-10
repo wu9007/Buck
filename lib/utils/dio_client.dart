@@ -36,7 +36,14 @@ class DioClient<T> {
       TipsTool.error('网络异常').show();
     }
     if (response != null) {
-      ResponseBody<T> responseBody = ResponseBody<T>.fromMap(response.data);
+      Map responseData;
+      List<String> encrypt = response.headers['encrypt'];
+      if (encrypt != null && encrypt[0] == 'true') {
+        responseData = jsonDecode(EncryptHelper.getInstance().decodeClientData(response.data["encryptContent"]));
+      } else {
+        responseData = response.data;
+      }
+      ResponseBody<T> responseBody = ResponseBody<T>.fromMap(responseData);
       if (responseBody.token != null) {
         _cacheControl.setToken(responseBody.token);
       }
@@ -66,7 +73,14 @@ class DioClient<T> {
       TipsTool.error('网络异常').show();
     }
     if (response != null) {
-      ResponseBody<T> responseBody = ResponseBody<T>.fromMap(response.data);
+      Map responseData;
+      List<String> encrypt = response.headers['encrypt'];
+      if (encrypt != null && encrypt[0] == 'true') {
+        responseData = jsonDecode(EncryptHelper.getInstance().decodeClientData(response.data["encryptContent"]));
+      } else {
+        responseData = response.data;
+      }
+      ResponseBody<T> responseBody = ResponseBody<T>.fromMap(responseData);
       if (responseBody.token != null) {
         _cacheControl.setToken(responseBody.token);
       }
