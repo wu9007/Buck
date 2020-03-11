@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:buck/basic_app.dart';
 import 'package:buck/service/cache_control.dart';
-import 'package:buck/utils/encrypt_helper.dart';
+import 'package:buck/utils/aes_helper.dart';
 import 'package:buck/utils/login_client.dart';
+import 'package:buck/utils/rsa_helper.dart';
 import 'package:buck/widgets/tips/tips_tool.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +20,6 @@ class DioClient<T> {
 
   CacheControl _cacheControl;
 
-  /// TODO 接收到响应的是数据之后判断数据是否被加密，若被加密则进行解密（AES+RSA）
   Future<ResponseBody<T>> post(url, {Map data, Map queryParameters, UploadFile uploadFile, List<UploadFile> uploadFiles, customBaseUrl, bool encrypt = false}) async {
     _cacheControl = await CacheControl.getInstance();
     _dio.options.headers = {'clientName': buck.packageInfo.appName, 'encrypt': encrypt};
@@ -30,7 +30,7 @@ class DioClient<T> {
     if (uploadFile != null) data.putIfAbsent('file', () async => await MultipartFile.fromFile(uploadFile.filePath, filename: uploadFile.fileName, contentType: uploadFile.contentType));
     if (uploadFiles != null) data.putIfAbsent('files', () => uploadFiles.map((e) async => await MultipartFile.fromFile(uploadFile.filePath, filename: uploadFile.fileName, contentType: uploadFile.contentType)));
     try {
-      response = await _dio.post(url, data: encrypt ? EncryptHelper.getInstance().encodeBackendData(jsonEncode(data)) : data, queryParameters: queryParameters);
+      response = await _dio.post(url, data: encrypt ? RsaHelper.getInstance().encodeBackendData(jsonEncode(data)) : data, queryParameters: queryParameters);
     } on DioError catch (e) {
       print(e);
       TipsTool.error('网络异常').show();
@@ -39,7 +39,10 @@ class DioClient<T> {
       Map responseData;
       List<String> encrypt = response.headers['encrypt'];
       if (encrypt != null && encrypt[0] == 'true') {
-        responseData = jsonDecode(EncryptHelper.getInstance().decodeClientData(response.data["encryptContent"]));
+        String aesKey = RsaHelper.getInstance().decodeClientData(response.data["aesKey"]);
+        print(aesKey);
+        print(response.data["encryptContent"]);
+        responseData = jsonDecode(AesHelper.decrypt(aesKey, response.data["encryptContent"]));
       } else {
         responseData = response.data;
       }
@@ -76,7 +79,10 @@ class DioClient<T> {
       Map responseData;
       List<String> encrypt = response.headers['encrypt'];
       if (encrypt != null && encrypt[0] == 'true') {
-        responseData = jsonDecode(EncryptHelper.getInstance().decodeClientData(response.data["encryptContent"]));
+        String aesKey = RsaHelper.getInstance().decodeClientData(response.data["aesKey"]);
+        print(aesKey);
+        print(response.data["encryptContent"]);
+        responseData = jsonDecode(AesHelper.decrypt(aesKey, response.data["encryptContent"]));
       } else {
         responseData = response.data;
       }

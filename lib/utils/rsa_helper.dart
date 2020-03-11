@@ -5,14 +5,14 @@ import 'package:pointycastle/asymmetric/api.dart';
 
 final parser = RSAKeyParser();
 
-class EncryptHelper {
-  static final EncryptHelper _instance = EncryptHelper._();
+class RsaHelper {
+  static final RsaHelper _instance = RsaHelper._();
   Encrypter _clientEncrypter;
   Encrypter _backendEncrypter;
   String _clientPublicKeyString;
   String _clientPrivateKeyString;
 
-  EncryptHelper._();
+  RsaHelper._();
 
   static getInstance() {
     return _instance;

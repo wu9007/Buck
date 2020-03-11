@@ -1,4 +1,4 @@
-import 'package:buck/utils/encrypt_helper.dart';
+import 'package:buck/utils/rsa_helper.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:encrypt/encrypt_io.dart';
 import 'package:pointycastle/asymmetric/api.dart';
@@ -19,7 +19,7 @@ main() async {
   test("encrypt_helper test", () async {
     final plainText =
         'Lorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing eliLorem ipsum dolor sit amet, consectetur adipiscing elit';
-    EncryptHelper encryptHelper = EncryptHelper.getInstance();
+    RsaHelper encryptHelper = RsaHelper.getInstance();
     await encryptHelper.init(
       clientPublicKeyPath: 'assets/rsa/public_key.pem',
       clientPrivateKeyPath: 'assets/rsa/private_key.pem',

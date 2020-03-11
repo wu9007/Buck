@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:buck/basic_app.dart';
 import 'package:buck/model/user_info.dart';
 import 'package:buck/utils/dio_client.dart';
-import 'package:buck/utils/encrypt_helper.dart';
+import 'package:buck/utils/rsa_helper.dart';
 import 'package:buck/widgets/tips/tips_tool.dart';
 
 class LoginClient {
@@ -27,7 +27,7 @@ class LoginClient {
     }
 
     /// 测试当前使用的服务器地址是否通畅
-    Map<String, dynamic> queryParameters = {'clientName': buck.packageInfo.appName, 'publicKey': EncryptHelper.getInstance().clientPublicKeyString};
+    Map<String, dynamic> queryParameters = {'clientName': buck.packageInfo.appName, 'publicKey': RsaHelper.getInstance().clientPublicKeyString};
     ResponseBody responseBody = await DioClient().post(buck.commonApiInstance.connectApi, queryParameters: queryParameters);
 
     /// 如果通畅，直接返回
@@ -38,7 +38,7 @@ class LoginClient {
         responseBody = await DioClient().get(buck.commonApiInstance.loginApi, customBaseUrl: baseUrl);
         if (responseBody != null) {
           buck.cacheControl.setActiveBaseUrl(baseUrl);
-          EncryptHelper.getInstance().setBackendPublicKey('-----BEGIN PUBLIC KEY-----\n' + responseBody.data + '\n-----END PUBLIC KEY-----');
+          RsaHelper.getInstance().setBackendPublicKey('-----BEGIN PUBLIC KEY-----\n' + responseBody.data + '\n-----END PUBLIC KEY-----');
           return true;
         }
       }
@@ -50,14 +50,14 @@ class LoginClient {
           responseBody = await DioClient().get(buck.commonApiInstance.loginApi, customBaseUrl: customBaseUrl);
           if (responseBody != null) {
             buck.cacheControl.setActiveBaseUrl(customBaseUrl);
-            EncryptHelper.getInstance().setBackendPublicKey('-----BEGIN PUBLIC KEY-----\n' + responseBody.data + '\n-----END PUBLIC KEY-----');
+            RsaHelper.getInstance().setBackendPublicKey('-----BEGIN PUBLIC KEY-----\n' + responseBody.data + '\n-----END PUBLIC KEY-----');
             return true;
           }
         }
       }
       return false;
     } else {
-      EncryptHelper.getInstance().setBackendPublicKey('-----BEGIN PUBLIC KEY-----\n' + responseBody.data + '\n-----END PUBLIC KEY-----');
+      RsaHelper.getInstance().setBackendPublicKey('-----BEGIN PUBLIC KEY-----\n' + responseBody.data + '\n-----END PUBLIC KEY-----');
     }
     return true;
   }
