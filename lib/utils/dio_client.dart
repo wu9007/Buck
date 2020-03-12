@@ -99,6 +99,7 @@ class DioClient<T> {
     } else {
       responseData = response.data;
     }
+    if (responseData == null || responseData == '') responseData = {};
     return ResponseBody<T>.fromMap(responseData);
   }
 }
