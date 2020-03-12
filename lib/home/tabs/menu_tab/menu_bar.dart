@@ -32,7 +32,11 @@ class MenuBar extends StatelessWidget {
         Positioned.fill(
           top: 40,
           left: 40,
-          child: Text("功  能", style: TextStyle(fontFamily: 'pinshang', fontWeight: FontWeight.bold,fontSize: 20)),
+          child: Text("功  能",
+              style: TextStyle(
+                  fontFamily: 'pinshang',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20)),
         ),
 //        AppBar(
 //          backgroundColor: Colors.transparent,

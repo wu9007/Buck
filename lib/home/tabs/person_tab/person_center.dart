@@ -28,7 +28,8 @@ class PersonCenterState extends State<PersonCenter> {
         PersonBar(height: 180),
         Positioned.fill(
           child: Padding(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 50),
+            padding:
+                EdgeInsets.only(top: MediaQuery.of(context).padding.top + 50),
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -68,7 +69,8 @@ class PersonCenterState extends State<PersonCenter> {
 //                  ),
                       child: FadeInImage.assetNetwork(
                         placeholder: 'assets/images/logo.png',
-                        image: 'https://repository-images.githubusercontent.com/234246059/f2541b80-58d8-11ea-98a1-a82ad94117f4',
+                        image:
+                            'https://repository-images.githubusercontent.com/234246059/f2541b80-58d8-11ea-98a1-a82ad94117f4',
                       ),
                     ),
                     decoration: BoxDecoration(
@@ -87,9 +89,12 @@ class PersonCenterState extends State<PersonCenter> {
                       children: <Widget>[
                         Text(
                           _userInfo.name,
-                          style: TextStyle(fontSize: 18, fontFamily: 'pinshang'),
+                          style:
+                              TextStyle(fontSize: 18, fontFamily: 'pinshang'),
                         ),
-                        Text(_userInfo.departmentName ?? '未填写部门信息', style: TextStyle(color: Theme.of(context).hintColor)),
+                        Text(_userInfo.departmentName ?? '未填写部门信息',
+                            style:
+                                TextStyle(color: Theme.of(context).hintColor)),
                       ],
                     ),
                   ),
@@ -100,7 +105,8 @@ class PersonCenterState extends State<PersonCenter> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                  Text('ID: ${_userInfo.avatar}', style: TextStyle(color: Theme.of(context).hintColor)),
+                  Text('ID: ${_userInfo.avatar}',
+                      style: TextStyle(color: Theme.of(context).hintColor)),
                   Icon(MyIcons.qrCode, color: Theme.of(context).hintColor),
                 ],
               ),
@@ -118,16 +124,19 @@ class PersonCenterState extends State<PersonCenter> {
         Container(
           child: ListTile(
             leading: Icon(MyIcons.fill, color: Colors.teal),
-            title: Text('主题', style: TextStyle(color: Theme.of(context).hintColor)),
+            title: Text('主题',
+                style: TextStyle(color: Theme.of(context).hintColor)),
             trailing: Icon(Icons.chevron_right),
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ThemeSwitcher())),
+            onTap: () => Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => ThemeSwitcher())),
           ),
           color: Theme.of(context).canvasColor,
         ),
         Container(
           child: ListTile(
             leading: Icon(MyIcons.lock, color: Colors.deepOrange),
-            title: Text('修改密码', style: TextStyle(color: Theme.of(context).hintColor)),
+            title: Text('修改密码',
+                style: TextStyle(color: Theme.of(context).hintColor)),
             trailing: Icon(Icons.chevron_right),
           ),
           color: Theme.of(context).canvasColor,
@@ -135,7 +144,12 @@ class PersonCenterState extends State<PersonCenter> {
         Divider(height: 1),
         Container(
           child: ListTile(
-            title: Center(child: Text('注销登录', style: TextStyle(fontFamily: 'shouji', color: Theme.of(context).hintColor, fontSize: 18))),
+            title: Center(
+                child: Text('注销登录',
+                    style: TextStyle(
+                        fontFamily: 'shouji',
+                        color: Theme.of(context).hintColor,
+                        fontSize: 18))),
             onTap: () => LoginClient.getInstance().logOut(),
           ),
           color: Theme.of(context).canvasColor,

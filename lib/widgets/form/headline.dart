@@ -19,7 +19,11 @@ class Headline extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 3),
             color: Colors.orange,
           ),
-          Text(text, style: TextStyle(fontSize: 16, fontFamily: 'pinshang', fontWeight: FontWeight.bold))
+          Text(text,
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'pinshang',
+                  fontWeight: FontWeight.bold))
         ],
       ),
     );

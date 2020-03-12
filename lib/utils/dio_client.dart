@@ -17,16 +17,43 @@ class DioClient<T> {
     responseType: ResponseType.json,
   ));
 
-  Future<ResponseBody<T>> post(url, {Map data, Map queryParameters, UploadFile uploadFile, List<UploadFile> uploadFiles, customBaseUrl, bool encrypt = false}) async {
-    _dio.options.headers = {'clientName': buck.packageInfo.appName, 'encrypt': encrypt};
-    if (buck.cacheControl.token.length > 0) _dio.options.headers['Authorization'] = 'Bearer ' + buck.cacheControl.token;
-    _dio.options.baseUrl = customBaseUrl == null ? buck.cacheControl.activeBaseUrl : customBaseUrl;
+  Future<ResponseBody<T>> post(url,
+      {Map data,
+      Map queryParameters,
+      UploadFile uploadFile,
+      List<UploadFile> uploadFiles,
+      customBaseUrl,
+      bool encrypt = false}) async {
+    _dio.options.headers = {
+      'clientName': buck.packageInfo.appName,
+      'encrypt': encrypt
+    };
+    if (buck.cacheControl.token.length > 0)
+      _dio.options.headers['Authorization'] =
+          'Bearer ' + buck.cacheControl.token;
+    _dio.options.baseUrl =
+        customBaseUrl == null ? buck.cacheControl.activeBaseUrl : customBaseUrl;
 
     Response response;
-    if (uploadFile != null) data.putIfAbsent('file', () async => await MultipartFile.fromFile(uploadFile.filePath, filename: uploadFile.fileName, contentType: uploadFile.contentType));
-    if (uploadFiles != null) data.putIfAbsent('files', () => uploadFiles.map((e) async => await MultipartFile.fromFile(uploadFile.filePath, filename: uploadFile.fileName, contentType: uploadFile.contentType)));
+    if (uploadFile != null)
+      data.putIfAbsent(
+          'file',
+          () async => await MultipartFile.fromFile(uploadFile.filePath,
+              filename: uploadFile.fileName,
+              contentType: uploadFile.contentType));
+    if (uploadFiles != null)
+      data.putIfAbsent(
+          'files',
+          () => uploadFiles.map((e) async => await MultipartFile.fromFile(
+              uploadFile.filePath,
+              filename: uploadFile.fileName,
+              contentType: uploadFile.contentType)));
     try {
-      response = await _dio.post(url, data: encrypt ? RsaHelper.getInstance().encodeBackendData(jsonEncode(data)) : data, queryParameters: queryParameters);
+      response = await _dio.post(url,
+          data: encrypt
+              ? RsaHelper.getInstance().encodeBackendData(jsonEncode(data))
+              : data,
+          queryParameters: queryParameters);
     } on DioError catch (e) {
       print(e);
       TipsTool.error('网络异常').show();
@@ -50,8 +77,11 @@ class DioClient<T> {
 
   Future<ResponseBody<T>> get(url, {queryParameters, customBaseUrl}) async {
     _dio.options.headers = {'clientName': buck.packageInfo.appName};
-    if (buck.cacheControl.token.length > 0) _dio.options.headers['Authorization'] = 'Bearer ' + buck.cacheControl.token;
-    _dio.options.baseUrl = customBaseUrl == null ? buck.cacheControl.activeBaseUrl : customBaseUrl;
+    if (buck.cacheControl.token.length > 0)
+      _dio.options.headers['Authorization'] =
+          'Bearer ' + buck.cacheControl.token;
+    _dio.options.baseUrl =
+        customBaseUrl == null ? buck.cacheControl.activeBaseUrl : customBaseUrl;
 
     Response response;
     try {
@@ -77,13 +107,21 @@ class DioClient<T> {
     }
   }
 
-  Future download(BuildContext context, url, {Map<String, dynamic> queryParameters, @required path, ProgressCallback onReceiveProgress}) async {
-    if (buck.cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + buck.cacheControl.token};
+  Future download(BuildContext context, url,
+      {Map<String, dynamic> queryParameters,
+      @required path,
+      ProgressCallback onReceiveProgress}) async {
+    if (buck.cacheControl.token.length > 0)
+      _dio.options.headers = {
+        'Authorization': 'Bearer ' + buck.cacheControl.token
+      };
     _dio.options.baseUrl = buck.cacheControl.activeBaseUrl;
     _dio.options.responseType = ResponseType.stream;
 
     try {
-      await _dio.download(url, path, queryParameters: queryParameters, onReceiveProgress: onReceiveProgress);
+      await _dio.download(url, path,
+          queryParameters: queryParameters,
+          onReceiveProgress: onReceiveProgress);
     } on DioError catch (e) {
       print(e);
       TipsTool.error('网络异常').show();
@@ -94,8 +132,10 @@ class DioClient<T> {
     var responseData;
     List<String> encrypt = response.headers['encrypt'];
     if (encrypt != null && encrypt[0] == 'true') {
-      String aesKey = RsaHelper.getInstance().decodeClientData(response.data["aesKey"]);
-      responseData = jsonDecode(AesHelper.decrypt(aesKey, response.data["encryptContent"]));
+      String aesKey =
+          RsaHelper.getInstance().decodeClientData(response.data["aesKey"]);
+      responseData = jsonDecode(
+          AesHelper.decrypt(aesKey, response.data["encryptContent"]));
     } else {
       responseData = response.data;
     }

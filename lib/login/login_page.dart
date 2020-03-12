@@ -30,7 +30,8 @@ class LoginPage extends StatefulWidget {
   State<StatefulWidget> createState() => LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin, PdaListenerMixin {
+class LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin, PdaListenerMixin {
   LoginEnterAnimation enterAnimation;
   AnimationController animationController;
 
@@ -44,7 +45,8 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
   @override
   initState() {
     super.initState();
-    animationController = new AnimationController(duration: const Duration(seconds: 1), vsync: this)
+    animationController = new AnimationController(
+        duration: const Duration(seconds: 1), vsync: this)
       ..addListener(() {
         setState(() {});
       });
@@ -91,7 +93,8 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
                   child: _buildTextFormUsername(textTheme),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: 12),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.1, vertical: 12),
                   child: Container(
                     color: Colors.grey,
                     height: 1,
@@ -112,11 +115,15 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
     return FadeTransition(
       opacity: enterAnimation.userNameOpacity,
       child: TextFormField(
-        style: textTheme.headline6.copyWith(color: Colors.black87, letterSpacing: 1.2),
+        style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+            letterSpacing: 1.2),
         decoration: new InputDecoration(
           border: InputBorder.none,
           hintText: USER_NAME_HINT,
-          hintStyle: textTheme.subtitle1.copyWith(color: Colors.grey),
+          hintStyle: textTheme.subhead.copyWith(color: Colors.grey),
           icon: Icon(Icons.person, color: Colors.black87),
           contentPadding: EdgeInsets.zero,
         ),
@@ -138,11 +145,15 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
     return FadeTransition(
       opacity: enterAnimation.passwordOpacity,
       child: TextFormField(
-        style: textTheme.headline6.copyWith(color: Colors.black87, letterSpacing: 1.2),
+        style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+            letterSpacing: 1.2),
         decoration: new InputDecoration(
             border: InputBorder.none,
             hintText: PASSWORD_HINT,
-            hintStyle: textTheme.subtitle1.copyWith(color: Colors.grey),
+            hintStyle: textTheme.subhead.copyWith(color: Colors.grey),
             contentPadding: EdgeInsets.zero,
             icon: Icon(Icons.lock, color: Colors.black87)),
         keyboardType: TextInputType.text,
@@ -162,7 +173,10 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
 
   Widget _buildSignButton(context) {
     return Transform(
-      transform: Matrix4.translationValues(enterAnimation.translation.value * 200, enterAnimation.translation.value * 20, 0.0),
+      transform: Matrix4.translationValues(
+          enterAnimation.translation.value * 200,
+          enterAnimation.translation.value * 20,
+          0.0),
       child: ForwardButton(
         onPressed: () async {
           bool validate = _formKey.currentState.validate();
@@ -171,10 +185,12 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
             _formKey.currentState.save();
             bool success;
             try {
-              bool baseUrlAvailable = await LoginClient.getInstance().checkUrl();
-              if(baseUrlAvailable) {
-                success = await LoginClient.getInstance().login(_userName, _password);
-              } else{
+              bool baseUrlAvailable =
+                  await LoginClient.getInstance().checkUrl();
+              if (baseUrlAvailable) {
+                success =
+                    await LoginClient.getInstance().login(_userName, _password);
+              } else {
                 TipsTool.warning('请检测网络是否正常\n\n或扫码设置服务器地址后重新尝试登录').show();
               }
             } catch (e) {
@@ -184,7 +200,8 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
             }
             if (success ?? false) {
               await animationController.reverse();
-              buck.navigatorKey.currentState.pushNamedAndRemoveUntil('homePage', (route) => route == null);
+              buck.navigatorKey.currentState.pushNamedAndRemoveUntil(
+                  'homePage', (route) => route == null);
             }
           }
         },
@@ -195,7 +212,8 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
 
   Widget _transTopView(Size size, TextTheme textTheme) {
     return Transform(
-      transform: Matrix4.translationValues(0.0, -enterAnimation.yTranslation.value * size.height, 0.0),
+      transform: Matrix4.translationValues(
+          0.0, -enterAnimation.yTranslation.value * size.height, 0.0),
       child: LoginTopBar(
           child: Container(
         height: size.height * 0.67,
@@ -212,10 +230,13 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
               ),
             ),
             Transform(
-              transform: Matrix4.translationValues(-enterAnimation.xTranslation.value * size.width, 0.0, 0.0),
+              transform: Matrix4.translationValues(
+                  -enterAnimation.xTranslation.value * size.width, 0.0, 0.0),
               child: Padding(
-                padding: EdgeInsets.only(top: size.height * 0.15, left: 24, right: 24),
-                child: HeaderText(text: widget.titleLabel, imagePath: widget.logoPath),
+                padding: EdgeInsets.only(
+                    top: size.height * 0.15, left: 24, right: 24),
+                child: HeaderText(
+                    text: widget.titleLabel, imagePath: widget.logoPath),
               ),
             ),
             _buildForm(size, textTheme),
@@ -238,7 +259,12 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
               opacity: enterAnimation.titleLabelOpacity,
               child: Text(
                 widget.welcomeLabel,
-                style: textTheme.headline6.copyWith(fontFamily: 'shouji', color: Colors.black87, fontWeight: FontWeight.normal, wordSpacing: 1.2, fontSize: 15),
+                style: TextStyle(
+                    fontFamily: 'shouji',
+                    color: Colors.black87,
+                    fontWeight: FontWeight.normal,
+                    wordSpacing: 1.2,
+                    fontSize: 15),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -257,7 +283,12 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
           return WillPopScope(
             child: GradientCircularProgressRoute(
               colors: [Colors.yellow, Colors.orange],
-              label: Container(child: Text('登录中……', style: TextStyle(fontSize: 15, color: Colors.white70, decoration: TextDecoration.none))),
+              label: Container(
+                  child: Text('登录中……',
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white70,
+                          decoration: TextDecoration.none))),
             ),
             onWillPop: () => Future.value(false),
           );
@@ -271,12 +302,12 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
 
   @override
   void onEvent(Object code) {
-    if(code.toString().startsWith('http')) {
+    if (code.toString().startsWith('http')) {
       String customBaseUrls = buck.cacheControl.customBaseUrls;
-      if(customBaseUrls == null) customBaseUrls = code;
-      if(!customBaseUrls.contains(code)) customBaseUrls += ',$code';
+      if (customBaseUrls == null) customBaseUrls = code;
+      if (!customBaseUrls.contains(code)) customBaseUrls += ',$code';
       buck.cacheControl.setCustomBaseUrls(customBaseUrls);
-    } else{
+    } else {
       TipsTool.warning('扫描内容不合法').show();
     }
   }

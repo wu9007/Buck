@@ -10,7 +10,7 @@ Old longings nomadic leap, Chafing at custom's chain; Again from its brumal slee
 
 ```yaml
 dependencies:
- buck: ^0.1.2
+ buck: ^0.1.2+1
 ```
 
 ## Completed
@@ -26,6 +26,6 @@ dependencies:
 -  [x] 配置服务器地址功能
 -  [x] 系统升级提醒
 -  [x] 加密请求(RSA)
+-  [x] 解密响应数据(AES+RSA)
 
 ## Todo
--  [x] 解密响应数据(AES+RSA)

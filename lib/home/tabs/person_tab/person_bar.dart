@@ -17,7 +17,10 @@ class PersonBar extends StatelessWidget {
             gradient: new LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Theme.of(context).primaryColor, Theme.of(context).cardColor],
+              colors: [
+                Theme.of(context).primaryColor,
+                Theme.of(context).cardColor
+              ],
             ),
           ),
           height: height,
@@ -26,7 +29,11 @@ class PersonBar extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           centerTitle: true,
-          title: Text("个人中心", style: TextStyle(fontFamily: 'pinshang', fontWeight: FontWeight.bold, color: Colors.white)),
+          title: Text("个人中心",
+              style: TextStyle(
+                  fontFamily: 'pinshang',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white)),
         ),
       ],
     );

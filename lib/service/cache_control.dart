@@ -1,12 +1,11 @@
 import 'dart:convert';
 
 import 'package:buck/model/user_info.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final PublishSubject<List<String>> shortcutSubject = PublishSubject<List<String>>();
+final PublishSubject<List<String>> shortcutSubject =
+    PublishSubject<List<String>>();
 final PublishSubject<String> themeSubject = PublishSubject<String>();
 
 class CacheControl {
@@ -81,7 +80,8 @@ class CacheControl {
     shortcutSubject.add(shortcutBundleIds);
   }
 
-  void initThemeType(String themeType) => _sp.setString(_themeTypeKey, themeType);
+  void initThemeType(String themeType) =>
+      _sp.setString(_themeTypeKey, themeType);
 
   void setThemeType(String themeType) {
     _sp.setString(_themeTypeKey, themeType);
@@ -96,19 +96,23 @@ class CacheControl {
 
   String get version => _sp.get(_appVersionKey);
 
-  void setActiveBaseUrl(String activeBaseUrl) => _sp.setString(_customBaseUrlsKey, activeBaseUrl);
+  void setActiveBaseUrl(String activeBaseUrl) =>
+      _sp.setString(_customBaseUrlsKey, activeBaseUrl);
 
   String get activeBaseUrl => _sp.get(_customBaseUrlsKey);
 
-  void setCustomBaseUrls(String customBaseUrls) => _sp.setString(_allBaseUrlKey, customBaseUrls);
+  void setCustomBaseUrls(String customBaseUrls) =>
+      _sp.setString(_allBaseUrlKey, customBaseUrls);
 
   String get customBaseUrls => _sp.get(_allBaseUrlKey);
 
-  void setConnectTimeout(int connectTimeout) => _sp.setInt(_connectTimeoutKey, connectTimeout);
+  void setConnectTimeout(int connectTimeout) =>
+      _sp.setInt(_connectTimeoutKey, connectTimeout);
 
   int get connectTimeout => _sp.getInt(_connectTimeoutKey);
 
-  void setReceiveTimeout(int receiveTimeout) => _sp.setInt(_receiveTimeoutKey, receiveTimeout);
+  void setReceiveTimeout(int receiveTimeout) =>
+      _sp.setInt(_receiveTimeoutKey, receiveTimeout);
 
   int get receiveTimeout => _sp.getInt(_receiveTimeoutKey);
 }

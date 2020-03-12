@@ -31,9 +31,13 @@ class NumberFieldState extends State<NumberField> {
   @override
   void initState() {
     super.initState();
-    if (this.widget.initValue < this.widget.miniValue) this._value = this.widget.miniValue;
-    if (this.widget.initValue > this.widget.maxValue) this._value = this.widget.maxValue;
-    if (this.widget.initValue >= this.widget.miniValue && this.widget.initValue <= this.widget.maxValue) this._value = this.widget.initValue;
+    if (this.widget.initValue < this.widget.miniValue)
+      this._value = this.widget.miniValue;
+    if (this.widget.initValue > this.widget.maxValue)
+      this._value = this.widget.maxValue;
+    if (this.widget.initValue >= this.widget.miniValue &&
+        this.widget.initValue <= this.widget.maxValue)
+      this._value = this.widget.initValue;
   }
 
   @override
@@ -47,7 +51,8 @@ class NumberFieldState extends State<NumberField> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           InkWell(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
             onTap: () {
               if (this._value > widget.miniValue) {
                 this.setState(() => this._value = this._value - 1);
@@ -60,7 +65,9 @@ class NumberFieldState extends State<NumberField> {
               padding: EdgeInsets.symmetric(horizontal: 3),
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10)),
               ),
               child: Icon(
                 Icons.remove,
@@ -92,12 +99,16 @@ class NumberFieldState extends State<NumberField> {
                 TextEditingValue(
                   text: this._value.toString(),
                   selection: TextSelection.fromPosition(
-                    TextPosition(affinity: TextAffinity.downstream, offset: this._value.toString().length),
+                    TextPosition(
+                        affinity: TextAffinity.downstream,
+                        offset: this._value.toString().length),
                   ),
                 ),
               ),
               keyboardType: TextInputType.number,
-              inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9]"))],
+              inputFormatters: [
+                WhitelistingTextInputFormatter(RegExp("[0-9]"))
+              ],
               textAlign: TextAlign.center,
               style: new TextStyle(
                 fontSize: 17.0,
@@ -112,7 +123,9 @@ class NumberFieldState extends State<NumberField> {
             ),
           ),
           InkWell(
-            borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(10),
+                bottomRight: Radius.circular(10)),
             onTap: () {
               if (this._value < widget.maxValue) {
                 this.setState(() => this._value = this._value + 1);
@@ -123,7 +136,11 @@ class NumberFieldState extends State<NumberField> {
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 3),
-              decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10))),
+              decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      bottomRight: Radius.circular(10))),
               child: Icon(
                 Icons.add,
                 color: Colors.black54,

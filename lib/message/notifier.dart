@@ -18,16 +18,20 @@ class Notifier {
 
   Future init() async {
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-    var initializationSettingsAndroid = new AndroidInitializationSettings('app_icon');
-    var initializationSettings = InitializationSettings(initializationSettingsAndroid, null);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: (String payload) async {
+    var initializationSettingsAndroid =
+        new AndroidInitializationSettings('app_icon');
+    var initializationSettings =
+        InitializationSettings(initializationSettingsAndroid, null);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: (String payload) async {
       _notificationId--;
       if (payload != null) {
         notifierSubject.add(payload);
       }
     });
 
-    socketMessageSubject.stream.listen((messageBody) => showBigTextNotification(messageBody));
+    socketMessageSubject.stream
+        .listen((messageBody) => showBigTextNotification(messageBody));
   }
 
   Future<void> showBigTextNotification(MessageBody messageBody) async {
@@ -48,7 +52,10 @@ class Notifier {
       style: AndroidNotificationStyle.BigText,
       styleInformation: bigTextStyleInformation,
     );
-    var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, null);
-    await flutterLocalNotificationsPlugin.show(++_notificationId, title, content, platformChannelSpecifics, payload: messageBody.uuid);
+    var platformChannelSpecifics =
+        NotificationDetails(androidPlatformChannelSpecifics, null);
+    await flutterLocalNotificationsPlugin.show(
+        ++_notificationId, title, content, platformChannelSpecifics,
+        payload: messageBody.uuid);
   }
 }

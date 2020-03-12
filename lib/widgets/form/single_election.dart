@@ -47,7 +47,8 @@ class SingleElectionState extends State<SingleElection> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.color == null) _unSelectedColor = Theme.of(context).iconTheme.color;
+    if (widget.color == null)
+      _unSelectedColor = Theme.of(context).iconTheme.color;
     return Opacity(
       opacity: widget.disabled ? 0.5 : 1,
       child: Padding(
@@ -96,12 +97,19 @@ class SingleElectionState extends State<SingleElection> {
                   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                   child: FlatButton(
                     color: selected ? _selectedColor[50] : Colors.transparent,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12)), side: BorderSide(color: selected ? _selectedColor : _unSelectedColor)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        side: BorderSide(
+                            color:
+                                selected ? _selectedColor : _unSelectedColor)),
                     child: Text(
                       widget.list[index].label,
-                      style: new TextStyle(color: selected ? _selectedColor : _unSelectedColor),
+                      style: new TextStyle(
+                          color: selected ? _selectedColor : _unSelectedColor),
                     ),
-                    onPressed: widget.disabled ? () => TipsTool.warning(widget.disabledHind) : () => widget.onPressed(widget.list[index]),
+                    onPressed: widget.disabled
+                        ? () => TipsTool.warning(widget.disabledHind)
+                        : () => widget.onPressed(widget.list[index]),
                   ),
                 );
               },
@@ -123,8 +131,14 @@ class SingleElectionItem {
         value = map[valueName ?? 'value'] ?? '',
         sourceBody = map;
 
-  static List<SingleElectionItem> allFromMap(List mapList, {labelName, valueName}) {
-    return mapList != null ? mapList.map((map) => SingleElectionItem.fromMap(map, labelName: labelName, valueName: valueName)).toList() : [];
+  static List<SingleElectionItem> allFromMap(List mapList,
+      {labelName, valueName}) {
+    return mapList != null
+        ? mapList
+            .map((map) => SingleElectionItem.fromMap(map,
+                labelName: labelName, valueName: valueName))
+            .toList()
+        : [];
   }
 }
 

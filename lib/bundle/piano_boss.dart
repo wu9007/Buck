@@ -22,9 +22,14 @@ class PianoBoss {
     if (_userInfo != null) {
       List pianoIds = _userInfo.bundleIds;
       _pool.entries.forEach((entry) {
-        List<Piano> pianos = entry.value.values.where((piano) => buck.menuFree ? true : (!piano.auth || pianoIds.contains(piano.id))).toList();
+        List<Piano> pianos = entry.value.values
+            .where((piano) => buck.menuFree
+                ? true
+                : (!piano.auth || pianoIds.contains(piano.id)))
+            .toList();
         pianos.sort((piano1, piano2) => piano1.sort > piano2.sort ? 1 : -1);
-        if (pianos.length > 0) groupingPianos.putIfAbsent(entry.key, () => pianos);
+        if (pianos.length > 0)
+          groupingPianos.putIfAbsent(entry.key, () => pianos);
       });
     }
     return groupingPianos;
@@ -40,16 +45,19 @@ class PianoBoss {
     }).toList();
   }
 
-  static List<Widget> _buildPianoWidget(List<Piano> pianos, BuildContext context) {
+  static List<Widget> _buildPianoWidget(
+      List<Piano> pianos, BuildContext context) {
     List<Widget> pianoButtons = pianos.map((piano) {
       return Container(
         child: GestureDetector(
           child: ListTile(
             leading: Hero(tag: piano.id, child: piano.leading),
-            title: Text(piano.cnName, style: TextStyle(color: Theme.of(context).hintColor)),
+            title: Text(piano.cnName,
+                style: TextStyle(color: Theme.of(context).hintColor)),
             trailing: Icon(Icons.chevron_right),
           ),
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => piano)),
+          onTap: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => piano)),
         ),
         color: Theme.of(context).canvasColor,
       );

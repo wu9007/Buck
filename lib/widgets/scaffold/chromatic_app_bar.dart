@@ -27,7 +27,9 @@ class ChromaticAppBar extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           centerTitle: true,
-          title: Text(title, style: TextStyle(fontFamily: 'pinshang', fontWeight: FontWeight.bold)),
+          title: Text(title,
+              style: TextStyle(
+                  fontFamily: 'pinshang', fontWeight: FontWeight.bold)),
         ),
       ],
     );

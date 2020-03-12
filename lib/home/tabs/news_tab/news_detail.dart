@@ -22,7 +22,9 @@ class NewsDetailState extends State<NewsDetail> {
   void initState() {
     super.initState();
     _messageUuid = widget.uuid;
-    MessageBody messageBody = buck.messageBox.allMessage().singleWhere((item) => item.uuid == _messageUuid);
+    MessageBody messageBody = buck.messageBox
+        .allMessage()
+        .singleWhere((item) => item.uuid == _messageUuid);
     this.setState(() => _messageBody = messageBody);
 
     if (messageBody.unread) {
@@ -47,7 +49,11 @@ class NewsDetailState extends State<NewsDetail> {
           NewsBar(height: 75, title: '来自${_messageBody.senderName}的消息'),
           Positioned.fill(
             child: Padding(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 50.0 + 10, bottom: 5, left: 15, right: 15),
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 50.0 + 10,
+                  bottom: 5,
+                  left: 15,
+                  right: 15),
               child: _messageBody != null
                   ? SingleChildScrollView(
                       child: Column(
@@ -59,15 +65,24 @@ class NewsDetailState extends State<NewsDetail> {
                           ),
                           Text(
                             '${_messageBody.sendTime.year}年${_messageBody.sendTime.month}月${_messageBody.sendTime.day}日 ${_messageBody.sendTime.hour}:${_messageBody.sendTime.minute}',
-                            style: TextStyle(fontSize: 15, color: Theme.of(context).hintColor),
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Theme.of(context).hintColor),
                           ),
                           Divider(height: 27),
-                          Text(_messageBody.content, style: TextStyle(fontSize: 15, height: 1.7)),
+                          Text(_messageBody.content,
+                              style: TextStyle(fontSize: 15, height: 1.7)),
                           Divider(),
                           _messageBody.bundleId != null
                               ? GestureDetector(
-                                  child: Text('去处理', style: TextStyle(color: Colors.blue, fontSize: 15, decoration: TextDecoration.underline)),
-                                  onTap: () => Navigator.of(context).pushNamed(_messageBody.bundleId),
+                                  child: Text('去处理',
+                                      style: TextStyle(
+                                          color: Colors.blue,
+                                          fontSize: 15,
+                                          decoration:
+                                              TextDecoration.underline)),
+                                  onTap: () => Navigator.of(context)
+                                      .pushNamed(_messageBody.bundleId),
                                 )
                               : SizedBox(height: 10),
                         ],

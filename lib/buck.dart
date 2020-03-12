@@ -48,7 +48,11 @@ class Buck {
     return _instance;
   }
 
-  Future init({@required String baseUrl, int connectTimeout, int requestTimeout, bool menuFree = false}) async {
+  Future init(
+      {@required String baseUrl,
+      int connectTimeout,
+      int requestTimeout,
+      bool menuFree = false}) async {
     _notifierInstance = Notifier.getInstance();
     _commonApiInstance = CommonApi.getInstance();
     _messageBoxInstance = MessageBox.getInstance();
@@ -67,8 +71,10 @@ class Buck {
     }
     _notifierInstance.init();
     _cacheControlInstance.init(baseUrl);
-    if (connectTimeout != null) _cacheControlInstance.setConnectTimeout(connectTimeout);
-    if (requestTimeout != null) _cacheControlInstance.setReceiveTimeout(requestTimeout);
+    if (connectTimeout != null)
+      _cacheControlInstance.setConnectTimeout(connectTimeout);
+    if (requestTimeout != null)
+      _cacheControlInstance.setReceiveTimeout(requestTimeout);
   }
 
   void settingCommonPath({

@@ -13,7 +13,8 @@ class MenuCenter extends StatefulWidget {
   State<StatefulWidget> createState() => MenuCenterState();
 }
 
-class MenuCenterState extends State<MenuCenter> with SingleTickerProviderStateMixin {
+class MenuCenterState extends State<MenuCenter>
+    with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _animation;
   bool _shortcutOpen;
@@ -22,7 +23,8 @@ class MenuCenterState extends State<MenuCenter> with SingleTickerProviderStateMi
   void initState() {
     super.initState();
     _shortcutOpen = false;
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 200));
     _animation = Tween(begin: -132.0, end: 0.0).animate(_controller)
       ..addListener(() {
         setState(() {});
@@ -40,7 +42,8 @@ class MenuCenterState extends State<MenuCenter> with SingleTickerProviderStateMi
           MenuBar(radius: 115),
           Positioned.fill(
             child: Padding(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top, bottom: 5),
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top, bottom: 5),
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.only(top: 50.0, bottom: 27),
@@ -75,14 +78,15 @@ class MenuCenterState extends State<MenuCenter> with SingleTickerProviderStateMi
           child: Container(
             padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 50),
             width: 130,
-            decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(5)), color: Colors.black38),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(5)),
+                color: Colors.black38),
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               reverse: true,
               child: Column(
                 children: MenuBoss.shortcutMenus(context),
               ),
-
             ),
           )),
     );
@@ -97,7 +101,9 @@ class MenuCenterState extends State<MenuCenter> with SingleTickerProviderStateMi
           opacity: 0.5,
           child: Container(
             padding: EdgeInsets.all(9),
-            decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(10)), color: Colors.black38),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(10)),
+                color: Colors.black38),
             child: AnimatedIcon(
               icon: AnimatedIcons.list_view,
               progress: _controller,

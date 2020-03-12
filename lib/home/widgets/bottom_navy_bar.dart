@@ -33,13 +33,17 @@ class BottomNavyBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = (backgroundColor == null) ? Theme.of(context).bottomAppBarColor : backgroundColor;
+    final bgColor = (backgroundColor == null)
+        ? Theme.of(context).bottomAppBarColor
+        : backgroundColor;
 
     return Container(
       decoration: BoxDecoration(
         color: bgColor,
         boxShadow: [
-          BoxShadow(color: showElevation ? Colors.black12 : Colors.transparent, blurRadius: showElevation ? 2 : 0),
+          BoxShadow(
+              color: showElevation ? Colors.black12 : Colors.transparent,
+              blurRadius: showElevation ? 2 : 0),
         ],
       ),
       child: SafeArea(
@@ -117,10 +121,16 @@ class _ItemWidget extends StatelessWidget {
               Stack(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(right: 10, top: 5, bottom: 5),
+                    padding:
+                        const EdgeInsets.only(right: 10, top: 5, bottom: 5),
                     child: IconTheme(
                       data: IconThemeData(
-                          size: iconSize, color: isSelected ? item.activeColor.withOpacity(1) : item.inactiveColor == null ? item.activeColor : item.inactiveColor),
+                          size: iconSize,
+                          color: isSelected
+                              ? item.activeColor.withOpacity(1)
+                              : item.inactiveColor == null
+                                  ? item.activeColor
+                                  : item.inactiveColor),
                       child: item.icon,
                     ),
                   ),
@@ -132,9 +142,13 @@ class _ItemWidget extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 5.0),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 1.0, horizontal: 5.0),
                           color: Colors.red[400],
-                          child: Text(item.news > 99 ? '99+' : item.news.toString(), style: TextStyle(fontSize: 10, color: Colors.white)),
+                          child: Text(
+                              item.news > 99 ? '99+' : item.news.toString(),
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white)),
                         ),
                       ),
                     ),

@@ -5,11 +5,11 @@ import 'package:buck/basic_app.dart';
 import 'package:buck/message/cmd_executor.dart';
 import 'package:buck/message/message_body.dart';
 import 'package:buck/model/user_info.dart';
-import 'package:buck/utils/login_client.dart';
 import 'package:buck/widgets/tips/tips_tool.dart';
 import 'package:rxdart/rxdart.dart';
 
-final BehaviorSubject<MessageBody> socketMessageSubject = BehaviorSubject<MessageBody>();
+final BehaviorSubject<MessageBody> socketMessageSubject =
+    BehaviorSubject<MessageBody>();
 
 class SocketClient {
   static SocketClient _socketClient = new SocketClient._();
@@ -27,8 +27,12 @@ class SocketClient {
     String serialNo = buck.androidInfo.androidId;
     String activeBaseUrl = buck.cacheControl.activeBaseUrl;
     RegExpMatch portRegExpMatch = RegExp(r":\d{4}").firstMatch(activeBaseUrl);
-    String ip = activeBaseUrl.substring(activeBaseUrl.indexOf('//') + 2, portRegExpMatch.start);
-    String wsPort = (int.parse(activeBaseUrl.substring(portRegExpMatch.start + 1, portRegExpMatch.end)) + 1).toString();
+    String ip = activeBaseUrl.substring(
+        activeBaseUrl.indexOf('//') + 2, portRegExpMatch.start);
+    String wsPort = (int.parse(activeBaseUrl.substring(
+                portRegExpMatch.start + 1, portRegExpMatch.end)) +
+            1)
+        .toString();
     String wsUrl = 'ws://$ip:$wsPort';
     _webSocket = await WebSocket.connect(wsUrl, headers: {
       'avatar': userInfo.avatar,

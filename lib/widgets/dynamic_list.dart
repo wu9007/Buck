@@ -87,7 +87,9 @@ class DynamicListState extends State<DynamicList> {
             child: this.widget.separated
                 ? ListView.separated(
                     scrollDirection: widget.scrollDirection,
-                    separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0, color: Theme.of(context).hintColor),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Divider(
+                            height: 1.0, color: Theme.of(context).hintColor),
                     itemCount: _dataList.length + 1,
                     itemBuilder: (context, index) {
                       if (index == _dataList.length) {
@@ -135,9 +137,11 @@ class DynamicListState extends State<DynamicList> {
     if (newDataList != null) {
       if (newDataList.length == 0) {
         double edge = 50.0;
-        double offsetFromBottom = _controller.position.maxScrollExtent - _controller.position.pixels;
+        double offsetFromBottom =
+            _controller.position.maxScrollExtent - _controller.position.pixels;
         if (offsetFromBottom < edge) {
-          _controller.animateTo(_controller.offset - (edge - offsetFromBottom), duration: new Duration(milliseconds: 500), curve: Curves.easeOut);
+          _controller.animateTo(_controller.offset - (edge - offsetFromBottom),
+              duration: new Duration(milliseconds: 500), curve: Curves.easeOut);
         }
       } else {
         _dataList.addAll(newDataList);
@@ -156,7 +160,8 @@ Widget loadingProgress(loadingColor, {Widget initLoadingWidget}) {
   );
 }
 
-Widget opacityLoadingProgress(isPerformingRequest, loadingColor, {Widget loadingWidget}) {
+Widget opacityLoadingProgress(isPerformingRequest, loadingColor,
+    {Widget loadingWidget}) {
   if (loadingWidget == null) {
     loadingWidget = Loading();
   }
@@ -193,8 +198,10 @@ class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1800));
-    final CurvedAnimation curve = CurvedAnimation(parent: controller, curve: Curves.easeInOutBack);
+    controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1800));
+    final CurvedAnimation curve =
+        CurvedAnimation(parent: controller, curve: Curves.easeInOutBack);
     animation = Tween(begin: 0.0, end: 2 * math.pi).animate(curve)
       ..addListener(() {
         setState(() {});

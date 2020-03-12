@@ -27,14 +27,15 @@ class RsaHelper {
     _clientPrivateKeyString = await rootBundle.loadString(clientPrivateKeyPath);
     RSAPublicKey clientPublicKey = parser.parse(_clientPublicKeyString);
     RSAPrivateKey clientPrivateKey = parser.parse(_clientPrivateKeyString);
-    _clientEncrypter = Encrypter(RSA(publicKey: clientPublicKey, privateKey: clientPrivateKey));
+    _clientEncrypter = Encrypter(
+        RSA(publicKey: clientPublicKey, privateKey: clientPrivateKey));
   }
 
   /// 程序启动后向后台请求公钥
   setBackendPublicKey(String publicKeyStr) {
 //    if (_backendEncrypter == null) {
-      RSAPublicKey backendPublicKey = parser.parse(publicKeyStr);
-      _backendEncrypter = Encrypter(RSA(publicKey: backendPublicKey));
+    RSAPublicKey backendPublicKey = parser.parse(publicKeyStr);
+    _backendEncrypter = Encrypter(RSA(publicKey: backendPublicKey));
 //    }
   }
 

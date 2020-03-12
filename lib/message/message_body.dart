@@ -52,7 +52,8 @@ class MessageBody {
 
   Future<void> read() async {
     this._unread = false;
-    await DioClient().post(buck.commonApiInstance.readMessageApi, data: {'uuid': _uuid});
+    await DioClient()
+        .post(buck.commonApiInstance.readMessageApi, data: {'uuid': _uuid});
   }
 
   String get type => this._type;

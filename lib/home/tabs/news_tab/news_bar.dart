@@ -6,7 +6,8 @@ class NewsBar extends StatelessWidget {
   final String title;
   final double height;
 
-  const NewsBar({Key key, @required this.title, @required this.height}) : super(key: key);
+  const NewsBar({Key key, @required this.title, @required this.height})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +23,16 @@ class NewsBar extends StatelessWidget {
           centerTitle: true,
           leading: Navigator.canPop(context)
               ? GestureDetector(
-                  child: Icon(Icons.arrow_back, color: Theme.of(context).hintColor),
+                  child: Icon(Icons.arrow_back,
+                      color: Theme.of(context).hintColor),
                   onTap: () => Navigator.of(context).pop(),
                 )
               : Container(),
-          title: Text(title, style: TextStyle(fontFamily: 'pinshang', fontWeight: FontWeight.bold, color: Theme.of(context).cardColor)),
+          title: Text(title,
+              style: TextStyle(
+                  fontFamily: 'pinshang',
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).cardColor)),
         ),
       ],
     );

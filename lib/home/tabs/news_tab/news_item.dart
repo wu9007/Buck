@@ -23,15 +23,23 @@ class NewsItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(messageBody.senderName ?? '', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold), maxLines: 1),
-                    Text('${messageBody.sendTime.month}/${messageBody.sendTime.day} ${messageBody.sendTime.hour}:${messageBody.sendTime.minute}',
-                        style: TextStyle(fontSize: 13, color: Theme.of(context).hintColor), maxLines: 1),
+                    Text(messageBody.senderName ?? '',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                        maxLines: 1),
+                    Text(
+                        '${messageBody.sendTime.month}/${messageBody.sendTime.day} ${messageBody.sendTime.hour}:${messageBody.sendTime.minute}',
+                        style: TextStyle(
+                            fontSize: 13, color: Theme.of(context).hintColor),
+                        maxLines: 1),
                   ],
                 ),
-                Text(messageBody.title ?? '', style: TextStyle(fontSize: 14), maxLines: 1),
+                Text(messageBody.title ?? '',
+                    style: TextStyle(fontSize: 14), maxLines: 1),
                 Text(
                   messageBody.content ?? '',
-                  style: TextStyle(fontSize: 14, color: Theme.of(context).hintColor),
+                  style: TextStyle(
+                      fontSize: 14, color: Theme.of(context).hintColor),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

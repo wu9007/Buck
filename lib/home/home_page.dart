@@ -34,7 +34,8 @@ class _HomePageState extends State<HomePage> with PdaListenerMixin<HomePage> {
     _pageController = PageController();
     _newsNum = buck.messageBox.unreadMessage().length;
     messageBoxSubject.stream.listen((values) {
-      if (mounted) this.setState(() => _newsNum = buck.messageBox.unreadMessage().length);
+      if (mounted)
+        this.setState(() => _newsNum = buck.messageBox.unreadMessage().length);
     });
 
     notifierSubject.stream.listen((uuid) {
@@ -42,7 +43,9 @@ class _HomePageState extends State<HomePage> with PdaListenerMixin<HomePage> {
         detailIsOpen = true;
         this.setState(() => _currentIndex = 1);
         _pageController.jumpToPage(_currentIndex);
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewsDetail(uuid))).then((value) => detailIsOpen = false);
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => NewsDetail(uuid)))
+            .then((value) => detailIsOpen = false);
       }
     });
 
@@ -86,8 +89,12 @@ class _HomePageState extends State<HomePage> with PdaListenerMixin<HomePage> {
         },
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(title: Text('Menus'), icon: Icon(Icons.apps)),
-          BottomNavyBarItem(title: Text('Messages'), icon: Icon(Icons.message), news: _newsNum),
-          BottomNavyBarItem(title: Text('Person'), icon: Icon(Icons.person_pin)),
+          BottomNavyBarItem(
+              title: Text('Messages'),
+              icon: Icon(Icons.message),
+              news: _newsNum),
+          BottomNavyBarItem(
+              title: Text('Person'), icon: Icon(Icons.person_pin)),
         ],
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class HeaderText extends StatelessWidget {
-
   HeaderText({@required this.text, @required this.imagePath});
 
   final String text;
@@ -37,5 +36,4 @@ class HeaderText extends StatelessWidget {
       ],
     );
   }
-
 }

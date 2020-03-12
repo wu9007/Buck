@@ -12,7 +12,13 @@ class Selector<T> extends StatefulWidget {
     @required this.onChange,
     this.noUnderline = false,
     this.disabled = false,
-  })  : assert(store == null || store.isEmpty || value == null || store.where((DropdownMenuItem<T> item) => item.value == value).length == 1),
+  })  : assert(store == null ||
+            store.isEmpty ||
+            value == null ||
+            store
+                    .where((DropdownMenuItem<T> item) => item.value == value)
+                    .length ==
+                1),
         super(key: key);
 
   final T value;
@@ -32,8 +38,11 @@ class SelectorState<T> extends State<Selector<T>> {
   @override
   Widget build(BuildContext context) {
     dynamic disabledHint;
-    if (widget.value != null && widget.store != null && widget.store.length > 0) {
-      disabledHint = widget.store.singleWhere((item) => item.value == widget.value)?.child;
+    if (widget.value != null &&
+        widget.store != null &&
+        widget.store.length > 0) {
+      disabledHint =
+          widget.store.singleWhere((item) => item.value == widget.value)?.child;
     }
     return Opacity(
       opacity: widget.disabled ? 0.5 : 1,

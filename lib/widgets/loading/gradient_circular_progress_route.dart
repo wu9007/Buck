@@ -31,7 +31,8 @@ class GradientCircularProgressRoute extends StatefulWidget {
   }
 }
 
-class GradientCircularProgressRouteState extends State<GradientCircularProgressRoute> with TickerProviderStateMixin {
+class GradientCircularProgressRouteState
+    extends State<GradientCircularProgressRoute> with TickerProviderStateMixin {
   AnimationController _animationController;
   List<Color> _colors;
 
@@ -43,12 +44,14 @@ class GradientCircularProgressRouteState extends State<GradientCircularProgressR
     } else {
       _colors = widget.colors;
     }
-    _animationController = new AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _animationController =
+        new AnimationController(vsync: this, duration: Duration(seconds: 1));
     bool isForward = true;
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.forward) {
         isForward = true;
-      } else if (status == AnimationStatus.completed || status == AnimationStatus.dismissed) {
+      } else if (status == AnimationStatus.completed ||
+          status == AnimationStatus.dismissed) {
         if (isForward) {
           _animationController.reverse();
         } else {

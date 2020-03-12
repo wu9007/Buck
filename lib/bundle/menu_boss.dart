@@ -24,9 +24,12 @@ class MenuBoss {
     if (_userInfo != null) {
       List bundleIds = _userInfo.bundleIds;
       _pool.entries.forEach((entry) {
-        List<Menu> menus = entry.value.values.where((menu) => buck.menuFree ? true : bundleIds.contains(menu.id)).toList();
+        List<Menu> menus = entry.value.values
+            .where((menu) => buck.menuFree ? true : bundleIds.contains(menu.id))
+            .toList();
         menus.sort((menu1, menu2) => menu1.sort > menu2.sort ? 1 : -1);
-        if (menus.length > 0) groupingBundles.putIfAbsent(entry.key, () => menus);
+        if (menus.length > 0)
+          groupingBundles.putIfAbsent(entry.key, () => menus);
       });
     }
     return groupingBundles;
@@ -39,13 +42,19 @@ class MenuBoss {
       return Container(
         margin: EdgeInsets.all(6),
         padding: EdgeInsets.all(6),
-        decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.vertical(top: Radius.circular(5))),
+        decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(5))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-              child: Text(groupName, style: TextStyle(fontSize: 16.0, fontFamily: 'pinshang', color: Theme.of(context).primaryColorLight)),
+              child: Text(groupName,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: 'pinshang',
+                      color: Theme.of(context).primaryColorLight)),
             ),
             Divider(
               height: 20,
@@ -60,15 +69,28 @@ class MenuBoss {
   }
 
   static List<Widget> shortcutMenus(BuildContext context) {
-    List<Menu> _shortcutMenus = allMenus.entries.where((entry) => buck.cacheControl.shortcutBundleIds.contains(entry.key)).map((entry) => entry.value).toList();
-    List<Widget> _shortcutMenusWidget = _buildMenuWidget(_shortcutMenus, context, shortcut: true);
-    return _shortcutMenusWidget.length <= 0 ? [Text('暂未加入快捷菜单', style: TextStyle(color: Colors.white, fontSize: 13))] : _shortcutMenusWidget;
+    List<Menu> _shortcutMenus = allMenus.entries
+        .where(
+            (entry) => buck.cacheControl.shortcutBundleIds.contains(entry.key))
+        .map((entry) => entry.value)
+        .toList();
+    List<Widget> _shortcutMenusWidget =
+        _buildMenuWidget(_shortcutMenus, context, shortcut: true);
+    return _shortcutMenusWidget.length <= 0
+        ? [
+            Text('暂未加入快捷菜单',
+                style: TextStyle(color: Colors.white, fontSize: 13))
+          ]
+        : _shortcutMenusWidget;
   }
 
-  static List<Widget> _buildMenuWidget(List<Menu> menus, BuildContext context, {bool shortcut = false}) {
+  static List<Widget> _buildMenuWidget(List<Menu> menus, BuildContext context,
+      {bool shortcut = false}) {
     Widget icon;
     return menus.map((menu) {
-      icon = !shortcut && menu.key != null ? Hero(tag: menu.key, child: menu.icon) : menu.icon;
+      icon = !shortcut && menu.key != null
+          ? Hero(tag: menu.key, child: menu.icon)
+          : menu.icon;
       double width = MediaQuery.of(context).size.width / 3 - 8;
       return Padding(
         padding: EdgeInsets.symmetric(vertical: 3),
@@ -77,10 +99,17 @@ class MenuBoss {
           id: menu.id,
           text: Padding(
             padding: EdgeInsets.only(bottom: 5),
-            child: Text(menu.cnName, style: TextStyle(fontSize: 14.0, fontFamily: 'pinshang', color: Theme.of(context).primaryColorLight)),
+            child: Text(menu.cnName,
+                style: TextStyle(
+                    fontSize: 14.0,
+                    fontFamily: 'pinshang',
+                    color: Theme.of(context).primaryColorLight)),
           ),
-          icon: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 2), child: icon),
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => menu)),
+          icon: Padding(
+              padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 2),
+              child: icon),
+          onTap: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => menu)),
           onLongPress: () {
             buck.cacheControl.operateShortcut(menu.id);
             Vibrate.feedback(FeedbackType.success);

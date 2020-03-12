@@ -42,18 +42,24 @@ class NewsCenterState extends State<NewsCenter> {
           NewsBar(height: 75, title: '消  息'),
           Positioned.fill(
             child: Padding(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 50.0, bottom: 5),
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 50.0, bottom: 5),
               child: RefreshIndicator(
                 onRefresh: () => buck.messageBox.loadMessage(),
                 child: ListView.separated(
                     controller: _controller,
                     itemCount: _allMessage.length,
-                    separatorBuilder: (BuildContext context, int index) => new Divider(),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        new Divider(),
                     itemBuilder: (context, index) {
                       MessageBody messageBody = _allMessage[index];
                       return GestureDetector(
                         behavior: HitTestBehavior.opaque,
-                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NewsDetail(messageBody.uuid))),
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    NewsDetail(messageBody.uuid))),
                         child: NewsItem(messageBody),
                       );
                     }),
@@ -70,12 +76,17 @@ class NewsCenterState extends State<NewsCenter> {
                       opacity: 0.8,
                       child: Container(
                         padding: EdgeInsets.all(9),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.white),
-                        child: Icon(MyIcons.toTop, color: Colors.black, size: 32),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.white),
+                        child:
+                            Icon(MyIcons.toTop, color: Colors.black, size: 32),
                       ),
                     ),
                     onTap: () {
-                      _controller.animateTo(.0, duration: Duration(milliseconds: 500), curve: Curves.ease);
+                      _controller.animateTo(.0,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.ease);
                     },
                   ),
           )
