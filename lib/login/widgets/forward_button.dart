@@ -22,7 +22,7 @@ class ForwardButton extends StatelessWidget {
             label,
             style: Theme.of(context)
                 .textTheme
-                .headline6
+                .title
                 .copyWith(color: Colors.white),
           ),
         ),

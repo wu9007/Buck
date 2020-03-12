@@ -35,7 +35,7 @@ class WhetherDialog extends StatelessWidget {
           children: <Widget>[
             Text(title,
                 style: TextStyle(
-                    color: Theme.of(context).textTheme.headline6.color,
+                    color: Theme.of(context).textTheme.title.color,
                     fontSize: 18,
                     decoration: TextDecoration.none,
                     fontFamily: 'pinshang')),
@@ -46,7 +46,7 @@ class WhetherDialog extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Text(content,
                       style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyText2.color,
+                          color: Theme.of(context).textTheme.body1.color,
                           fontSize: 15,
                           decoration: TextDecoration.none,
                           fontWeight: FontWeight.normal)),
