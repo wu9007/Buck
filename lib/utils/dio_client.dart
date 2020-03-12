@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:buck/basic_app.dart';
-import 'package:buck/service/cache_control.dart';
 import 'package:buck/utils/aes_helper.dart';
 import 'package:buck/utils/login_client.dart';
 import 'package:buck/utils/rsa_helper.dart';
@@ -18,15 +17,12 @@ class DioClient<T> {
     responseType: ResponseType.json,
   ));
 
-  CacheControl _cacheControl;
-
   Future<ResponseBody<T>> post(url, {Map data, Map queryParameters, UploadFile uploadFile, List<UploadFile> uploadFiles, customBaseUrl, bool encrypt = false}) async {
-    _cacheControl = await CacheControl.getInstance();
     _dio.options.headers = {'clientName': buck.packageInfo.appName, 'encrypt': encrypt};
-    if (_cacheControl.token.length > 0) _dio.options.headers['Authorization'] = 'Bearer ' + _cacheControl.token;
-    _dio.options.baseUrl = customBaseUrl == null ? _cacheControl.activeBaseUrl : customBaseUrl;
+    if (buck.cacheControl.token.length > 0) _dio.options.headers['Authorization'] = 'Bearer ' + buck.cacheControl.token;
+    _dio.options.baseUrl = customBaseUrl == null ? buck.cacheControl.activeBaseUrl : customBaseUrl;
 
-    Response<Map<String, dynamic>> response;
+    Response response;
     if (uploadFile != null) data.putIfAbsent('file', () async => await MultipartFile.fromFile(uploadFile.filePath, filename: uploadFile.fileName, contentType: uploadFile.contentType));
     if (uploadFiles != null) data.putIfAbsent('files', () => uploadFiles.map((e) async => await MultipartFile.fromFile(uploadFile.filePath, filename: uploadFile.fileName, contentType: uploadFile.contentType)));
     try {
@@ -36,19 +32,9 @@ class DioClient<T> {
       TipsTool.error('网络异常').show();
     }
     if (response != null) {
-      Map responseData;
-      List<String> encrypt = response.headers['encrypt'];
-      if (encrypt != null && encrypt[0] == 'true') {
-        String aesKey = RsaHelper.getInstance().decodeClientData(response.data["aesKey"]);
-        print(aesKey);
-        print(response.data["encryptContent"]);
-        responseData = jsonDecode(AesHelper.decrypt(aesKey, response.data["encryptContent"]));
-      } else {
-        responseData = response.data;
-      }
-      ResponseBody<T> responseBody = ResponseBody<T>.fromMap(responseData);
+      ResponseBody<T> responseBody = _buildResponseBody(response);
       if (responseBody.token != null) {
-        _cacheControl.setToken(responseBody.token);
+        buck.cacheControl.setToken(responseBody.token);
       }
       if (responseBody.resend ?? false) {
         return post(url, data: data);
@@ -63,12 +49,11 @@ class DioClient<T> {
   }
 
   Future<ResponseBody<T>> get(url, {queryParameters, customBaseUrl}) async {
-    _cacheControl = await CacheControl.getInstance();
     _dio.options.headers = {'clientName': buck.packageInfo.appName};
-    if (_cacheControl.token.length > 0) _dio.options.headers['Authorization'] = 'Bearer ' + _cacheControl.token;
-    _dio.options.baseUrl = customBaseUrl == null ? _cacheControl.activeBaseUrl : customBaseUrl;
+    if (buck.cacheControl.token.length > 0) _dio.options.headers['Authorization'] = 'Bearer ' + buck.cacheControl.token;
+    _dio.options.baseUrl = customBaseUrl == null ? buck.cacheControl.activeBaseUrl : customBaseUrl;
 
-    Response<Map<String, dynamic>> response;
+    Response response;
     try {
       response = await _dio.get(url, queryParameters: queryParameters);
     } on DioError catch (e) {
@@ -76,19 +61,9 @@ class DioClient<T> {
       TipsTool.error('网络异常').show();
     }
     if (response != null) {
-      Map responseData;
-      List<String> encrypt = response.headers['encrypt'];
-      if (encrypt != null && encrypt[0] == 'true') {
-        String aesKey = RsaHelper.getInstance().decodeClientData(response.data["aesKey"]);
-        print(aesKey);
-        print(response.data["encryptContent"]);
-        responseData = jsonDecode(AesHelper.decrypt(aesKey, response.data["encryptContent"]));
-      } else {
-        responseData = response.data;
-      }
-      ResponseBody<T> responseBody = ResponseBody<T>.fromMap(responseData);
+      ResponseBody<T> responseBody = _buildResponseBody(response);
       if (responseBody.token != null) {
-        _cacheControl.setToken(responseBody.token);
+        buck.cacheControl.setToken(responseBody.token);
       }
       if (responseBody.resend ?? false) {
         return get(url, queryParameters: queryParameters);
@@ -103,9 +78,8 @@ class DioClient<T> {
   }
 
   Future download(BuildContext context, url, {Map<String, dynamic> queryParameters, @required path, ProgressCallback onReceiveProgress}) async {
-    _cacheControl = await CacheControl.getInstance();
-    if (_cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + _cacheControl.token};
-    _dio.options.baseUrl = _cacheControl.activeBaseUrl;
+    if (buck.cacheControl.token.length > 0) _dio.options.headers = {'Authorization': 'Bearer ' + buck.cacheControl.token};
+    _dio.options.baseUrl = buck.cacheControl.activeBaseUrl;
     _dio.options.responseType = ResponseType.stream;
 
     try {
@@ -114,6 +88,18 @@ class DioClient<T> {
       print(e);
       TipsTool.error('网络异常').show();
     }
+  }
+
+  ResponseBody<T> _buildResponseBody(response) {
+    var responseData;
+    List<String> encrypt = response.headers['encrypt'];
+    if (encrypt != null && encrypt[0] == 'true') {
+      String aesKey = RsaHelper.getInstance().decodeClientData(response.data["aesKey"]);
+      responseData = jsonDecode(AesHelper.decrypt(aesKey, response.data["encryptContent"]));
+    } else {
+      responseData = response.data;
+    }
+    return ResponseBody<T>.fromMap(responseData);
   }
 }
 
