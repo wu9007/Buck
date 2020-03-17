@@ -13,7 +13,7 @@ class BundlePreparation extends StatefulMenu {
   String get cnName => 'Preparation';
 
   @override
-  Widget get icon => Icon(Icons.add_to_home_screen);
+  Widget get icon => Icon(Icons.palette, color: Colors.redAccent,);
 
   @override
   String get id => 'preparation';
@@ -50,7 +50,7 @@ class BundlePreparationState extends State<BundlePreparation> with SingleTickerP
           length: 3,
         ),
       ),
-      chromaticAppBar: ChromaticAppBar('制 备'),
+      chromaticAppBar: ChromaticAppBar('Preparation'),
     );
   }
 
@@ -67,15 +67,15 @@ class BundlePreparationState extends State<BundlePreparation> with SingleTickerP
         new Row(
           children: [
             StepTab(
-              text: "工作准备",
+              text: "Work Preparation",
               selected: _stepIndex == 0,
             ),
             StepTab(
-              text: "初检",
+              text: "Initial Survey",
               selected: _stepIndex == 1,
             ),
             StepTab(
-              text: "浸泡清洗",
+              text: "Soak Cleaning",
               selected: _stepIndex == 2,
             ),
           ],

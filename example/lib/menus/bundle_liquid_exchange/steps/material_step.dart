@@ -63,15 +63,15 @@ class MaterialStepState extends State<MaterialStep> {
                 Container(height: 30),
                 Selector(
                   value: _mediaBatch,
-                  label: '  培 养 基：',
-                  hint: '请选择培养基批次号',
+                  label: 'DMEM',
+                  hint: 'select the medium batch number',
                   store: menuItems,
                   onChange: (item) => this.setState(() => _mediaBatch = item),
                 ),
                 Selector(
                   value: _pipetteBatch,
-                  label: '  移 液 管：',
-                  hint: '请选择移液管批次号',
+                  label: 'Pipette',
+                  hint: 'select pipette lot number',
                   store: menuItems,
                   onChange: (item) => this.setState(() => _pipetteBatch = item),
                 ),
@@ -83,7 +83,7 @@ class MaterialStepState extends State<MaterialStep> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[Text(' 扫描生物安全柜进入换液环节', style: TextStyle(color: Colors.white, fontFamily: 'shouji', fontSize: 18))],
+                    children: <Widget>[Text(' Next Step', style: TextStyle(color: Colors.white, fontFamily: 'shouji', fontSize: 18))],
                   ),
                   color: Colors.grey,
                 ),

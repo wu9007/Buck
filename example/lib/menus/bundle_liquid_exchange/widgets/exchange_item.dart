@@ -100,9 +100,9 @@ class ExchangeItemState extends State<ExchangeItem> with SingleTickerProviderSta
                 children: <Widget>[
                   Icon(Icons.golf_course, size: 20, color: Colors.black26),
                   SizedBox(width: 5),
-                  Text('于 ', style: TextStyle(fontSize: 15, color: Colors.black54)),
+                  Text('On ', style: TextStyle(fontSize: 15, color: Colors.black54)),
                   Text(widget.advanceNextTime.toLocal().toString().substring(0, 16), style: TextStyle(fontSize: 16)),
-                  Text(' 入箱培养', style: TextStyle(fontSize: 15, color: Colors.black54)),
+                  Text(' Inbox', style: TextStyle(fontSize: 15, color: Colors.black54)),
                 ],
               ),
               Row(
@@ -110,14 +110,14 @@ class ExchangeItemState extends State<ExchangeItem> with SingleTickerProviderSta
                 children: <Widget>[
                   Icon(Icons.location_on, size: 20, color: Colors.black26),
                   SizedBox(width: 5),
-                  Text('位于 ', style: TextStyle(fontSize: 15, color: Colors.black54)),
+                  Text('At ', style: TextStyle(fontSize: 15, color: Colors.black54)),
                   Text(widget.location, style: TextStyle(fontSize: 16)),
                 ],
               ),
               Row(
                 children: <Widget>[
                   Icon(Icons.timer, size: 20, color: Colors.black26),
-                  Text('下次换液 ', style: TextStyle(fontSize: 15, color: Colors.black54)),
+                  Text('Next Time ', style: TextStyle(fontSize: 15, color: Colors.black54)),
                   SizedBox(width: 5),
                   Text(widget.advanceNextTime.toLocal().toString().substring(0, 16), style: TextStyle(color: tipColor, fontSize: 18)),
                 ],

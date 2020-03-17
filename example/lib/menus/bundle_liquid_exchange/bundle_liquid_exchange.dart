@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class BundleLiquidExchange extends StatelessMenu {
   @override
-  Widget get icon => Icon(Icons.wifi_tethering);
+  Widget get icon => Icon(Icons.wifi_tethering, color: Colors.lightBlue);
 
   @override
   String get id => 'liquid_exchange';

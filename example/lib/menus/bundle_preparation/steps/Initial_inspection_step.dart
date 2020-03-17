@@ -67,8 +67,8 @@ class InitialInspectionStepState extends State<InitialInspectionStep> {
           Input(
             controller: _umbilicalLengthController,
             leading: Icon(Icons.straighten, color: Colors.black45),
-            label: '脐带长度',
-            hint: '请输入脐带长度',
+            label: 'Length',
+            hint: 'Please enter the length of the umbilical cord',
             trailing: Text('cm', style: CustomStyle.labelStyle),
             onChanged: (v) {
               this.setState(() => _umbilicalLength = double.parse(v));
@@ -77,7 +77,7 @@ class InitialInspectionStepState extends State<InitialInspectionStep> {
           Divider(height: 1),
           CheckboxListTile(
             secondary: const Icon(Icons.bubble_chart, color: Colors.black45),
-            title: const Text('脐带肿胀'),
+            title: const Text('Swelling'),
             value: this._swellingCheck,
             onChanged: (bool value) {
               setState(() {
@@ -88,7 +88,7 @@ class InitialInspectionStepState extends State<InitialInspectionStep> {
           Divider(height: 1),
           CheckboxListTile(
             secondary: const Icon(Icons.opacity, color: Colors.black45),
-            title: const Text('脐带淤血'),
+            title: const Text('Extravasated'),
             value: this._congestionCheck,
             onChanged: (bool value) {
               setState(() {
@@ -113,7 +113,7 @@ class InitialInspectionStepState extends State<InitialInspectionStep> {
                     ),
                   ),
                 )
-              : SizedBox(height: 180, child: Center(child: Container(child: Text('图片预览区', style: CustomStyle.hintStyle)))),
+              : SizedBox(height: 180, child: Center(child: Container(child: Text('Image Preview Area', style: CustomStyle.hintStyle)))),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: FlatButton.icon(
@@ -125,7 +125,7 @@ class InitialInspectionStepState extends State<InitialInspectionStep> {
                 size: 20,
               ),
               color: Colors.cyan,
-              label: Text('拍照上传', style: TextStyle(color: Colors.white, fontFamily: 'shouji', fontSize: 16)),
+              label: Text('Photo Upload', style: TextStyle(color: Colors.white, fontFamily: 'shouji', fontSize: 16)),
             ),
           ),
         ],
@@ -150,12 +150,12 @@ class InitialInspectionStepState extends State<InitialInspectionStep> {
           StepButton(
             stepButtonType: StepButtonType.pre,
             backgroundColor: Colors.orange,
-            text: Text('上一步', style: TextStyle(color: Colors.white, fontFamily: 'shouji', fontSize: 18)),
+            text: Text('Back', style: TextStyle(color: Colors.white, fontFamily: 'shouji', fontSize: 18)),
             onTap: widget.preTap,
           ),
           StepButton(
             stepButtonType: StepButtonType.next,
-            text: Text('下一步', style: TextStyle(color: Colors.white, fontFamily: 'shouji', fontSize: 18)),
+            text: Text('Next', style: TextStyle(color: Colors.white, fontFamily: 'shouji', fontSize: 18)),
             onTap: widget.nextTap,
           ),
         ],

@@ -84,12 +84,12 @@ class PreparationStepState extends State<PreparationStep> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Headline('浸泡消毒'),
+          Headline('Immersion Disinfection'),
           Input(
             controller: _alcoholDisinfectConsumeController,
             leading: Icon(Icons.format_color_fill, color: Colors.black45),
-            label: '酒精用量',
-            hint: '请输入酒精用量',
+            label: 'Alcohol Use',
+            hint: 'input alcohol dosage',
             trailing: Text('ml', style: CustomStyle.unitStyle),
             onChanged: (v) {
               this.setState(() => _alcoholDisinfectConsume = double.parse(v));
@@ -100,22 +100,22 @@ class PreparationStepState extends State<PreparationStep> {
           Input(
             controller: _disinfectDurationController,
             leading: Icon(Icons.timer, color: Colors.black45),
-            label: '用时',
-            hint: '请输入消毒用时',
-            trailing: Text('分', style: CustomStyle.unitStyle),
+            label: 'Total Time',
+            hint: 'enter disinfection time',
+            trailing: Text('Min', style: CustomStyle.unitStyle),
             onChanged: (v) {
               this.setState(() => _disinfectDuration = double.parse(v));
             },
             inputFormatters: [Formatter.floatOnly],
           ),
           Divider(height: 1),
-          Headline('清洗剪碎'),
+          Headline('Clean Cut Up'),
           Input(
             controller: _cleaningTimesController,
             leading: Icon(Icons.settings_input_svideo, color: Colors.black45),
-            label: '清洗次数',
-            hint: '请输入清洗次数',
-            trailing: Text('次', style: CustomStyle.unitStyle),
+            label: 'Washing Time',
+            hint: 'enter cleaning times',
+            trailing: Text('Times', style: CustomStyle.unitStyle),
             onChanged: (v) {
               this.setState(() => _cleaningTimes = int.parse(v));
             },
@@ -125,9 +125,9 @@ class PreparationStepState extends State<PreparationStep> {
           Input(
             controller: _cleaningConsumeController,
             leading: Icon(Icons.local_drink, color: Colors.black45),
-            label: '酒精用量',
-            hint: '请输入酒精用量',
-            trailing: Text('ml/次', style: CustomStyle.unitStyle),
+            label: 'Alcohol Use',
+            hint: 'input alcohol dosage',
+            trailing: Text('ml/times', style: CustomStyle.unitStyle),
             onChanged: (v) {
               this.setState(() => _cleaningConsume = double.parse(v));
             },
@@ -137,8 +137,8 @@ class PreparationStepState extends State<PreparationStep> {
           Input(
             controller: _whartonJellyVolumeController,
             leading: Icon(Icons.polymer, color: Colors.black45),
-            label: '华通胶体积',
-            hint: '请输入华通胶体积',
+            label: 'Huatong Colloidal Product',
+            hint: 'input huatong colloidal product',
             trailing: Text('ml', style: CustomStyle.unitStyle),
             onChanged: (v) {
               this.setState(() => _whartonJellyVolume = double.parse(v));
@@ -149,9 +149,9 @@ class PreparationStepState extends State<PreparationStep> {
           Input(
             controller: _cleaningTimesController,
             leading: Icon(Icons.settings_input_svideo, color: Colors.black45),
-            label: '清洗次数',
-            hint: '请输入清洗次数',
-            trailing: Text('次', style: CustomStyle.unitStyle),
+            label: 'Washing Times',
+            hint: 'enter cleaning times',
+            trailing: Text('times', style: CustomStyle.unitStyle),
             onChanged: (v) {
               this.setState(() => _cleaningTimes = int.parse(v));
             },
@@ -161,9 +161,9 @@ class PreparationStepState extends State<PreparationStep> {
           Input(
             controller: _cleaningConsumeController,
             leading: Icon(Icons.local_drink, color: Colors.black45),
-            label: '酒精用量',
-            hint: '请输入酒精用量',
-            trailing: Text('ml/次', style: CustomStyle.unitStyle),
+            label: 'Alcohol Use',
+            hint: 'input alcohol dosage',
+            trailing: Text('ml/times', style: CustomStyle.unitStyle),
             onChanged: (v) {
               this.setState(() => _cleaningConsume = double.parse(v));
             },
@@ -173,8 +173,8 @@ class PreparationStepState extends State<PreparationStep> {
           Input(
             controller: _cutVolumeController,
             leading: Icon(Icons.content_cut, color: Colors.black45),
-            label: '剪碎后体积',
-            hint: '请输入剪碎后体积',
+            label: 'Volume After Shearing',
+            hint: 'enter the cut volume',
             trailing: Text('ml', style: CustomStyle.unitStyle),
             onChanged: (v) {
               this.setState(() => _cutVolume = double.parse(v));
@@ -182,11 +182,11 @@ class PreparationStepState extends State<PreparationStep> {
             inputFormatters: [Formatter.floatOnly],
           ),
           Divider(height: 1),
-          Headline('分装'),
+          Headline('Split Charging'),
           Input(
             controller: _incubatorNumController,
             leading: Icon(Icons.local_laundry_service, color: Colors.black45),
-            label: '培养箱编号',
+            label: 'Incubator Number',
             onChanged: (v) {
               this.setState(() => _incubatorNum = v);
             },
@@ -195,7 +195,7 @@ class PreparationStepState extends State<PreparationStep> {
           Input(
             controller: _startTrainingTimeController,
             leading: Icon(Icons.access_time, color: Colors.black45),
-            label: '开始时间',
+            label: 'Start Time',
           ),
           Divider(height: 1),
         ],
@@ -212,12 +212,12 @@ class PreparationStepState extends State<PreparationStep> {
           StepButton(
             stepButtonType: StepButtonType.pre,
             backgroundColor: Colors.orange,
-            text: Text('上一步', style: TextStyle(color: Colors.white, fontFamily: 'shouji', fontSize: 18)),
+            text: Text('Back', style: TextStyle(color: Colors.white, fontFamily: 'shouji', fontSize: 18)),
             onTap: widget.preTap,
           ),
           StepButton(
             stepButtonType: StepButtonType.next,
-            text: Text('完成制备 ', style: TextStyle(color: Colors.white, fontFamily: 'shouji', fontSize: 18)),
+            text: Text('Next ', style: TextStyle(color: Colors.white, fontFamily: 'shouji', fontSize: 18)),
             onTap: widget.onComplete,
             icon: Icon(Icons.verified_user, color: Colors.white, size: 20),
             disabled: true,

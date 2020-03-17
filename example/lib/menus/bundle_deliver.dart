@@ -42,15 +42,15 @@ class BundleDeliverState extends State<BundleDeliver> {
         children: <Widget>[
           Input(
             leading: Icon(Icons.straighten, color: Theme.of(context).hintColor),
-            label: '脐带长度',
-            hint: '请输入脐带长度',
+            label: 'Length',
+            hint: 'enter the length of the umbilical cord',
             enabled: false,
             trailing: Text('cm', style: CustomStyle.unitStyle),
           ),
           Divider(height: 1),
           CheckboxListTile(
             secondary: const Icon(Icons.bubble_chart, color: Colors.black45),
-            title: Text('脐带肿胀', style: CustomStyle.labelStyle),
+            title: Text('Swell', style: CustomStyle.labelStyle),
             value: false,
             onChanged: null,
           ),
@@ -58,8 +58,8 @@ class BundleDeliverState extends State<BundleDeliver> {
           Selector(
             leading: Icon(Icons.straighten, color: Theme.of(context).hintColor),
             value: null,
-            label: '酒        精',
-            hint: '请选择酒精批次号',
+            label: 'Alcohol',
+            hint: 'select alcohol batch number',
             store: [],
             onChange: () {},
             noUnderline: true,
@@ -67,21 +67,21 @@ class BundleDeliverState extends State<BundleDeliver> {
           ),
           Divider(height: 1),
           SingleElection.build(
-            label: '物品清单',
+            label: 'Inventory',
             leading: Icon(Icons.shopping_cart, color: Theme.of(context).hintColor),
             value: _selectedValue,
-            list: List.generate(5, (index) => SingleElectionItem('物品清单' + index.toString(), index.toString())),
+            list: List.generate(5, (index) => SingleElectionItem('Inventory' + index.toString(), index.toString())),
             onPressed: (item) {
               this.setState(() => _selectedValue = item.value);
             },
           ),
           Divider(height: 1),
           MultiElection.build(
-            label: '异常类型',
+            label: 'Exception Type',
             leading: Icon(Icons.multiline_chart, color: Theme.of(context).hintColor),
             value: _selectedValues,
             selectedColor: Colors.red,
-            list: List.generate(5, (index) => MultiElectionItem('异常类型' + index.toString(), index.toString())),
+            list: List.generate(5, (index) => MultiElectionItem('Exception Type' + index.toString(), index.toString())),
             onPressed: (item) {
               var value = item.value;
               if (_selectedValues.contains(value)) {
