@@ -67,15 +67,15 @@ class BundlePreparationState extends State<BundlePreparation> with SingleTickerP
         new Row(
           children: [
             StepTab(
-              text: "Work Preparation",
+              text: "Preparation",
               selected: _stepIndex == 0,
             ),
             StepTab(
-              text: "Initial Survey",
+              text: "Initial",
               selected: _stepIndex == 1,
             ),
             StepTab(
-              text: "Soak Cleaning",
+              text: "Cleaning",
               selected: _stepIndex == 2,
             ),
           ],

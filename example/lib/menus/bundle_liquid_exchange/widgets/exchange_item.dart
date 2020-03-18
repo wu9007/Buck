@@ -88,42 +88,48 @@ class ExchangeItemState extends State<ExchangeItem> with SingleTickerProviderSta
               ],
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 25),
-                child: Text(widget.code, style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
-              ),
-              Row(
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Icon(Icons.golf_course, size: 20, color: Colors.black26),
-                  SizedBox(width: 5),
-                  Text('On ', style: TextStyle(fontSize: 15, color: Colors.black54)),
-                  Text(widget.advanceNextTime.toLocal().toString().substring(0, 16), style: TextStyle(fontSize: 16)),
-                  Text(' Inbox', style: TextStyle(fontSize: 15, color: Colors.black54)),
+                  Padding(
+                    padding: EdgeInsets.only(left: 25),
+                    child: Text(widget.code, style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(Icons.golf_course, size: 20, color: Colors.black26),
+                      SizedBox(width: 5),
+                      Text('On ', style: TextStyle(fontSize: 15, color: Colors.black54)),
+                      Text(widget.advanceNextTime.toLocal().toString().substring(0, 16), style: TextStyle(fontSize: 16)),
+                      Text(' Inbox', style: TextStyle(fontSize: 15, color: Colors.black54)),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.location_on, size: 20, color: Colors.black26),
+                      SizedBox(width: 5),
+                      Text('At ', style: TextStyle(fontSize: 15, color: Colors.black54)),
+                      Text(widget.location, style: TextStyle(fontSize: 16)),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(Icons.timer, size: 20, color: Colors.black26),
+                      Text('Next Time ', style: TextStyle(fontSize: 15, color: Colors.black54)),
+                      SizedBox(width: 5),
+                      Text(widget.advanceNextTime.toLocal().toString().substring(0, 16), style: TextStyle(color: tipColor, fontSize: 18)),
+                    ],
+                  ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(Icons.location_on, size: 20, color: Colors.black26),
-                  SizedBox(width: 5),
-                  Text('At ', style: TextStyle(fontSize: 15, color: Colors.black54)),
-                  Text(widget.location, style: TextStyle(fontSize: 16)),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Icon(Icons.timer, size: 20, color: Colors.black26),
-                  Text('Next Time ', style: TextStyle(fontSize: 15, color: Colors.black54)),
-                  SizedBox(width: 5),
-                  Text(widget.advanceNextTime.toLocal().toString().substring(0, 16), style: TextStyle(color: tipColor, fontSize: 18)),
-                ],
-              ),
-            ],
+            ),
           ),
+
         ],
       ),
     );
