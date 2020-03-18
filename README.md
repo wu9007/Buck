@@ -10,8 +10,10 @@ Old longings nomadic leap, Chafing at custom's chain; Again from its brumal slee
 
 ```yaml
 dependencies:
- buck: ^0.1.3
+ buck: ^0.1.3+1
 ```
+
+![Framework diagram](https://github.com/wechat-program/album/blob/master/gif/flutter/buck/buck.gif?raw=true)
 
 ## Completed
 -  [x] 自定义功能点及分组

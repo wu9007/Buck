@@ -1,4 +1,5 @@
-## 0.1.3
+## 0.1.3+1 - 2020/03/18.
+## 0.1.3 - 2020/03/13.
 
 * Prepare for 1.0.0 version of sensors and package_info. ([dart_lsc](http://github.com/amirh/dart_lsc))
 
