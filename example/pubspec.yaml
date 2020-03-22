@@ -13,6 +13,7 @@ dependencies:
   flutter_earth: ^0.0.4
   image_picker: ^0.6.2+1
   encrypt: ^4.0.0
+  multiple_select: ^0.1.22
 
 dev_dependencies:
   flutter_test:
