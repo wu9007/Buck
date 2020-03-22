@@ -10,7 +10,7 @@ Old longings nomadic leap, Chafing at custom's chain; Again from its brumal slee
 
 ```yaml
 dependencies:
- buck: ^0.1.3+1
+ buck: ^0.1.3+2
 ```
 
 ![Framework diagram](https://github.com/wechat-program/album/blob/master/gif/flutter/buck/buck.gif?raw=true)
@@ -29,5 +29,3 @@ dependencies:
 -  [x] 系统升级提醒
 -  [x] 加密请求(RSA)
 -  [x] 解密响应数据(AES+RSA)
-
-## Todo

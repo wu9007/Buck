@@ -73,7 +73,7 @@ class SelectorState<T> extends State<Selector<T>> {
                 ),
                 value: widget.value,
                 items: widget.store,
-                onChanged: widget.disabled ? null : widget.onChange,
+                onChanged: widget.disabled ? (_) {} : widget.onChange,
                 isExpanded: true,
                 iconSize: 28,
                 iconEnabledColor: Colors.grey[400],
