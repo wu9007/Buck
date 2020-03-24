@@ -5,7 +5,7 @@ import 'package:buck/widgets/dialogs/upgrade_dialog.dart';
 import 'package:buck/widgets/dialogs/whether_dialog.dart';
 import 'package:flutter/material.dart';
 
-class BundleService extends StatelessMenu {
+class BundleDialog extends StatelessMenu {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,8 +91,8 @@ class BundleService extends StatelessMenu {
   String get id => 'service';
 
   @override
-  int get sort => 3;
+  int get sort => 1;
 
   @override
-  String get cnName => 'service';
+  String get cnName => 'Dialog';
 }
