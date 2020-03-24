@@ -26,11 +26,11 @@ class SocketClient {
     UserInfo userInfo = buck.userInfo;
     String serialNo = buck.androidInfo.androidId;
     String activeBaseUrl = buck.cacheControl.activeBaseUrl;
-    RegExpMatch portRegExpMatch = RegExp(r":\d{4}").firstMatch(activeBaseUrl);
+    RegExpMatch portRegExpMatch = RegExp(r"\d{1}:").firstMatch(activeBaseUrl);
     String ip = activeBaseUrl.substring(
-        activeBaseUrl.indexOf('//') + 2, portRegExpMatch.start);
+        activeBaseUrl.indexOf('//') + 2, portRegExpMatch.start + 1);
     String wsPort = (int.parse(activeBaseUrl.substring(
-                portRegExpMatch.start + 1, portRegExpMatch.end)) +
+                portRegExpMatch.start + 2, portRegExpMatch.end)) +
             1)
         .toString();
     String wsUrl = 'ws://$ip:$wsPort';
