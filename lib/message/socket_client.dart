@@ -30,7 +30,7 @@ class SocketClient {
     String ip = activeBaseUrl.substring(
         activeBaseUrl.indexOf('//') + 2, portRegExpMatch.start + 1);
     String wsPort = (int.parse(activeBaseUrl.substring(
-                portRegExpMatch.start + 2, portRegExpMatch.end)) +
+                portRegExpMatch.start + 2, activeBaseUrl.length)) +
             1)
         .toString();
     String wsUrl = 'ws://$ip:$wsPort';
