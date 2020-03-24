@@ -29,7 +29,7 @@ class TipsTool {
         msg: _message,
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
-        timeInSecForIos: 1,
+        timeInSecForIosWeb: 1,
         backgroundColor: Colors.grey[100],
         textColor: textColor,
         fontSize: 14.0);

@@ -4,6 +4,8 @@ import 'package:buck/utils/rsa_helper.dart';
 import 'package:buck_example/menus/bundle_dialog.dart';
 import 'package:buck_example/menus/bundle_form.dart';
 import 'package:buck_example/menus/bundle_list.dart';
+import 'package:buck_example/menus/bundle_loading.dart';
+import 'package:buck_example/menus/bundle_scaffold.dart';
 import 'package:buck_example/pianos/piano_album.dart';
 import 'package:buck_example/pianos/piano_card.dart';
 import 'package:buck_example/pianos/piano_collect.dart';
@@ -12,8 +14,8 @@ import 'package:buck_example/pianos/piano_expression.dart';
 import 'package:buck_example/pianos/piano_setting.dart';
 import 'package:flutter/material.dart';
 
-const BASE_URL = 'http://10.1.10.177:8001';
-//const BASE_URL = 'http://192.168.43.29:8001';
+const BASE_URL = 'http://172.0.66.104:80';
+//const BASE_URL = 'http://10.1.10.177:8001';
 
 const CONNECT_API = '/connect';
 const LOGIN_API = '/auth/guest/app_login';
@@ -42,12 +44,13 @@ Future<void> main() async {
       readMessageApi: READ_MESSAGE_API,
       versionApi: VERSION_PATH_API);
 
-  buck.installMenus('Alpha', [BundleForm(key: Key('c-Deliver'))]);
-  buck.installMenus('Beta', [
+  buck.installMenus('Alpha', [
     BundleDialog(),
     BundleList(),
-    BundleForm(key: Key('c-Deliver'))
+    BundleForm(key: Key('c-Deliver')),
+    BundleLoading()
   ]);
+  buck.installMenus('Bate', [BundleScaffold()]);
   buck.installPianos('Piano Group A', [PianoEarth()]);
   buck.installPianos('Piano Group B',
       [PianoCollect(), PianoAlbum(), PianoCard(), PianoExpression()]);
