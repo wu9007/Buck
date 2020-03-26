@@ -8,7 +8,8 @@ import 'package:buck/widgets/tips/tips_tool.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http_parser/http_parser.dart';
+export 'package:dio/src/form_data.dart';
+export 'package:dio/src/multipart_file.dart';
 
 class DioClient<T> {
   final Dio _dio = new Dio(BaseOptions(
@@ -18,12 +19,7 @@ class DioClient<T> {
   ));
 
   Future<ResponseBody<T>> post(url,
-      {Map data = const {},
-      Map queryParameters,
-      UploadFile uploadFile,
-      List<UploadFile> uploadFiles,
-      customBaseUrl,
-      bool encrypt = false}) async {
+      {data, Map queryParameters, customBaseUrl, bool encrypt = false}) async {
     _dio.options.headers = {
       'clientName': buck.packageInfo.appName,
       'encrypt': encrypt
@@ -35,19 +31,6 @@ class DioClient<T> {
         customBaseUrl == null ? buck.cacheControl.activeBaseUrl : customBaseUrl;
 
     Response response;
-    if (uploadFile != null)
-      data.putIfAbsent(
-          'file',
-          () async => await MultipartFile.fromFile(uploadFile.filePath,
-              filename: uploadFile.fileName,
-              contentType: uploadFile.contentType));
-    if (uploadFiles != null)
-      data.putIfAbsent(
-          'files',
-          () => uploadFiles.map((e) async => await MultipartFile.fromFile(
-              uploadFile.filePath,
-              filename: uploadFile.fileName,
-              contentType: uploadFile.contentType)));
     try {
       response = await _dio.post(url,
           data: encrypt
@@ -190,19 +173,4 @@ class ResponseBody<T> {
   bool get resend => _resend;
 
   bool get reLogin => _reLogin;
-}
-
-class UploadFile {
-  final String filePath;
-  final String fileName;
-  final MediaType contentType;
-
-  static UploadFile build({
-    @required String filePath,
-    @required String filename,
-    MediaType contentType,
-  }) =>
-      UploadFile._(filePath, filename, contentType);
-
-  UploadFile._(this.filePath, this.fileName, this.contentType);
 }
