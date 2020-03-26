@@ -18,7 +18,7 @@ class DioClient<T> {
   ));
 
   Future<ResponseBody<T>> post(url,
-      {Map data,
+      {Map data = const {},
       Map queryParameters,
       UploadFile uploadFile,
       List<UploadFile> uploadFiles,
