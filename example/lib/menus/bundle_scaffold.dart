@@ -11,7 +11,7 @@ class BundleScaffold extends StatelessMenu {
     return ChromaticScaffold(
       chromaticAppBar: ChromaticAppBar(
         'Chromatic Scaffold',
-        height: 80,
+        height: 180,
         colors: [Colors.blue[600], Colors.blue[200]],
       ),
       body: Center(

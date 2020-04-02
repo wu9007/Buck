@@ -1,7 +1,6 @@
 import 'package:buck/basic_app.dart';
 import 'package:buck/service/message_box.dart';
 import 'package:buck/constant/icon_constant.dart';
-import 'package:buck/home/tabs/news_tab/news_bar.dart';
 import 'package:buck/home/tabs/news_tab/news_detail.dart';
 import 'package:buck/home/tabs/news_tab/news_item.dart';
 import 'package:buck/message/message_body.dart';
@@ -37,13 +36,20 @@ class NewsCenterState extends State<NewsCenter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('消  息',
+            style: TextStyle(
+                fontFamily: 'pinshang',
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).cardColor)),
+        centerTitle: true,
+        backgroundColor: Colors.black12,
+      ),
       body: Stack(
         children: <Widget>[
-          NewsBar(height: 75, title: '消  息'),
           Positioned.fill(
             child: Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top + 50.0, bottom: 5),
+              padding: EdgeInsets.only(top: 15, bottom: 5),
               child: RefreshIndicator(
                 onRefresh: () => buck.messageBox.loadMessage(),
                 child: ListView.separated(

@@ -1,5 +1,4 @@
 import 'package:buck/basic_app.dart';
-import 'package:buck/home/tabs/news_tab/news_bar.dart';
 import 'package:buck/message/message_body.dart';
 import 'package:buck/message/notifier.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,16 +43,20 @@ class NewsDetailState extends State<NewsDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('来自${_messageBody.senderName}的消息',
+            style: TextStyle(
+                fontFamily: 'pinshang',
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).cardColor)),
+        centerTitle: true,
+        backgroundColor: Colors.black12,
+      ),
       body: Stack(
         children: <Widget>[
-          NewsBar(height: 75, title: '来自${_messageBody.senderName}的消息'),
           Positioned.fill(
             child: Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top + 50.0 + 10,
-                  bottom: 5,
-                  left: 15,
-                  right: 15),
+              padding: EdgeInsets.only(top: 15, bottom: 5, left: 15, right: 15),
               child: _messageBody != null
                   ? SingleChildScrollView(
                       child: Column(

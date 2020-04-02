@@ -43,7 +43,7 @@ List<Item<num, String, String>> items = List.generate(
   (index) => Item.build(
     value: index,
     display: '$index display',
-    content: '$index content' * (index + 1),
+    content: '$index content',
   ),
 );
 
@@ -105,107 +105,119 @@ class BundleDeliverState extends State<BundleForm> {
         title: Text('deliver',
             style: TextStyle(color: Colors.black, fontFamily: 'pinshang')),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Input(
-            leading: Icon(Icons.straighten, color: Theme.of(context).hintColor),
-            label: 'Length',
-            hint: 'enter the length of the umbilical cord',
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Input(
+              leading:
+                  Icon(Icons.straighten, color: Theme.of(context).hintColor),
+              label: 'Length',
+              hint: 'enter the length of the umbilical cord',
 //            enabled: false,
-            trailing: Text('cm', style: CustomStyle.unitStyle),
-            onChanged: (v) {
-              this.setState(() => _length = double.parse(v));
-            },
-            controller: _disinfectDurationController,
-          ),
-          Divider(height: 1),
-          CheckboxListTile(
-            secondary: const Icon(Icons.bubble_chart, color: Colors.black45),
-            title: const Text('Swelling'),
-            value: this._swellingCheck,
-            onChanged: (bool value) {
-              setState(() {
-                this._swellingCheck = !this._swellingCheck;
-              });
-            },
-          ),
-          Divider(height: 1),
-          Selector(
-            leading: Icon(Icons.straighten, color: Theme.of(context).hintColor),
-            value: _mediaBatch,
-            label: 'Alcohol',
-            hint: 'select alcohol batch number',
-            store: menuItems,
-            onChange: (item) => this.setState(() => _mediaBatch = item),
-            noUnderline: true,
-//            disabled: true,
-          ),
-          Divider(height: 1),
-          SingleElection.build(
-            label: 'Inventory',
-            leading:
-                Icon(Icons.shopping_cart, color: Theme.of(context).hintColor),
-            value: _selectedValue,
-            list: List.generate(
-                5,
-                (index) => SingleElectionItem(
-                    'Inventory' + index.toString(), index.toString())),
-            onPressed: (item) {
-              this.setState(() => _selectedValue = item.value);
-            },
-          ),
-          Divider(height: 1),
-          MultiElection.build(
-            label: 'Exception Type',
-            leading:
-                Icon(Icons.multiline_chart, color: Theme.of(context).hintColor),
-            value: _selectedValues,
-            selectedColor: Colors.red,
-            list: List.generate(
-                5,
-                (index) => MultiElectionItem(
-                    'Exception Type' + index.toString(), index.toString())),
-            onPressed: (item) {
-              var value = item.value;
-              if (_selectedValues.contains(value)) {
-                _selectedValues.remove(value);
-              } else {
-                _selectedValues.add(value);
-              }
-              this.setState(() => _selectedValues = _selectedValues);
-            },
-          ),
-          Divider(height: 1),
-          Headline('多选'),
-          MultiFilterSelect(
-            allItems: items,
-            initValue: _initValue,
-            selectCallback: (List selectedValue) => print(selectedValue.length),
-          ),
-          MultipleDropDown(
-            placeholder: '请选择',
-            disabled: false,
-            values: _multipleSelectedValues,
-            elements: elements,
-          ),
-          SizedBox(height: 25),
-          MaterialButton(
-            child: Text(
-              '保    存',
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              trailing: Text('cm', style: CustomStyle.unitStyle),
+              onChanged: (v) {
+                this.setState(() => _length = double.parse(v));
+              },
+              controller: _disinfectDurationController,
             ),
-            color: Colors.blue,
-            onPressed: () async {
-              ResponseBody body = await DioClient()
-                  .post('/example/order/app_save_order?batchNum=$_mediaBatch');
-              if (body.success) {
-                TipsTool.info('保存成功 - 批号为： ${body.data['butchNum']}').show();
-                Navigator.of(context).pop();
-              }
-            },
-          ),
-        ],
+            Divider(height: 1),
+            CheckboxListTile(
+              secondary: const Icon(Icons.bubble_chart, color: Colors.black45),
+              title: const Text('Swelling'),
+              value: this._swellingCheck,
+              onChanged: (bool value) {
+                setState(() {
+                  this._swellingCheck = !this._swellingCheck;
+                });
+              },
+            ),
+            Divider(height: 1),
+            Selector(
+              leading:
+                  Icon(Icons.straighten, color: Theme.of(context).hintColor),
+              value: _mediaBatch,
+              label: 'Alcohol',
+              hint: 'select alcohol batch number',
+              store: menuItems,
+              onChange: (item) => this.setState(() => _mediaBatch = item),
+              noUnderline: true,
+//            disabled: true,
+            ),
+            Divider(height: 1),
+            SingleElection.build(
+              label: 'Inventory',
+              leading:
+                  Icon(Icons.shopping_cart, color: Theme.of(context).hintColor),
+              value: _selectedValue,
+              list: List.generate(
+                  5,
+                  (index) => SingleElectionItem(
+                      'Inventory' + index.toString(), index.toString())),
+              onPressed: (item) {
+                this.setState(() => _selectedValue = item.value);
+              },
+            ),
+            Divider(height: 1),
+            MultiElection.build(
+              label: 'Exception Type',
+              leading: Icon(Icons.multiline_chart,
+                  color: Theme.of(context).hintColor),
+              value: _selectedValues,
+              selectedColor: Colors.red,
+              list: List.generate(
+                  5,
+                  (index) => MultiElectionItem(
+                      'Exception Type' + index.toString(), index.toString())),
+              onPressed: (item) {
+                var value = item.value;
+                if (_selectedValues.contains(value)) {
+                  _selectedValues.remove(value);
+                } else {
+                  _selectedValues.add(value);
+                }
+                this.setState(() => _selectedValues = _selectedValues);
+              },
+            ),
+            Divider(height: 1),
+            Headline('多选'),
+            MultiFilterSelect(
+              allItems: items,
+              initValue: _initValue,
+              selectCallback: (List selectedValue) =>
+                  print(selectedValue.length),
+            ),
+            MultipleDropDown(
+              placeholder: '请选择',
+              disabled: false,
+              values: _multipleSelectedValues,
+              elements: elements,
+            ),
+            SizedBox(height: 25),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18 ),
+              child: MaterialButton(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    '保    存',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                ),
+                color: Colors.orange,
+                onPressed: () async {
+                  ResponseBody body = await DioClient().post(
+                      '/example/order/app_save_order?batchNum=$_mediaBatch');
+                  if (body.success) {
+                    TipsTool.info('保存成功 - 批号为： ${body.data['butchNum']}')
+                        .show();
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
