@@ -49,7 +49,8 @@ class Notifier {
       'bigTextChannel',
       '大文本通道',
       '大文本任务提示',
-      style: AndroidNotificationStyle.BigText,
+      importance: Importance.Max,
+      priority: Priority.High,
       styleInformation: bigTextStyleInformation,
     );
     var platformChannelSpecifics =
