@@ -50,7 +50,7 @@ class Buck {
 
   Future init(
       {@required String baseUrl,
-      String wsPort,
+      int wsPort,
       int connectTimeout,
       int requestTimeout,
       bool menuFree = false}) async {

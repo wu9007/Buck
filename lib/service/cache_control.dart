@@ -38,7 +38,7 @@ class CacheControl {
     return _instance;
   }
 
-  Future init(String baseUrl, String wsPort) async {
+  Future init(String baseUrl, int wsPort) async {
     _setBaseUrl(baseUrl);
     _setWsPort(wsPort);
   }
@@ -56,9 +56,9 @@ class CacheControl {
 
   String get baseUrl => _sp.getString(_baseUrlKey);
 
-  void _setWsPort(String wsPort) => _sp.setString(_wsPortKey, wsPort);
+  void _setWsPort(int wsPort) => _sp.setInt(_wsPortKey, wsPort);
 
-  String get wsPort => _sp.getString(_wsPortKey);
+  int get wsPort => _sp.getInt(_wsPortKey);
 
   void setUserInfo(String userInfo) => _sp.setString(_userInfoKey, userInfo);
 

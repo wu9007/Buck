@@ -29,12 +29,11 @@ class SocketClient {
     RegExpMatch portRegExpMatch = RegExp(r"\d{1}:").firstMatch(activeBaseUrl);
     String ip = activeBaseUrl.substring(
         activeBaseUrl.indexOf('//') + 2, portRegExpMatch.start + 1);
-    String wsPort = buck.cacheControl.wsPort;
+    int wsPort = buck.cacheControl.wsPort;
     if (wsPort == null)
-      wsPort = (int.parse(activeBaseUrl.substring(
-                  portRegExpMatch.start + 2, activeBaseUrl.length)) +
-              1)
-          .toString();
+      wsPort = int.parse(activeBaseUrl.substring(
+              portRegExpMatch.start + 2, activeBaseUrl.length)) +
+          1;
     String wsUrl = 'ws://$ip:$wsPort';
     _webSocket = await WebSocket.connect(wsUrl, headers: {
       'avatar': userInfo.avatar,
