@@ -26,6 +26,8 @@ class CacheControl {
   static final String _connectTimeoutKey = '8';
   static final String _receiveTimeoutKey = '9';
 
+  static final String _wsPortKey = '10';
+
   static final CacheControl _instance = CacheControl._();
   static SharedPreferences _sp;
 
@@ -36,8 +38,9 @@ class CacheControl {
     return _instance;
   }
 
-  Future init(String baseUrl) async {
+  Future init(String baseUrl, String wsPort) async {
     _setBaseUrl(baseUrl);
+    _setWsPort(wsPort);
   }
 
   void setToken(token) => _sp.setString(_tokenKey, token);
@@ -52,6 +55,10 @@ class CacheControl {
   void _setBaseUrl(String baseUrl) => _sp.setString(_baseUrlKey, baseUrl);
 
   String get baseUrl => _sp.getString(_baseUrlKey);
+
+  void _setWsPort(String wsPort) => _sp.setString(_wsPortKey, wsPort);
+
+  String get wsPort => _sp.getString(_wsPortKey);
 
   void setUserInfo(String userInfo) => _sp.setString(_userInfoKey, userInfo);
 

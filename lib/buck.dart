@@ -50,6 +50,7 @@ class Buck {
 
   Future init(
       {@required String baseUrl,
+      String wsPort,
       int connectTimeout,
       int requestTimeout,
       bool menuFree = false}) async {
@@ -70,7 +71,7 @@ class Buck {
       await _socketClientInstance.connect();
     }
     _notifierInstance.init();
-    _cacheControlInstance.init(baseUrl);
+    _cacheControlInstance.init(baseUrl, wsPort);
     if (connectTimeout != null)
       _cacheControlInstance.setConnectTimeout(connectTimeout);
     if (requestTimeout != null)
