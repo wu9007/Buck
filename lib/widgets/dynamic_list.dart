@@ -134,18 +134,16 @@ class DynamicListState extends State<DynamicList> {
   _loadMore() async {
     if (mounted) this.setState(() => isPerformingRequest = true);
     List newDataList = await widget.dataRequester();
-    if (newDataList != null) {
-      if (newDataList.length == 0) {
-        double edge = 50.0;
-        double offsetFromBottom =
-            _controller.position.maxScrollExtent - _controller.position.pixels;
-        if (offsetFromBottom < edge) {
-          _controller.animateTo(_controller.offset - (edge - offsetFromBottom),
-              duration: new Duration(milliseconds: 500), curve: Curves.easeOut);
-        }
-      } else {
-        _dataList.addAll(newDataList);
+    if(newDataList == null || newDataList.length == 0) {
+      double edge = 50.0;
+      double offsetFromBottom =
+          _controller.position.maxScrollExtent - _controller.position.pixels;
+      if (offsetFromBottom < edge) {
+        _controller.animateTo(_controller.offset - (edge - offsetFromBottom),
+            duration: new Duration(milliseconds: 500), curve: Curves.easeOut);
       }
+    } else {
+      _dataList.addAll(newDataList);
     }
     if (mounted) this.setState(() => isPerformingRequest = false);
   }
