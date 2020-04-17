@@ -19,8 +19,8 @@ const BASE_URL = 'http://172.0.66.104:80';
 
 const CONNECT_API = '/connect';
 const LOGIN_API = '/auth/guest/app_login';
-const LIST_MESSAGE_API = '/notification/app/list_own';
-const READ_MESSAGE_API = '/notification/app/read';
+const LIST_MESSAGE_API = '/admin/app/list_own';
+const READ_MESSAGE_API = '/admin/app/read';
 const VERSION_PATH_API = '/admin/app_version/latest';
 
 const LOGO_PATH = "assets/images/logo.png";

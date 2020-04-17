@@ -1,6 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+Widget defaultLoadingWidget = SpinKitWave(
+  size: 30,
+  color: Colors.grey[350],
+  duration: const Duration(milliseconds: 1000),
+  itemCount: 7,
+);
 
 /// 下拉刷新，上拉加载更多数据
 class DynamicList extends StatefulWidget {
@@ -48,8 +55,8 @@ class DynamicList extends StatefulWidget {
 }
 
 class DynamicListState extends State<DynamicList> {
-  bool isPerformingRequest = false;
-  ScrollController _controller = new ScrollController();
+  bool _isPerformingRequest = false;
+  ScrollController _scrollController = new ScrollController();
   List _dataList;
 
   @override
@@ -58,9 +65,11 @@ class DynamicListState extends State<DynamicList> {
     this._onRefresh();
     if (this.widget.controller != null) {
       this.widget.controller.refresh = () => _onRefresh();
+      this.widget.controller.scrollController = _scrollController;
     }
-    _controller.addListener(() {
-      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
         _loadMore();
       }
     });
@@ -69,7 +78,7 @@ class DynamicListState extends State<DynamicList> {
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -94,7 +103,7 @@ class DynamicListState extends State<DynamicList> {
                     itemBuilder: (context, index) {
                       if (index == _dataList.length) {
                         return opacityLoadingProgress(
-                          isPerformingRequest,
+                          _isPerformingRequest,
                           loadingColor,
                           loadingWidget: this.widget.moreLoadingWidget,
                         );
@@ -102,7 +111,7 @@ class DynamicListState extends State<DynamicList> {
                         return widget.itemBuilder(_dataList, context, index);
                       }
                     },
-                    controller: _controller,
+                    controller: _scrollController,
                   )
                 : ListView.builder(
                     scrollDirection: widget.scrollDirection,
@@ -110,7 +119,7 @@ class DynamicListState extends State<DynamicList> {
                     itemBuilder: (context, index) {
                       if (index == _dataList.length) {
                         return opacityLoadingProgress(
-                          isPerformingRequest,
+                          _isPerformingRequest,
                           loadingColor,
                           loadingWidget: this.widget.moreLoadingWidget,
                         );
@@ -118,7 +127,7 @@ class DynamicListState extends State<DynamicList> {
                         return widget.itemBuilder(_dataList, context, index);
                       }
                     },
-                    controller: _controller,
+                    controller: _scrollController,
                   ),
           );
   }
@@ -132,26 +141,28 @@ class DynamicListState extends State<DynamicList> {
 
   /// 加载更多数据
   _loadMore() async {
-    if (mounted) this.setState(() => isPerformingRequest = true);
+    if (mounted) this.setState(() => _isPerformingRequest = true);
     List newDataList = await widget.dataRequester();
-    if(newDataList == null || newDataList.length == 0) {
+    if (newDataList == null || newDataList.length == 0) {
       double edge = 50.0;
-      double offsetFromBottom =
-          _controller.position.maxScrollExtent - _controller.position.pixels;
+      double offsetFromBottom = _scrollController.position.maxScrollExtent -
+          _scrollController.position.pixels;
       if (offsetFromBottom < edge) {
-        _controller.animateTo(_controller.offset - (edge - offsetFromBottom),
-            duration: new Duration(milliseconds: 500), curve: Curves.easeOut);
+        _scrollController.animateTo(
+            _scrollController.offset - (edge - offsetFromBottom),
+            duration: new Duration(milliseconds: 500),
+            curve: Curves.easeOut);
       }
     } else {
       _dataList.addAll(newDataList);
     }
-    if (mounted) this.setState(() => isPerformingRequest = false);
+    if (mounted) this.setState(() => _isPerformingRequest = false);
   }
 }
 
 Widget loadingProgress(loadingColor, {Widget initLoadingWidget}) {
   if (initLoadingWidget == null) {
-    initLoadingWidget = Loading();
+    initLoadingWidget = defaultLoadingWidget;
   }
   return Center(
     child: initLoadingWidget,
@@ -161,7 +172,7 @@ Widget loadingProgress(loadingColor, {Widget initLoadingWidget}) {
 Widget opacityLoadingProgress(isPerformingRequest, loadingColor,
     {Widget loadingWidget}) {
   if (loadingWidget == null) {
-    loadingWidget = Loading();
+    loadingWidget = defaultLoadingWidget;
   }
   return new Padding(
     padding: const EdgeInsets.all(8.0),
@@ -176,63 +187,18 @@ Widget opacityLoadingProgress(isPerformingRequest, loadingColor,
 
 class DynamicListController {
   Function refresh;
+  ScrollController scrollController;
 
   fireRefresh() {
     if (refresh != null) {
       refresh();
+      this.toTop();
     }
   }
-}
 
-class Loading extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => LoadingState();
-}
-
-class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> animation;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1800));
-    final CurvedAnimation curve =
-        CurvedAnimation(parent: controller, curve: Curves.easeInOutBack);
-    animation = Tween(begin: 0.0, end: 2 * math.pi).animate(curve)
-      ..addListener(() {
-        setState(() {});
-      })
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          controller.reset();
-          controller.forward();
-        } else if (status == AnimationStatus.dismissed) {
-          controller.forward();
-        }
-      });
-    controller.forward();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      child: Transform.rotate(
-        angle: animation.value,
-        child: Icon(
-          Icons.donut_large,
-          color: Theme.of(context).primaryColor,
-          size: 30,
-        ),
-      ),
-    );
+  toTop() {
+    if (scrollController.hasClients)
+      scrollController.animateTo(0.0,
+          duration: Duration(milliseconds: 500), curve: Curves.decelerate);
   }
 }
