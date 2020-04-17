@@ -1,3 +1,7 @@
+## 0.1.3+13 - 2020/04/17.
+
+* Fix DioClient Bug.
+
 ## 0.1.3+12 - 2020/04/17.
 
 * upgrade dynamic list widget.

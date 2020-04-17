@@ -38,11 +38,14 @@ class DioClient<T> {
               : data,
           queryParameters: queryParameters);
     } on DioError catch (e) {
-      print(e);
-      TipsTool.error('网络异常').show();
+      response = e.response;
     }
     if (response != null) {
       ResponseBody<T> responseBody = _buildResponseBody(response);
+      if (!responseBody.success)
+        TipsTool.error(
+                '网络异常: ${response.statusCode}    ${response.statusMessage}')
+            .show();
       if (responseBody.token != null) {
         buck.cacheControl.setToken(responseBody.token);
       }
@@ -70,11 +73,14 @@ class DioClient<T> {
     try {
       response = await _dio.get(url, queryParameters: queryParameters);
     } on DioError catch (e) {
-      print(e);
-      TipsTool.error('网络异常').show();
+      response = e.response;
     }
     if (response != null) {
       ResponseBody<T> responseBody = _buildResponseBody(response);
+      if (!responseBody.success)
+        TipsTool.error(
+                '网络异常: ${response.statusCode}    ${response.statusMessage}')
+            .show();
       if (responseBody.token != null) {
         buck.cacheControl.setToken(responseBody.token);
       }
