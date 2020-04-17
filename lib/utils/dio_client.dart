@@ -43,8 +43,7 @@ class DioClient<T> {
     if (response != null) {
       ResponseBody<T> responseBody = _buildResponseBody(response);
       if (!responseBody.success)
-        TipsTool.error(
-                '网络异常: ${response.statusCode}    ${response.statusMessage}')
+        TipsTool.error('${responseBody.title}    ${responseBody.message}')
             .show();
       if (responseBody.token != null) {
         buck.cacheControl.setToken(responseBody.token);
@@ -78,8 +77,7 @@ class DioClient<T> {
     if (response != null) {
       ResponseBody<T> responseBody = _buildResponseBody(response);
       if (!responseBody.success)
-        TipsTool.error(
-                '网络异常: ${response.statusCode}    ${response.statusMessage}')
+        TipsTool.error('${responseBody.title}    ${responseBody.message}')
             .show();
       if (responseBody.token != null) {
         buck.cacheControl.setToken(responseBody.token);

@@ -1,3 +1,7 @@
+## 0.1.3+14 - 2020/04/17.
+
+* Fix LoginClient Bug.
+
 ## 0.1.3+13 - 2020/04/17.
 
 * Fix DioClient Bug.
