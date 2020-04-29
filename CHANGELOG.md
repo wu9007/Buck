@@ -1,3 +1,7 @@
+## 0.1.3+15 - 2020/04/29 
+
+* DynamicList support for custom dividers.
+
 ## 0.1.3+14 - 2020/04/17.
 
 * Fix LoginClient Bug.

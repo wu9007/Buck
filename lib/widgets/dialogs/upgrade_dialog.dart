@@ -150,8 +150,6 @@ class UpgradeDialogState extends State<UpgradeDialog> {
   }
 
   Future<void> _handleStorage() async {
-    await PermissionHandler().requestPermissions(
-      [PermissionGroup.storage],
-    );
+    await Permission.storage.request();
   }
 }
