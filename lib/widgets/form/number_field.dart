@@ -15,7 +15,7 @@ class NumberField extends StatefulWidget {
   NumberField.build({
     Key key,
     @required this.miniValue,
-    @required this.maxValue,
+    this.maxValue,
     @required this.initValue,
     @required this.onChange,
     this.width = 40.0,
@@ -33,10 +33,12 @@ class NumberFieldState extends State<NumberField> {
     super.initState();
     if (this.widget.initValue < this.widget.miniValue)
       this._value = this.widget.miniValue;
-    if (this.widget.initValue > this.widget.maxValue)
+    if (this.widget.maxValue != null &&
+        this.widget.initValue > this.widget.maxValue)
       this._value = this.widget.maxValue;
     if (this.widget.initValue >= this.widget.miniValue &&
-        this.widget.initValue <= this.widget.maxValue)
+        (widget.maxValue == null ||
+            this.widget.initValue <= this.widget.maxValue))
       this._value = this.widget.initValue;
   }
 
@@ -75,50 +77,53 @@ class NumberFieldState extends State<NumberField> {
               ),
             ),
           ),
-          Container(
-            width: widget.width,
-            height: 25,
-            alignment: Alignment.center,
-            child: TextField(
-              onChanged: (content) {
-                if (content == null || content.toString().length == 0) {
-                  this.setState(() => this._value = this.widget.miniValue);
-                } else {
-                  int inputValue = int.parse(content);
-                  if (inputValue > widget.maxValue) {
-                    this.setState(() => this._value = widget.maxValue);
-                  } else if (inputValue < widget.miniValue) {
-                    this.setState(() => this._value = widget.miniValue);
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              height: 25,
+              alignment: Alignment.center,
+              child: TextField(
+                onChanged: (content) {
+                  if (content == null || content.toString().length == 0) {
+                    this.setState(() => this._value = this.widget.miniValue);
                   } else {
-                    this.setState(() => this._value = inputValue);
+                    int inputValue = int.parse(content);
+                    if (widget.maxValue != null &&
+                        inputValue > widget.maxValue) {
+                      this.setState(() => this._value = widget.maxValue);
+                    } else if (inputValue < widget.miniValue) {
+                      this.setState(() => this._value = widget.miniValue);
+                    } else {
+                      this.setState(() => this._value = inputValue);
+                    }
                   }
-                }
-                this.widget.onChange(this._value);
-              },
-              controller: TextEditingController.fromValue(
-                TextEditingValue(
-                  text: this._value.toString(),
-                  selection: TextSelection.fromPosition(
-                    TextPosition(
-                        affinity: TextAffinity.downstream,
-                        offset: this._value.toString().length),
+                  this.widget.onChange(this._value);
+                },
+                controller: TextEditingController.fromValue(
+                  TextEditingValue(
+                    text: this._value.toString(),
+                    selection: TextSelection.fromPosition(
+                      TextPosition(
+                          affinity: TextAffinity.downstream,
+                          offset: this._value.toString().length),
+                    ),
                   ),
                 ),
-              ),
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                WhitelistingTextInputFormatter(RegExp("[0-9]"))
-              ],
-              textAlign: TextAlign.center,
-              style: new TextStyle(
-                fontSize: 17.0,
-                color: Colors.black,
-              ),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(style: BorderStyle.none, width: 0),
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  WhitelistingTextInputFormatter(RegExp("[0-9]"))
+                ],
+                textAlign: TextAlign.center,
+                style: new TextStyle(
+                  fontSize: 17.0,
+                  color: Colors.black,
                 ),
-                contentPadding: EdgeInsets.only(),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(style: BorderStyle.none, width: 0),
+                  ),
+                  contentPadding: EdgeInsets.only(),
+                ),
               ),
             ),
           ),
@@ -127,9 +132,9 @@ class NumberFieldState extends State<NumberField> {
                 topRight: Radius.circular(10),
                 bottomRight: Radius.circular(10)),
             onTap: () {
-              if (this._value < widget.maxValue) {
+              if (widget.maxValue == null || this._value < widget.maxValue) {
                 this.setState(() => this._value = this._value + 1);
-              } else {
+              } else if (widget.maxValue != null) {
                 this.setState(() => this._value = widget.maxValue);
               }
               this.widget.onChange(this._value);

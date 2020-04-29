@@ -4,6 +4,7 @@ import 'package:buck/utils/dio_client.dart';
 import 'package:buck/widgets/form/constant/style_constant.dart';
 import 'package:buck/widgets/form/headline.dart';
 import 'package:buck/widgets/form/input.dart';
+import 'package:buck/widgets/form/number_field.dart';
 import 'package:buck/widgets/form/multi_election.dart';
 import 'package:buck/widgets/form/selector.dart';
 import 'package:buck/widgets/form/single_election.dart';
@@ -133,6 +134,13 @@ class BundleDeliverState extends State<BundleForm> {
               },
             ),
             Divider(height: 1),
+            NumberField.build(
+                miniValue: -1,
+                initValue: 20,
+                onChange: (value) {
+                  print(value);
+                }),
+            Divider(height: 1),
             Selector(
               leading:
                   Icon(Icons.straighten, color: Theme.of(context).hintColor),
@@ -195,7 +203,7 @@ class BundleDeliverState extends State<BundleForm> {
             ),
             SizedBox(height: 25),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18 ),
+              padding: EdgeInsets.symmetric(horizontal: 18),
               child: MaterialButton(
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
