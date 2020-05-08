@@ -1,3 +1,7 @@
+## 0.1.3+16 - 2020/05/08
+
+* Add the sync button.
+
 ## 0.1.3+15 - 2020/04/29 
 
 * DynamicList support for custom dividers.

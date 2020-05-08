@@ -9,6 +9,7 @@ import 'package:buck/widgets/form/multi_election.dart';
 import 'package:buck/widgets/form/selector.dart';
 import 'package:buck/widgets/form/single_election.dart';
 import 'package:buck/widgets/tips/tips_tool.dart';
+import 'package:buck/widgets/button//sync_button.dart';
 import 'package:flutter/material.dart';
 import 'package:multiple_select/Item.dart';
 import 'package:multiple_select/multi_drop_down.dart';
@@ -87,6 +88,7 @@ class BundleDeliverState extends State<BundleForm> {
   List _multipleSelectedValues = [];
   TextEditingController _disinfectDurationController =
       new TextEditingController();
+  SyncButtonController _syncButtonController = new SyncButtonController();
 
   @override
   void initState() {
@@ -204,18 +206,22 @@ class BundleDeliverState extends State<BundleForm> {
             SizedBox(height: 25),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 18),
-              child: MaterialButton(
+              child: SyncButton(
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: Text(
                     '保    存',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
+                controller: _syncButtonController,
+                textColor: Colors.white,
                 color: Colors.orange,
                 onPressed: () async {
-                  ResponseBody body = await DioClient().post(
-                      '/example/order/app_save_order?batchNum=$_mediaBatch');
+                  _syncButtonController.disable();
+                  ResponseBody body =
+                      await Future.delayed(Duration(seconds: 2), () {})
+                          .whenComplete(() => _syncButtonController.enable());
                   if (body.success) {
                     TipsTool.info('保存成功 - 批号为： ${body.data['butchNum']}')
                         .show();
