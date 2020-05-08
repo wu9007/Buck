@@ -13,6 +13,7 @@ import 'package:buck/message/notifier.dart';
 import 'package:buck/message/socket_client.dart';
 import 'package:buck/model/user_info.dart';
 import 'package:device_info/device_info.dart';
+import 'package:device_sn/device_sn.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
@@ -25,6 +26,7 @@ class Buck {
   bool _menuFree;
   UserInfo userInfo;
   PackageInfo _packageInfo;
+  String _serialNumber;
   AndroidDeviceInfo _androidInfo;
   Directory _documentsDir;
   Map<String, WidgetBuilder> _routers = {};
@@ -61,6 +63,11 @@ class Buck {
     _cacheControlInstance = await CacheControl.getInstance();
     _socketClientInstance = await SocketClient.getInstance();
     _themePainterInstance = ThemePainter.getInstance();
+    try {
+      _serialNumber = await DeviceSn.pdaSn;
+    } on Exception {
+      _serialNumber = await DeviceSn.commonSn;
+    }
     _androidInfo = await DeviceInfoPlugin().androidInfo;
     _packageInfo = await PackageInfo.fromPlatform();
     _documentsDir = await getApplicationDocumentsDirectory();
@@ -133,4 +140,6 @@ class Buck {
   CommonApi get commonApiInstance => _commonApiInstance;
 
   Directory get documentsDir => _documentsDir;
+
+  String get serialNumber => _serialNumber;
 }

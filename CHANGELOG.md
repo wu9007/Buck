@@ -1,3 +1,7 @@
+## 0.1.3+17 - 2020/05/08
+
+* Login with a device serial number.
+
 ## 0.1.3+16 - 2020/05/08
 
 * Add the sync button.

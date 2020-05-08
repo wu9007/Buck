@@ -1,6 +1,6 @@
 name: buck
 description: An assembled flutter application framework Buck, Old longings nomadic leap, Chafing at custom's chain.
-version: 0.1.3+16
+version: 0.1.3+17
 authors:
   - leyan95 <leyansorosame@gmail.com>
 homepage: https://github.com/leyan95/buck
@@ -29,6 +29,7 @@ dependencies:
   encrypt: ^4.0.0
   pointycastle: ^1.0.2
   flutter_spinkit: ^4.1.2
+  device_sn: ^0.1.1
 
 dev_dependencies:
   flutter_test:

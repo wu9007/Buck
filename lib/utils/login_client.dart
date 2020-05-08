@@ -84,7 +84,7 @@ class LoginClient {
     Map<String, String> params = {
       'userName': userName,
       'password': password,
-      'serialNo': buck.androidInfo.androidId
+      'serialNo': buck.serialNumber
     };
     ResponseBody<Map<String, dynamic>> response =
         await DioClient<Map<String, dynamic>>()
