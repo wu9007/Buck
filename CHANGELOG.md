@@ -1,3 +1,7 @@
+## 0.1.3+18 - 2020/05/09
+
+* Add properties of sync button —— enable and shape.
+
 ## 0.1.3+17 - 2020/05/08
 
 * Login with a device serial number.

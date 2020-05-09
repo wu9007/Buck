@@ -205,7 +205,7 @@ class BundleDeliverState extends State<BundleForm> {
             ),
             SizedBox(height: 25),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18),
+              padding: EdgeInsets.symmetric(horizontal: 25),
               child: SyncButton(
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
@@ -217,6 +217,9 @@ class BundleDeliverState extends State<BundleForm> {
                 controller: _syncButtonController,
                 textColor: Colors.white,
                 color: Colors.orange,
+                shape: RoundedRectangleBorder(
+                    side: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(50))),
                 onPressed: () async {
                   _syncButtonController.disable();
                   ResponseBody body =
