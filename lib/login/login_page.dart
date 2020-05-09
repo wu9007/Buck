@@ -307,6 +307,7 @@ class LoginPageState extends State<LoginPage>
       if (customBaseUrls == null) customBaseUrls = code;
       if (!customBaseUrls.contains(code)) customBaseUrls += ',$code';
       buck.cacheControl.setCustomBaseUrls(customBaseUrls);
+      TipsTool.info('设置成功：$code').show();
     } else {
       TipsTool.warning('扫描内容不合法').show();
     }
