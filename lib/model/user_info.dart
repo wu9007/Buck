@@ -4,6 +4,8 @@ class UserInfo {
   final String name;
   final String departmentUuid;
   final String departmentName;
+  final String workDepartmentUuid;
+  final String workDepartmentName;
   final List authIds;
   final List bundleIds;
 
@@ -13,6 +15,8 @@ class UserInfo {
         name = map['name'],
         departmentUuid = map['departmentUuid'],
         departmentName = map['departmentName'],
+        workDepartmentUuid = map['workDepartmentUuid'],
+        workDepartmentName = map['workDepartmentName'],
         authIds = map['authIds'],
         bundleIds = map['bundleIds'];
 
@@ -22,6 +26,8 @@ class UserInfo {
         'name': this.name,
         'departmentUuid': this.departmentUuid,
         'demaprtmentName': this.departmentName,
+        'workDepartmentUuid': this.workDepartmentUuid,
+        'workDepartmentName': this.workDepartmentName,
         'authIds': this.authIds,
         'bundleIds': this.bundleIds
       };

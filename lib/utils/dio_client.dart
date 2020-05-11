@@ -45,12 +45,6 @@ class DioClient<T> {
       if (!responseBody.success)
         TipsTool.error('${responseBody.title}    ${responseBody.message}')
             .show();
-      if (responseBody.token != null) {
-        buck.cacheControl.setToken(responseBody.token);
-      }
-      if (responseBody.resend ?? false) {
-        return post(url, data: data);
-      }
       if (responseBody.reLogin ?? false) {
         LoginClient.getInstance().logOut();
       }
@@ -79,12 +73,6 @@ class DioClient<T> {
       if (!responseBody.success)
         TipsTool.error('${responseBody.title}    ${responseBody.message}')
             .show();
-      if (responseBody.token != null) {
-        buck.cacheControl.setToken(responseBody.token);
-      }
-      if (responseBody.resend ?? false) {
-        return get(url, queryParameters: queryParameters);
-      }
       if (responseBody.reLogin ?? false) {
         LoginClient.getInstance().logOut();
       }
@@ -137,8 +125,6 @@ class ResponseBody<T> {
   final T _data;
   final String _title;
   final String _message;
-  final bool _resend;
-  final String _token;
   final bool _reLogin;
 
   ResponseBody.fromMap(Map<String, dynamic> map)
@@ -147,8 +133,6 @@ class ResponseBody<T> {
         _data = map['data'],
         _title = map['title'],
         _message = map['message'],
-        _resend = map['resend'],
-        _token = map['token'],
         _reLogin = map['reLogin'];
 
   Map<String, dynamic> toMap() => <String, dynamic>{
@@ -157,14 +141,10 @@ class ResponseBody<T> {
         'data': this._data,
         'title': this._title,
         'message': this._message,
-        'resend': this._resend,
-        'token': this._token,
         'reLogin': this._reLogin,
       };
 
   bool get success => _success;
-
-  String get token => _token;
 
   String get message => _message;
 
@@ -173,8 +153,6 @@ class ResponseBody<T> {
   String get category => _category;
 
   T get data => _data;
-
-  bool get resend => _resend;
 
   bool get reLogin => _reLogin;
 }

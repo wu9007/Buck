@@ -1,3 +1,8 @@
+## 0.1.4 - 2020/05/11
+
+* Reset user constructor.
+* Custom logout api.
+
 ## 0.1.3+18 - 2020/05/09
 
 * Add properties of sync button —— enable and shape.
