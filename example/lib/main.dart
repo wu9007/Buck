@@ -14,7 +14,7 @@ import 'package:buck_example/pianos/piano_expression.dart';
 import 'package:buck_example/pianos/piano_setting.dart';
 import 'package:flutter/material.dart';
 
-const BASE_URL = 'http://10.1.6.118:8001';
+const BASE_URL = 'http://172.0.18.250:8080';
 
 const CONNECT_API = '/connect';
 const LOGIN_API = '/authentication/authentication/login';

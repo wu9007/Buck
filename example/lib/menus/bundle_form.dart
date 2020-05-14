@@ -137,10 +137,10 @@ class BundleDeliverState extends State<BundleForm> {
             ),
             Divider(height: 1),
             NumberField.build(
-                miniValue: -1,
+                miniValue: 0,
                 maxValue: 5,
                 initValue: 2,
-                precision: 2,
+                precision: 3,
                 onChange: (value) {
                   print(value);
                 }),
