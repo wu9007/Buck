@@ -6,11 +6,12 @@ typedef ValueChanged<T> = void Function(T value);
 /// 数字操作框
 /// Created by Shusheng.
 class NumberField extends StatefulWidget {
-  final int miniValue;
-  final int maxValue;
-  final int initValue;
-  final double width;
-  final ValueChanged<int> onChange;
+  final num miniValue;
+  final num maxValue;
+  final num initValue;
+  final num width;
+  final int precision;
+  final ValueChanged<num> onChange;
 
   NumberField.build({
     Key key,
@@ -19,6 +20,7 @@ class NumberField extends StatefulWidget {
     @required this.initValue,
     @required this.onChange,
     this.width = 40.0,
+    this.precision = 0,
   }) : super(key: key);
 
   @override
@@ -26,24 +28,48 @@ class NumberField extends StatefulWidget {
 }
 
 class NumberFieldState extends State<NumberField> {
-  int _value;
+  RegExp _intOrFloatExp;
+  FocusNode _focusNode = FocusNode();
+  TextEditingController _textEditingController = TextEditingController();
+  String _value;
 
   @override
   void initState() {
     super.initState();
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
+        this._textEditingController.text =
+            num.parse(this._textEditingController.text).toString();
+        this._value = this._textEditingController.text;
+      }
+    });
+    if (this.widget.precision == 0) {
+      _intOrFloatExp = new RegExp(r"^(-?\d+)$");
+    } else {
+      _intOrFloatExp = new RegExp(
+          r"^(\-?\d+|\d+\.\d{0," + this.widget.precision.toString() + r"})$");
+    }
     if (this.widget.initValue < this.widget.miniValue)
-      this._value = this.widget.miniValue;
+      this._value = this.widget.miniValue.toString();
     if (this.widget.maxValue != null &&
         this.widget.initValue > this.widget.maxValue)
-      this._value = this.widget.maxValue;
+      this._value = this.widget.maxValue.toString();
     if (this.widget.initValue >= this.widget.miniValue &&
         (widget.maxValue == null ||
             this.widget.initValue <= this.widget.maxValue))
-      this._value = this.widget.initValue;
+      this._value = this.widget.initValue.toString();
   }
 
   @override
   Widget build(BuildContext context) {
+    _textEditingController.value = TextEditingValue(
+      text: this._value,
+      selection: TextSelection.fromPosition(
+        TextPosition(
+            affinity: TextAffinity.downstream,
+            offset: this._value.toString().length),
+      ),
+    );
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(width: 0.1, color: Colors.black26),
@@ -56,12 +82,13 @@ class NumberFieldState extends State<NumberField> {
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
             onTap: () {
-              if (this._value > widget.miniValue) {
-                this.setState(() => this._value = this._value - 1);
+              if (num.parse(this._value) - 1 > widget.miniValue) {
+                this.setState(() => this._value = (num.parse(this._value) - 1)
+                    .toStringAsFixed(this.widget.precision));
               } else {
-                this.setState(() => this._value = widget.miniValue);
+                this.setState(() => this._value = widget.miniValue.toString());
               }
-              this.widget.onChange(this._value);
+              this.widget.onChange(num.parse(this._value));
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 3),
@@ -83,36 +110,34 @@ class NumberFieldState extends State<NumberField> {
               height: 25,
               alignment: Alignment.center,
               child: TextField(
+                focusNode: _focusNode,
                 onChanged: (content) {
-                  if (content == null || content.toString().length == 0) {
-                    this.setState(() => this._value = this.widget.miniValue);
+                  if (content == null || content.length == 0) {
+                    this.setState(
+                            () => this._value = this.widget.miniValue.toString());
                   } else {
-                    int inputValue = int.parse(content);
-                    if (widget.maxValue != null &&
-                        inputValue > widget.maxValue) {
-                      this.setState(() => this._value = widget.maxValue);
-                    } else if (inputValue < widget.miniValue) {
-                      this.setState(() => this._value = widget.miniValue);
+                    if (_intOrFloatExp.hasMatch(content)) {
+                      num inputValue = num.parse(content);
+                      if (widget.maxValue != null &&
+                          inputValue > widget.maxValue) {
+                        this.setState(
+                                () => this._value = widget.maxValue.toString());
+                      } else if (inputValue < widget.miniValue) {
+                        this.setState(
+                                () => this._value = widget.miniValue.toString());
+                      } else {
+                        this._value = content;
+                      }
                     } else {
-                      this.setState(() => this._value = inputValue);
+                      this.setState(() {});
                     }
                   }
-                  this.widget.onChange(this._value);
+                  if (!content.endsWith('.')) {
+                    this.widget.onChange(num.parse(this._value));
+                  }
                 },
-                controller: TextEditingController.fromValue(
-                  TextEditingValue(
-                    text: this._value.toString(),
-                    selection: TextSelection.fromPosition(
-                      TextPosition(
-                          affinity: TextAffinity.downstream,
-                          offset: this._value.toString().length),
-                    ),
-                  ),
-                ),
+                controller: _textEditingController,
                 keyboardType: TextInputType.number,
-                inputFormatters: [
-                  WhitelistingTextInputFormatter(RegExp("[0-9]"))
-                ],
                 textAlign: TextAlign.center,
                 style: new TextStyle(
                   fontSize: 17.0,
@@ -132,12 +157,14 @@ class NumberFieldState extends State<NumberField> {
                 topRight: Radius.circular(10),
                 bottomRight: Radius.circular(10)),
             onTap: () {
-              if (widget.maxValue == null || this._value < widget.maxValue) {
-                this.setState(() => this._value = this._value + 1);
+              if (widget.maxValue == null ||
+                  num.parse(this._value) + 1 < widget.maxValue) {
+                this.setState(() => this._value = (num.parse(this._value) + 1)
+                    .toStringAsFixed(this.widget.precision));
               } else if (widget.maxValue != null) {
-                this.setState(() => this._value = widget.maxValue);
+                this.setState(() => this._value = widget.maxValue.toString());
               }
-              this.widget.onChange(this._value);
+              this.widget.onChange(num.parse(this._value));
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 3),
@@ -159,6 +186,8 @@ class NumberFieldState extends State<NumberField> {
 
   @override
   void dispose() {
+    this._textEditingController.dispose();
+    this._focusNode.dispose();
     super.dispose();
   }
 }

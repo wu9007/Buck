@@ -10,7 +10,7 @@ Old longings nomadic leap, Chafing at custom's chain; Again from its brumal slee
 
 ```yaml
 dependencies:
- buck: ^0.1.3+18
+ buck: ^0.1.3+19
 ```
 
 ## Completed
