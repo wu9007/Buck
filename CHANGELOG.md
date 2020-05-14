@@ -1,3 +1,8 @@
+## 0.1.4 - 2020/05/14
+
+* Reset user constructor.
+* Custom logout api.
+
 ## 0.1.3+19 - 2020/05/14
 
 * upgrade number field.

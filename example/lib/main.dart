@@ -14,11 +14,11 @@ import 'package:buck_example/pianos/piano_expression.dart';
 import 'package:buck_example/pianos/piano_setting.dart';
 import 'package:flutter/material.dart';
 
-const BASE_URL = 'http://172.0.66.104:80';
-//const BASE_URL = 'http://10.1.10.177:8001';
+const BASE_URL = 'http://172.0.18.250:8080';
 
 const CONNECT_API = '/connect';
-const LOGIN_API = '/auth/guest/app_login';
+const LOGIN_API = '/authentication/authentication/login';
+const LOGOUT_API = '/authentication/authentication/logout';
 const LIST_MESSAGE_API = '/admin/app/list_own';
 const READ_MESSAGE_API = '/admin/app/read';
 const VERSION_PATH_API = '/admin/app_version/latest';
@@ -40,6 +40,7 @@ Future<void> main() async {
   buck.settingCommonPath(
       connectApi: CONNECT_API,
       loginApi: LOGIN_API,
+      logoutApi: LOGOUT_API,
       listMessageApi: LIST_MESSAGE_API,
       readMessageApi: READ_MESSAGE_API,
       versionApi: VERSION_PATH_API);
