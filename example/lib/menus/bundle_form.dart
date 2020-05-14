@@ -42,7 +42,7 @@ List<DropdownMenuItem> menuItems = [
 
 List<Item<num, String, String>> items = List.generate(
   150,
-  (index) => Item.build(
+      (index) => Item.build(
     value: index,
     display: '$index display',
     content: '$index content',
@@ -52,7 +52,7 @@ List<Item<num, String, String>> items = List.generate(
 /// Simulate 15 data
 List<MultipleSelectItem> elements = List.generate(
   15,
-  (index) => MultipleSelectItem.build(
+      (index) => MultipleSelectItem.build(
     value: index,
     display: '$index display',
     content: '$index content',
@@ -87,7 +87,7 @@ class BundleDeliverState extends State<BundleForm> {
   List<num> _initValue = [1, 2, 6];
   List _multipleSelectedValues = [];
   TextEditingController _disinfectDurationController =
-      new TextEditingController();
+  new TextEditingController();
   SyncButtonController _syncButtonController = new SyncButtonController();
 
   @override
@@ -114,7 +114,7 @@ class BundleDeliverState extends State<BundleForm> {
           children: <Widget>[
             Input(
               leading:
-                  Icon(Icons.straighten, color: Theme.of(context).hintColor),
+              Icon(Icons.straighten, color: Theme.of(context).hintColor),
               label: 'Length',
               hint: 'enter the length of the umbilical cord',
 //            enabled: false,
@@ -154,7 +154,7 @@ class BundleDeliverState extends State<BundleForm> {
             Divider(height: 1),
             Selector(
               leading:
-                  Icon(Icons.straighten, color: Theme.of(context).hintColor),
+              Icon(Icons.straighten, color: Theme.of(context).hintColor),
               value: _mediaBatch,
               label: 'Alcohol',
               hint: 'select alcohol batch number',
@@ -167,11 +167,11 @@ class BundleDeliverState extends State<BundleForm> {
             SingleElection.build(
               label: 'Inventory',
               leading:
-                  Icon(Icons.shopping_cart, color: Theme.of(context).hintColor),
+              Icon(Icons.shopping_cart, color: Theme.of(context).hintColor),
               value: _selectedValue,
               list: List.generate(
                   5,
-                  (index) => SingleElectionItem(
+                      (index) => SingleElectionItem(
                       'Inventory' + index.toString(), index.toString())),
               onPressed: (item) {
                 this.setState(() => _selectedValue = item.value);
@@ -186,7 +186,7 @@ class BundleDeliverState extends State<BundleForm> {
               selectedColor: Colors.red,
               list: List.generate(
                   5,
-                  (index) => MultiElectionItem(
+                      (index) => MultiElectionItem(
                       'Exception Type' + index.toString(), index.toString())),
               onPressed: (item) {
                 var value = item.value;
@@ -232,8 +232,8 @@ class BundleDeliverState extends State<BundleForm> {
                 onPressed: () async {
                   _syncButtonController.disable();
                   ResponseBody body =
-                      await Future.delayed(Duration(seconds: 2), () {})
-                          .whenComplete(() => _syncButtonController.enable());
+                  await Future.delayed(Duration(seconds: 2), () {})
+                      .whenComplete(() => _syncButtonController.enable());
                   if (body.success) {
                     TipsTool.info('保存成功 - 批号为： ${body.data['butchNum']}')
                         .show();

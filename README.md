@@ -11,7 +11,6 @@ Old longings nomadic leap, Chafing at custom's chain; Again from its brumal slee
 ```yaml
 dependencies:
  buck: ^0.1.4
-```
 
 ## Completed
 -  [x] 自定义功能点及分组
