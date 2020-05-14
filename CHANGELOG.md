@@ -1,3 +1,7 @@
+## 0.1.3+19 - 2020/05/14
+
+* upgrade number field.
+
 ## 0.1.3+18 - 2020/05/09
 
 * Add properties of sync button —— enable and shape.
