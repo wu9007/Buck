@@ -90,8 +90,7 @@ class LoginClient {
         await DioClient<Map<String, dynamic>>()
             .post(buck.commonApiInstance.loginApi, data: params, encrypt: true);
     if (response != null && response.success && response.data != null) {
-      Map<String, dynamic> userMap = response.data['userView'];
-      buck.cacheControl.setToken(response.data['token']);
+      Map<String, dynamic> userMap = response.data;
       buck.cacheControl.setUserInfo(jsonEncode(userMap));
       buck.userInfo = UserInfo.fromMap(userMap);
       await buck.socketClient.connect();
@@ -103,16 +102,12 @@ class LoginClient {
     return false;
   }
 
-  Future<void> logOut() async {
-    ResponseBody responseBody =
-        await new DioClient().get(buck.commonApiInstance.logoutApi);
-    if (responseBody != null && responseBody.success) {
-      buck.cacheControl.recycleAuth();
-      buck.messageBox.clear();
-      buck.userInfo = null;
-      buck.socketClient.closeSocket();
-      buck.navigatorKey.currentState
-          ?.pushNamedAndRemoveUntil('loginPage', (route) => route == null);
-    }
+  void logOut() {
+    buck.cacheControl.recycleAuth();
+    buck.messageBox.clear();
+    buck.userInfo = null;
+    buck.socketClient.closeSocket();
+    buck.navigatorKey.currentState
+        ?.pushNamedAndRemoveUntil('loginPage', (route) => route == null);
   }
 }

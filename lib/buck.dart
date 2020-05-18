@@ -88,7 +88,6 @@ class Buck {
   void settingCommonPath({
     @required String connectApi,
     @required String loginApi,
-    @required String logoutApi,
     @required String listMessageApi,
     @required String readMessageApi,
     @required String versionApi,
@@ -96,7 +95,6 @@ class Buck {
     _commonApiInstance.setCommonPath(
       connectApi: connectApi,
       loginApi: loginApi,
-      logoutApi: logoutApi,
       listMessageApi: listMessageApi,
       readMessageApi: readMessageApi,
       versionApi: versionApi,

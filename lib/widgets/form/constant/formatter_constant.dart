@@ -19,8 +19,4 @@ class Formatter {
   /// 浮点保留两位小数
   static final WhitelistingTextInputFormatter floatReg2 =
       WhitelistingTextInputFormatter(RegExp(r'^(\d+)(.\d{0,2})?'));
-
-  /// 浮点保留两位小数
-  static final WhitelistingTextInputFormatter floatOrIntReg =
-      WhitelistingTextInputFormatter(RegExp(r'^[1-9][0-9]*([.][0-9]+)?$'));
 }
