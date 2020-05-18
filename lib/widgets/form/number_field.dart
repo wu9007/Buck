@@ -114,17 +114,17 @@ class NumberFieldState extends State<NumberField> {
                 onChanged: (content) {
                   if (content == null || content.length == 0) {
                     this.setState(
-                            () => this._value = this.widget.miniValue.toString());
+                        () => this._value = this.widget.miniValue.toString());
                   } else {
                     if (_intOrFloatExp.hasMatch(content)) {
                       num inputValue = num.parse(content);
                       if (widget.maxValue != null &&
                           inputValue > widget.maxValue) {
                         this.setState(
-                                () => this._value = widget.maxValue.toString());
+                            () => this._value = widget.maxValue.toString());
                       } else if (inputValue < widget.miniValue) {
                         this.setState(
-                                () => this._value = widget.miniValue.toString());
+                            () => this._value = widget.miniValue.toString());
                       } else {
                         this._value = content;
                       }
