@@ -1,0 +1,22 @@
+{
+  "userView": {
+    "uuid": "00100180000120200704000001",
+    "avatar": "Sword",
+    "name": "张楚岚",
+    "departmentUuid": "00100040000120200704000001",
+    "departmentName": "研发小分队",
+    "departmentServiceUserAuthorityViewMap": {},
+    "businessDepartmentUuid": "00100040000120200704000001",
+    "businessDepartmentName": "研发小分队",
+    "stationUuid": "00100160000120200704000002",
+    "stationCode": "00501",
+    "authIds": [
+      "data_read",
+      "data_manage"
+    ]
+  },
+  "token": "eyJhbGciOiJIUzUxMiJ9.eyJnZW5lcmF0ZVRpbWUiOjE1OTY2OTc3OTY1ODcsImRlcGFydG1lbnRVdWlkIjoiMDAxMDAwNDAwMDAxMjAyMDA3MDQwMDAwMDEiLCJ1c2VyQXZhdGFyIjoiQURNSU4iLCJ3b3JrRGVwYXJ0bWVudFV1aWQiOiIwMDEwMDA0MDAwMDEyMDIwMDcwNDAwMDAwMSJ9.u8-TSA2GTafw2vLZ0aV47I926ONdoW3u6FmWhyV5oRrnzq5MWwzS8HLHBCKC2YUiKWK60VGQQxrUuDjE_Okrmg",
+  "expirationTime": 1596701396589,
+  "lifeLength": 3600000,
+  "rebirthTimePeriphery": 1596699596589
+}

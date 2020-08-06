@@ -22,7 +22,7 @@ class MenuBoss {
     UserInfo _userInfo = Buck.getInstance().userInfo;
     Map<String, List<Menu>> groupingBundles = {};
     if (_userInfo != null) {
-      List bundleIds = _userInfo.bundleIds;
+      Set bundleIds = _userInfo.bundleIds;
       _pool.entries.forEach((entry) {
         List<Menu> menus = entry.value.values
             .where((menu) => buck.menuFree ? true : bundleIds.contains(menu.id))

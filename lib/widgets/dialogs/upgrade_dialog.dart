@@ -128,7 +128,7 @@ class UpgradeDialogState extends State<UpgradeDialog> {
                     );
                     if (mounted) {
                       Navigator.of(context).pop();
-                      OpenFile.open(widget.path);
+                      OpenFile.open(storagePath);
                     }
                   }
                 },

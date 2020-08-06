@@ -17,6 +17,8 @@ class LoginPage extends StatefulWidget {
   final String logoPath;
   final String titleLabel;
   final String welcomeLabel;
+  final Future<bool> Function(
+      BuildContext context, String userName, String password) loginAction;
 
   const LoginPage({
     Key key,
@@ -24,6 +26,7 @@ class LoginPage extends StatefulWidget {
     @required this.logoPath,
     @required this.titleLabel,
     @required this.welcomeLabel,
+    this.loginAction,
   }) : super(key: key);
 
   @override
@@ -41,6 +44,24 @@ class LoginPageState extends State<LoginPage>
 
   String _userName;
   String _password;
+
+  Future<bool> Function(BuildContext context, String userName, String password)
+      defaultLoginAction = (context, userName, password) async {
+    bool success;
+    try {
+      bool baseUrlAvailable = await LoginClient.getInstance().checkUrl();
+      if (baseUrlAvailable) {
+        success = await LoginClient.getInstance().login(userName, password);
+      } else {
+        TipsTool.warning('请检测网络是否正常\n\n或扫码设置服务器地址后重新尝试登录').show();
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      Navigator.of(context).pop();
+    }
+    return success;
+  };
 
   @override
   initState() {
@@ -183,21 +204,9 @@ class LoginPageState extends State<LoginPage>
           if (validate) {
             _showLoading();
             _formKey.currentState.save();
-            bool success;
-            try {
-              bool baseUrlAvailable =
-                  await LoginClient.getInstance().checkUrl();
-              if (baseUrlAvailable) {
-                success =
-                    await LoginClient.getInstance().login(_userName, _password);
-              } else {
-                TipsTool.warning('请检测网络是否正常\n\n或扫码设置服务器地址后重新尝试登录').show();
-              }
-            } catch (e) {
-              print(e);
-            } finally {
-              Navigator.of(context).pop();
-            }
+            bool success =
+                await widget.loginAction(context, _userName, _password) ??
+                    defaultLoginAction(context, _userName, _password);
             if (success ?? false) {
               await animationController.reverse();
               buck.navigatorKey.currentState.pushNamedAndRemoveUntil(

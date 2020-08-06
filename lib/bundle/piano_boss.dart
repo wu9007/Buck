@@ -20,7 +20,7 @@ class PianoBoss {
     UserInfo _userInfo = Buck.getInstance().userInfo;
     Map<String, List<Piano>> groupingPianos = {};
     if (_userInfo != null) {
-      List pianoIds = _userInfo.bundleIds;
+      Set pianoIds = _userInfo.bundleIds;
       _pool.entries.forEach((entry) {
         List<Piano> pianos = entry.value.values
             .where((piano) => buck.menuFree

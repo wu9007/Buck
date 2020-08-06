@@ -35,6 +35,7 @@ flutter:
     - assets/city.json
     - assets/rsa/private_key.pem
     - assets/rsa/public_key.pem
+    - data/response_data.json
 
   fonts:
     - family: shouji

@@ -1,3 +1,4 @@
+import 'package:buck/basic_app.dart';
 import 'package:buck/buck.dart';
 import 'package:buck/bundle/piano_boss.dart';
 import 'package:buck/constant/icon_constant.dart';
@@ -18,7 +19,7 @@ class PersonCenterState extends State<PersonCenter> {
   @override
   void initState() {
     super.initState();
-    this._userInfo = Buck.getInstance().userInfo;
+    this._userInfo = buck.userInfo;
   }
 
   @override
@@ -150,7 +151,11 @@ class PersonCenterState extends State<PersonCenter> {
                         fontFamily: 'shouji',
                         color: Theme.of(context).hintColor,
                         fontSize: 18))),
-            onTap: () => LoginClient.getInstance().logOut(),
+            onTap: () {
+              LoginClient.getInstance().logOut();
+              buck.navigatorKey.currentState?.pushNamedAndRemoveUntil(
+                  'loginPage', (route) => route == null);
+            },
           ),
           color: Theme.of(context).canvasColor,
         ),

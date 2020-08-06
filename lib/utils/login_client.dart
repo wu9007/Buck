@@ -28,7 +28,7 @@ class LoginClient {
 
     /// 测试当前使用的服务器地址是否通畅
     Map<String, dynamic> queryParameters = {
-      'clientName': buck.packageInfo.appName,
+      'clientName': buck.appId,
       'publicKey': RsaHelper.getInstance().clientPublicKeyString
     };
     ResponseBody responseBody = await DioClient().post(
@@ -90,8 +90,31 @@ class LoginClient {
         await DioClient<Map<String, dynamic>>()
             .post(buck.commonApiInstance.loginApi, data: params, encrypt: true);
     if (response != null && response.success && response.data != null) {
-      Map<String, dynamic> userMap = response.data;
+      buck.cacheControl.setToken(response.data['token']);
+      Map<String, dynamic> userMap = response.data['userView'];
       buck.cacheControl.setUserInfo(jsonEncode(userMap));
+
+      /// 提取可访问的功能点
+      Set<String> bundleIds = new Set();
+      Map<String, dynamic> departmentServiceUserAuthorityViewMap =
+          userMap['departmentServiceUserAuthorityViewMap'];
+      if (departmentServiceUserAuthorityViewMap
+          .containsKey(userMap['businessDepartmentUuid'])) {
+        Map<String, dynamic> serviceUserAuthorityViewMap =
+            departmentServiceUserAuthorityViewMap[
+                userMap['businessDepartmentUuid']];
+        String applicationName = buck.appId.toUpperCase();
+        if (serviceUserAuthorityViewMap.containsKey(applicationName)) {
+          List userAuthorityViewList =
+              serviceUserAuthorityViewMap[applicationName];
+          if (userAuthorityViewList != null) {
+            bundleIds
+                .addAll(userAuthorityViewList.map((item) => item['bundleId']));
+          }
+        }
+      }
+      userMap['bundleIds'] = bundleIds;
+
       buck.userInfo = UserInfo.fromMap(userMap);
       await buck.socketClient.connect();
       TipsTool.info(response.message).show();
@@ -102,12 +125,18 @@ class LoginClient {
     return false;
   }
 
-  void logOut() {
+  logOut() {
+    /// 调用退出登录接口，无论成功失败都不应该影响程序正常使用
+    DioClient().get(buck.commonApiInstance.logoutApi).then((responseBody) {
+      if (responseBody == null || !responseBody.success)
+        TipsTool.warning('网络异常');
+    });
     buck.cacheControl.recycleAuth();
     buck.messageBox.clear();
     buck.userInfo = null;
     buck.socketClient.closeSocket();
-    buck.navigatorKey.currentState
-        ?.pushNamedAndRemoveUntil('loginPage', (route) => route == null);
+
+    /// 调用退出登录方法后清空路由栈并推入登录界面
+    /// buck.navigatorKey.currentState?.pushNamedAndRemoveUntil('loginPage', (route) => route == null);
   }
 }

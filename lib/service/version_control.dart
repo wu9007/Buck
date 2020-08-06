@@ -23,7 +23,7 @@ class VersionControl {
   checkVersion() async {
     ResponseBody responseBody = await DioClient().get(
         buck.commonApiInstance.versionApi,
-        queryParameters: {'appName': buck.packageInfo.appName});
+        queryParameters: {'appName': buck.appId});
     if (responseBody != null &&
         (responseBody.success ?? false) &&
         responseBody.data != null) {

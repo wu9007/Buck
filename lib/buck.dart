@@ -27,6 +27,9 @@ class Buck {
   UserInfo userInfo;
   PackageInfo _packageInfo;
   String _serialNumber;
+
+  /// appId需要与后台服务名相同
+  String _appId;
   AndroidDeviceInfo _androidInfo;
   Directory _documentsDir;
   Map<String, WidgetBuilder> _routers = {};
@@ -52,10 +55,12 @@ class Buck {
 
   Future init(
       {@required String baseUrl,
+      @required String appId,
       int wsPort,
       int connectTimeout,
       int requestTimeout,
       bool menuFree = false}) async {
+    _appId = appId;
     _notifierInstance = Notifier.getInstance();
     _commonApiInstance = CommonApi.getInstance();
     _messageBoxInstance = MessageBox.getInstance();
@@ -88,6 +93,7 @@ class Buck {
   void settingCommonPath({
     @required String connectApi,
     @required String loginApi,
+    @required String logoutApi,
     @required String listMessageApi,
     @required String readMessageApi,
     @required String versionApi,
@@ -95,6 +101,7 @@ class Buck {
     _commonApiInstance.setCommonPath(
       connectApi: connectApi,
       loginApi: loginApi,
+      logoutApi: logoutApi,
       listMessageApi: listMessageApi,
       readMessageApi: readMessageApi,
       versionApi: versionApi,
@@ -142,4 +149,6 @@ class Buck {
   Directory get documentsDir => _documentsDir;
 
   String get serialNumber => _serialNumber;
+
+  String get appId => _appId;
 }
