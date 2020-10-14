@@ -32,6 +32,7 @@ flutter:
     - assets/images/bundle3.png
     - assets/images/background.png
     - assets/images/logo.png
+    - assets/images/user.png
     - assets/city.json
     - assets/rsa/private_key.pem
     - assets/rsa/public_key.pem

@@ -1,5 +1,4 @@
 import 'package:buck/basic_app.dart';
-import 'package:buck/buck.dart';
 import 'package:buck/bundle/piano_boss.dart';
 import 'package:buck/constant/icon_constant.dart';
 import 'package:buck/home/tabs/person_tab/pages/theme_switcher.dart';
@@ -69,9 +68,10 @@ class PersonCenterState extends State<PersonCenter> {
 //                    fit: BoxFit.cover,
 //                  ),
                       child: FadeInImage.assetNetwork(
-                        placeholder: 'assets/images/logo.png',
+                        fit: BoxFit.fitHeight,
+                        placeholder: 'assets/images/user.png',
                         image:
-                            'https://repository-images.githubusercontent.com/234246059/f2541b80-58d8-11ea-98a1-a82ad94117f4',
+                            '${buck.cacheControl.activeBaseUrl}/authentication/common_info/profile?userName=${_userInfo.avatar}',
                       ),
                     ),
                     decoration: BoxDecoration(

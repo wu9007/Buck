@@ -204,9 +204,12 @@ class LoginPageState extends State<LoginPage>
           if (validate) {
             _showLoading();
             _formKey.currentState.save();
-            bool success =
-                await widget.loginAction(context, _userName, _password) ??
-                    defaultLoginAction(context, _userName, _password);
+            bool success;
+            if (widget.loginAction == null) {
+              success = await defaultLoginAction(context, _userName, _password);
+            } else {
+              success = await widget.loginAction(context, _userName, _password);
+            }
             if (success ?? false) {
               await animationController.reverse();
               buck.navigatorKey.currentState.pushNamedAndRemoveUntil(
